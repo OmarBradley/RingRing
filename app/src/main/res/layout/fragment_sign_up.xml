@@ -1,0 +1,48 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center_vertical"
+    android:orientation="vertical"
+    tools:context="olab.ringring.join.signup.SignUpFragment">
+
+    <EditText
+        android:id="@+id/edit_sign_up_email"
+        style="@style/JoinEditText"
+        android:ems="10"
+        android:hint="@string/sign_up_email_hint"
+        android:imeOptions="actionNext"
+        android:inputType="textEmailAddress" />
+
+    <EditText
+        android:id="@+id/edit_sign_up_my_phone_number"
+        style="@style/JoinEditText"
+        android:ems="10"
+        android:hint="@string/sign_up_my_phone_number_hint"
+        android:imeOptions="actionNext"
+        android:inputType="phone" />
+
+    <EditText
+        android:id="@+id/edit_sign_up_password"
+        style="@style/JoinEditText"
+        android:hint="@string/sign_up_password_hint"
+        android:imeOptions="actionNext"
+        android:inputType="textPassword" />
+
+
+    <com.github.pinball83.maskededittext.MaskedEditText
+        android:id="@+id/edit_sign_up_password_confirm"
+        style="@style/JoinEditText.SubmitEditText"
+        android:hint="@string/sign_up_password_confirm_hint"
+        android:inputType="textPassword"
+        app:maskIcon="@drawable/ic_masked_editText"
+        app:maskIconColor="@color/colorMaskedEditTextIcon" />
+
+    <Button
+        android:id="@+id/btn_sign_up_facebook"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/sign_up_facebook_text" />
+
+</LinearLayout>

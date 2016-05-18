@@ -1,0 +1,27 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center_vertical"
+    android:orientation="vertical"
+    tools:context="olab.ringring.join.login.LoginFragment">
+
+    <EditText
+        android:id="@+id/edit_login_email"
+        style="@style/JoinEditText"
+        android:ems="10"
+        android:hint="@string/login_email_hint"
+        android:imeOptions="actionNext"
+        android:inputType="textEmailAddress" />
+
+    <com.github.pinball83.maskededittext.MaskedEditText
+        android:id="@+id/edit_login_password"
+        style="@style/JoinEditText.SubmitEditText"
+        android:hint="@string/login_password_hint"
+        android:inputType="textPassword"
+        android:imeOptions="actionDone"
+        app:maskIcon="@drawable/ic_masked_editText"
+        app:maskIconColor="@color/colorMaskedEditTextIcon" />
+
+</LinearLayout>
