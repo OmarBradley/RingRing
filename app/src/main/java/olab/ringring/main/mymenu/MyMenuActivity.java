@@ -14,19 +14,24 @@ import android.widget.Button;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import lombok.Getter;
 import olab.ringring.R;
 import olab.ringring.main.home.HomeActivity;
 import olab.ringring.main.mymenu.dday.DdaySettingActivity;
 import olab.ringring.main.mymenu.missionhistory.MissionHistoryActivity;
 import olab.ringring.main.mymenu.myaccount.MyAccountActivity;
 import olab.ringring.main.ringdesign.RingDesignActivity;
+import olab.ringring.main.visitor.Visitor;
+import olab.ringring.main.visitor.concretevisitior.NavigationVisitor;
+import olab.ringring.main.visitor.concretevisitior.SetToggleVisitor;
+import olab.ringring.main.visitor.element.MainActivityElement;
 
 public class MyMenuActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+        implements MainActivityElement {
 
-    @Bind(R.id.toolbar) Toolbar toolbar;
-    @Bind(R.id.drawer_layout) DrawerLayout drawer;
-    @Bind(R.id.nav_view) NavigationView navigationView;
+    @Getter @Bind(R.id.toolbar) Toolbar toolbar;
+    @Getter @Bind(R.id.drawer_layout) DrawerLayout drawer;
+    @Getter @Bind(R.id.nav_view) NavigationView navigationView;
 
     @Bind(R.id.btn_goto_mission_history) Button btnGotoMissionHistoryPage;
     @Bind(R.id.btn_goto_my_account) Button btnGotoMyAccountPage;
@@ -38,12 +43,8 @@ public class MyMenuActivity extends AppCompatActivity
         setContentView(R.layout.activity_my_menu);
         ButterKnife.bind(this);
         setSupportActionBar(toolbar);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.setDrawerListener(toggle);
-        toggle.syncState();
-
-        navigationView.setNavigationItemSelectedListener(this);
+        this.accept(new NavigationVisitor());
+        this.accept(new SetToggleVisitor());
 
         btnGotoMissionHistoryPage.setOnClickListener((view) -> {
             moveToAnotherActivity(MissionHistoryActivity.class);
@@ -58,45 +59,17 @@ public class MyMenuActivity extends AppCompatActivity
     }
 
     @Override
+    public void accept(Visitor visitor) {
+        visitor.visit(this, this);
+    }
+
+    @Override
     public void onBackPressed() {
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
             super.onBackPressed();
         }
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.home, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
-
-    @SuppressWarnings("StatementWithEmptyBody")
-    @Override
-    public boolean onNavigationItemSelected(MenuItem item) {
-        int id = item.getItemId();
-        if (id == R.id.nav_home) {
-            moveToAnotherActivity(HomeActivity.class);
-        } else if (id == R.id.nav_my_menu) {
-            drawer.closeDrawer(GravityCompat.START);
-        } else if (id == R.id.nav_ring_design) {
-            moveToAnotherActivity(RingDesignActivity.class);
-        }
-
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        drawer.closeDrawer(GravityCompat.START);
-        return true;
     }
 
     private void moveToAnotherActivity(Class anotherActivity) {
