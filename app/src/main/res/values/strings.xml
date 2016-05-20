@@ -19,4 +19,20 @@
     <string name="title_activity_my_menu">MyMenuActivity</string>
     <string name="title_activity_ring_design">RingDesignActivity</string>
 
+    <!-- use util.date.Days.java -->
+    <string name="monday_string">월요일</string>
+    <string name="tuesday_string">화요일</string>
+    <string name="wednesday_string">수요일</string>
+    <string name="thursday_string">목요일</string>
+    <string name="friday_string">금요일</string>
+    <string name="saturday_string">토요일</string>
+    <string name="sunday_string">일요일</string>
+
+    <string name="year_string">년</string>
+    <string name="month_string">월</string>
+    <string name="day_string">일</string>
+
+    <string name="am_string">오전</string>
+    <string name="pm_string">오후</string>
+
 </resources>

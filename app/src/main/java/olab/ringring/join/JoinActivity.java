@@ -34,7 +34,6 @@ public class JoinActivity extends AppCompatActivity {
         addFragmentPageInAdapter();
         setAdapterInPager();
         setTabLayout();
-        /*setGoToNextPageAction();*/
         changeTabIndicator();
     }
 
@@ -86,16 +85,4 @@ public class JoinActivity extends AppCompatActivity {
             public void onPageScrollStateChanged(int state) {}
         });
     }
-
-    private void setGoToNextPageAction() {
-            Intent pageMover;
-            if (tabLayout.getSelectedTabPosition() == LOGIN_TAB_INDICATOR_VIEW_LOCATION) {
-                pageMover = new Intent(this, HomeActivity.class);
-                startActivity(pageMover);
-             } else if (tabLayout.getSelectedTabPosition() == SIGN_UP_INDICATOR_VIEW_LOCATION) {
-                pageMover = new Intent(this, PartnerConnectingActivity.class);
-                startActivity(pageMover);
-            }
-    }
-
 }

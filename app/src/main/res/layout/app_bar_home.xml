@@ -5,22 +5,49 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context="olab.ringring.main.home.HomeActivity">
+    tools:context="olab.ringring.main.mymenu.MyMenuActivity">
 
-    <android.support.design.widget.AppBarLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:theme="@style/AppTheme.AppBarOverlay">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
         <android.support.v7.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
+            android:layout_height="100dp"
             android:background="?attr/colorPrimary"
-            app:popupTheme="@style/AppTheme.PopupOverlay" />
+            app:popupTheme="@style/AppTheme.PopupOverlay">
 
-    </android.support.design.widget.AppBarLayout>
+            <include
+                layout="@layout/view_show_d_day"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal" />
 
-    <include layout="@layout/content_home" />
+        </android.support.v7.widget.Toolbar>
+
+        <include
+            layout="@layout/content_home"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="50dp" />
+    </LinearLayout>
+
+    <olab.ringring.main.home.view.customview.ChatProfileView
+        android:id="@+id/profile_view_user"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="50dp"
+        app:layout_anchor="@+id/toolbar"
+        app:layout_anchorGravity="bottom|start" />
+
+    <olab.ringring.main.home.view.customview.ChatProfileView
+        android:id="@+id/profile_view_lover"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="50dp"
+        app:layout_anchor="@+id/toolbar"
+        app:layout_anchorGravity="bottom|end" />
 
 </android.support.design.widget.CoordinatorLayout>

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:padding="16dp">
+
+    <TextView
+        android:id="@+id/text_lover_chat_message"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:background="@drawable/receive_chat_bubble"
+        android:padding="6dp"
+        android:paddingStart="14dp"
+        android:layout_marginRight="55dp"
+        android:text="New TextNew NwNew TextNewNew NwNew TextNewNew NwNew TextNewNew NwNew TextNew" />
+
+    <TextView
+        android:id="@+id/text_lover_chat_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="오후 10:22"
+        android:textSize="8dp"
+        android:layout_marginLeft="-51dp"
+        android:layout_alignBottom="@+id/text_lover_chat_message"
+        android:layout_toEndOf="@+id/text_lover_chat_message" />
+</RelativeLayout>

@@ -1,4 +1,4 @@
-package olab.ringring.main.home.view;
+package olab.ringring.main.home.view.customview;
 
 import android.content.Context;
 import android.util.AttributeSet;
@@ -21,8 +21,8 @@ import olab.ringring.R;
  */
 public class SendMessageInputView extends LinearLayout {
 
-    @Bind(R.id.btn_submit) Button btnSubmit;
-    @Bind(R.id.edit_message) EditText editMessage;
+    @Bind(R.id.btn_user) Button btnSubmit;
+    @Bind(R.id.edit_chat_message) EditText editMessage;
 
     @Getter @Setter
     private Consumer<View> btnSubmitOnClickListener;

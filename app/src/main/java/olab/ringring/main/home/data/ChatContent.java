@@ -15,7 +15,7 @@ public class ChatContent {
     private String message;
 
     @SerializedName("sender_id")
-    private String serverId;
+    private String senderId;
 
     @SerializedName("receiver_id")
     private String receiverId;
