@@ -8,7 +8,7 @@
     tools:context="olab.ringring.join.login.LoginFragment">
 
     <EditText
-        android:id="@+id/edit_login_email"
+        android:id="@+id/edit_content_text"
         style="@style/JoinEditText"
         android:ems="10"
         android:hint="@string/login_email_hint"

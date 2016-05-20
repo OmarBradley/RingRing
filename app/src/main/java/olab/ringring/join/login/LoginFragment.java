@@ -4,8 +4,6 @@ package olab.ringring.join.login;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,13 +15,12 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import olab.ringring.R;
 import olab.ringring.main.home.HomeActivity;
-import olab.ringring.util.NullCommand;
 
 public class LoginFragment extends Fragment {
 
     // TODO: 2016-05-18 view들의 id 선언해주기..
     @Bind(R.id.edit_login_password) MaskedEditText editLoginPassword;
-    @Bind(R.id.edit_login_email) EditText editLoginEmail;
+    @Bind(R.id.edit_content_text) EditText editLoginEmail;
 
 
 

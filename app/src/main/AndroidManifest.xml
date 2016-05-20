@@ -14,11 +14,11 @@
         <activity
             android:name=".splash.SplashActivity"
             android:theme="@style/NoActionBarTheme">
-            <!--<intent-filter>
+            <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>-->
+            </intent-filter>
         </activity>
         <activity
             android:name=".join.JoinActivity"
@@ -40,11 +40,11 @@
         <activity
             android:name=".main.home.HomeActivity"
             android:theme="@style/AppTheme.NoTitleActionBar">
-            <intent-filter>
+            <!--<intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+            </intent-filter>-->
         </activity>
         <activity
             android:name=".main.mymenu.MyMenuActivity"
