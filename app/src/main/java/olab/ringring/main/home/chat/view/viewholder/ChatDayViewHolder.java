@@ -1,4 +1,4 @@
-package olab.ringring.main.home.view.chatview.viewholder;
+package olab.ringring.main.home.chat.view.viewholder;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -7,9 +7,7 @@ import android.widget.TextView;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import olab.ringring.R;
-import olab.ringring.main.home.data.ChatContent;
-import olab.ringring.util.date.Days;
-import olab.ringring.util.date.NowDateGetter;
+import olab.ringring.main.home.chat.data.ChatContent;
 
 /**
  * Created by 재화 on 2016-05-20.

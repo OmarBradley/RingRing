@@ -39,7 +39,6 @@
         <activity android:name=".main.mymenu.missionhistory.MissionHistoryActivity" />
         <activity
             android:name=".main.home.HomeActivity"
-            android:windowSoftInputMode="adjustPan"
             android:theme="@style/AppTheme.NoTitleActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

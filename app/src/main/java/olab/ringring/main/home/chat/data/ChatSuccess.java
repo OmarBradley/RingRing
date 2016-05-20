@@ -1,4 +1,4 @@
-package olab.ringring.main.home.data;
+package olab.ringring.main.home.chat.data;
 
 import lombok.Data;
 

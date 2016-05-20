@@ -1,4 +1,4 @@
-package olab.ringring.main.home.view.chatview.adapter;
+package olab.ringring.main.home.chat.view.adapter;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -9,10 +9,10 @@ import java.util.List;
 
 import olab.ringring.R;
 import olab.ringring.main.home.HomeActivity;
-import olab.ringring.main.home.data.ChatContent;
-import olab.ringring.main.home.view.chatview.viewholder.ChatDayViewHolder;
-import olab.ringring.main.home.view.chatview.viewholder.LoverChatViewHolder;
-import olab.ringring.main.home.view.chatview.viewholder.UserChatViewHolder;
+import olab.ringring.main.home.chat.data.ChatContent;
+import olab.ringring.main.home.chat.view.viewholder.ChatDayViewHolder;
+import olab.ringring.main.home.chat.view.viewholder.LoverChatViewHolder;
+import olab.ringring.main.home.chat.view.viewholder.UserChatViewHolder;
 
 /**
  * Created by 재화 on 2016-05-19.

@@ -1,7 +1,9 @@
 package olab.ringring.main.home;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
@@ -11,6 +13,8 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 
@@ -18,9 +22,10 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import lombok.Getter;
 import olab.ringring.R;
-import olab.ringring.main.home.data.ChatContent;
-import olab.ringring.main.home.view.chatview.adapter.ChatViewAdapter;
-import olab.ringring.main.home.view.customview.ChatProfileView;
+import olab.ringring.main.home.chat.ChatFragment;
+import olab.ringring.main.home.chat.data.ChatContent;
+import olab.ringring.main.home.chat.view.adapter.ChatViewAdapter;
+import olab.ringring.main.home.customview.ChatProfileView;
 import olab.ringring.main.visitor.Visitor;
 import olab.ringring.main.visitor.concretevisitior.NavigationVisitor;
 import olab.ringring.main.visitor.concretevisitior.SetToggleVisitor;
@@ -39,13 +44,6 @@ public class HomeActivity extends AppCompatActivity
     @Getter @Bind(R.id.nav_view) NavigationView navigationView;
     @Bind(R.id.profile_view_user) ChatProfileView userProfileView;
     @Bind(R.id.profile_view_lover) ChatProfileView loverProfileView;
-    @Bind(R.id.list_view_chat_message) RecyclerView chatMessageListView;
-    @Bind(R.id.btn_user) Button userBtn;
-    @Bind(R.id.btn_lover) Button loverBtn;
-    @Bind(R.id.btn_chat_date) Button chatDateBtn;
-    @Bind(R.id.edit_chat_message) EditText chatMessageEdit;
-
-    ChatViewAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,21 +55,24 @@ public class HomeActivity extends AppCompatActivity
         this.accept(new NavigationVisitor());
         this.accept(new SetToggleVisitor());
         setElevationInChatProfileView();
-        setChatMessageListView();
-        setOnClickListenerOnButtons();
-        setButtonClickable();
+        setChatFragment();
     }
 
     private void deleteActionBarTitle(){
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayShowTitleEnabled(false);
+        actionBar.setDisplayShowCustomEnabled(true);
+    }
+
+    @Override
+    public void accept(Visitor visitor) {
+        visitor.visit(this, this);
     }
 
     private void setElevationInChatProfileView(){
         userProfileView.setElevation(2.0f);
         loverProfileView.setElevation(2.0f);
     }
-
 
     @Override
     public void onBackPressed() {
@@ -82,75 +83,14 @@ public class HomeActivity extends AppCompatActivity
         }
     }
 
-    @Override
-    public void accept(Visitor visitor) {
-        visitor.visit(this, this);
+    private void setChatFragment(){
+        ChatFragment chatFragment = new ChatFragment();
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.add(R.id.container_chat_fragment, chatFragment);
+        fragmentTransaction.commit();
     }
 
-    private void setChatMessageListView(){
-        adapter = new ChatViewAdapter();
-        chatMessageListView.setAdapter(adapter);
-        chatMessageListView.setLayoutManager(new LinearLayoutManager(this));
-    }
 
-    private void setOnClickListenerOnButtons() {
-        userBtn.setOnClickListener(view -> {
-            ChatContent chatContent = new ChatContent();
-            chatContent.setMessage(chatMessageEdit.getText().toString());
-            chatContent.setSenderId("" + USER_ID);
-            chatContent.setRegDate(new NowDateGetter().getChatTimeString());
-            adapter.addMessage(chatContent);
-            scrollLastItem(chatMessageListView);
-        });
-        loverBtn.setOnClickListener(view -> {
-            ChatContent chatContent = new ChatContent();
-            chatContent.setMessage(chatMessageEdit.getText().toString());
-            chatContent.setSenderId("" + LOVER_ID);
-            chatContent.setRegDate(new NowDateGetter().getChatTimeString());
-            adapter.addMessage(chatContent);
-            scrollLastItem(chatMessageListView);
-        });
-        chatDateBtn.setOnClickListener(view -> {
-            ChatContent chatContent = new ChatContent();
-            chatContent.setSenderId("" + CHAT_DAY_ID);
-            chatContent.setRegDate(new NowDateGetter().getNowDayString());
-            adapter.addMessage(chatContent);
-            scrollLastItem(chatMessageListView);
-        });
-    }
-
-    private void scrollLastItem(RecyclerView recyclerView) {
-        recyclerView.smoothScrollToPosition(recyclerView.getAdapter().getItemCount());
-    }
-
-    private void setButtonClickable() {
-        userBtn.setEnabled(false);
-        loverBtn.setEnabled(false);
-        chatDateBtn.setEnabled(false);
-        chatMessageEdit.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-                scrollLastItem(chatMessageListView);
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                String text = s.toString();
-                if (text.length() == 0) {
-                    userBtn.setEnabled(false);
-                    loverBtn.setEnabled(false);
-                    chatDateBtn.setEnabled(false);
-                } else {
-                    userBtn.setEnabled(true);
-                    loverBtn.setEnabled(true);
-                    chatDateBtn.setEnabled(true);
-                }
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {}
-        });
-    }
 
 }
 
