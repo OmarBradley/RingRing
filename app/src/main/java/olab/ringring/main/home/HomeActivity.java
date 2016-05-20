@@ -129,7 +129,9 @@ public class HomeActivity extends AppCompatActivity
         chatDateBtn.setEnabled(false);
         chatMessageEdit.addTextChangedListener(new TextWatcher() {
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                scrollLastItem(chatMessageListView);
+            }
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
@@ -151,3 +153,6 @@ public class HomeActivity extends AppCompatActivity
     }
 
 }
+
+
+

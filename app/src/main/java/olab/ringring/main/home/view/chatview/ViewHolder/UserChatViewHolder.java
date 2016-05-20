@@ -14,8 +14,8 @@ import olab.ringring.main.home.data.ChatContent;
  */
 public class UserChatViewHolder extends RecyclerView.ViewHolder implements ChatDataSetter{
 
-    @Bind(R.id.text_user_chat_message) TextView textUserChatMessage;
-    @Bind(R.id.text_user_chat_time) TextView textUserChatTime;
+    @Bind(R.id.text_user_chat_message) TextView userChatMessageText;
+    @Bind(R.id.text_user_chat_time) TextView userChatTimeText;
 
     public UserChatViewHolder(View itemView) {
         super(itemView);
@@ -24,7 +24,7 @@ public class UserChatViewHolder extends RecyclerView.ViewHolder implements ChatD
 
     @Override
     public void setChatDataInChatViewHolder(ChatContent data) {
-        textUserChatMessage.setText(data.getMessage());
-        textUserChatTime.setText(data.getRegDate());
+        userChatMessageText.setText(data.getMessage());
+        userChatTimeText.setText(data.getRegDate());
     }
 }

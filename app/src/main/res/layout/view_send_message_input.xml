@@ -2,35 +2,49 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="horizontal">
+    android:orientation="vertical">
 
-    <EditText
-        android:id="@+id/edit_chat_message"
-        android:layout_width="0dp"
+    <ImageView
+        android:id="@+id/image_send_message_input_border_line"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:background="@android:color/transparent"
-        android:hint="여기에 메시지 입력"
-        android:paddingTop="8dp" />
+        android:layout_centerHorizontal="true"
+        android:src="@drawable/send_message_input_border_line" />
 
-    <Button
-        android:id="@+id/btn_user"
-        android:layout_width="50dp"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
-        android:text="U" />
+        android:orientation="horizontal">
 
-    <Button
-        android:id="@+id/btn_lover"
-        android:layout_width="50dp"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
-        android:text="L" />
+        <EditText
+            android:id="@+id/edit_chat_message"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@android:color/transparent"
+            android:hint="여기에 메시지 입력"
+            android:paddingTop="8dp" />
 
-    <Button
-        android:id="@+id/btn_chat_date"
-        android:layout_width="50dp"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
-        android:text="D" />
+        <Button
+            android:id="@+id/btn_user"
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:text="U" />
+
+        <Button
+            android:id="@+id/btn_lover"
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:text="L" />
+
+        <Button
+            android:id="@+id/btn_chat_date"
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:text="D" />
+    </LinearLayout>
+
 </LinearLayout>

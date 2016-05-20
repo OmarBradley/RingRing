@@ -16,12 +16,7 @@
         android:layout_height="0dp"
         android:layout_weight="1" />
 
-    <ImageView
-        android:id="@+id/image_send_message_input_border_line"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:src="@drawable/send_message_input_border_line" />
+
 
     <include
         layout="@layout/view_send_message_input"

@@ -2,7 +2,6 @@ package olab.ringring.main.home.view.chatview.adapter;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
 
 import java.util.ArrayList;
@@ -68,6 +67,7 @@ public class ChatViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         return null;
     }
 
+
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         switch (getItemViewType(position)) {
@@ -79,6 +79,12 @@ public class ChatViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                 break;
             case VIEW_CHAT_DAY:
                 ((ChatDayViewHolder) holder).setChatDataInChatViewHolder(chatContents.get(position));
+                break;
         }
     }
+
+
+
+
+
 }
