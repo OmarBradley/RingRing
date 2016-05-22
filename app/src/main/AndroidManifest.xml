@@ -28,24 +28,28 @@
                 <action android:name="olab.ringring.join.JoinActivity" />
             </intent-filter>
         </activity>
-        <activity android:name=".join.signup.partnerauthorization.PartnerConnectingActivity">
+        <activity
+            android:name=".join.signup.partnerauthorization.PartnerConnectingActivity"
+            android:theme="@style/AppTheme">
             <intent-filter>
                 <action android:name="olab.ringring.partnerauthorization.PartnerConnectingActivity" />
             </intent-filter>
         </activity>
-        <activity android:name=".join.signup.partnerauthorization.DownloadLinkSendingActivity" />
-        <activity android:name=".main.mymenu.dday.DdaySettingActivity" />
-        <activity android:name=".main.mymenu.myaccount.MyAccountActivity" />
-        <activity android:name=".main.mymenu.missionhistory.MissionHistoryActivity" />
+        <activity
+            android:name=".join.signup.partnerauthorization.DownloadLinkSendingActivity"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".main.mymenu.dday.DdaySettingActivity"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".main.mymenu.myaccount.MyAccountActivity"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".main.mymenu.missionhistory.MissionHistoryActivity"
+            android:theme="@style/AppTheme" />
         <activity
             android:name=".main.home.HomeActivity"
-            android:theme="@style/AppTheme.NoTitleActionBar">
-            <!--<intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>-->
-        </activity>
+            android:theme="@style/AppTheme.NoTitleActionBar"></activity>
         <activity
             android:name=".main.mymenu.MyMenuActivity"
             android:label="@string/title_activity_my_menu"

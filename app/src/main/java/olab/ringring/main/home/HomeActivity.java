@@ -89,6 +89,9 @@ public class HomeActivity extends AppCompatActivity
         fragmentTransaction.add(R.id.container_chat_fragment, chatFragment);
         fragmentTransaction.commit();
     }
+
+
+
 }
 
 

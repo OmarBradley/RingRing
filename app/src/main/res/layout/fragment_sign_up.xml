@@ -16,7 +16,7 @@
         android:inputType="textEmailAddress" />
 
     <EditText
-        android:id="@+id/edit_sign_up_my_phone_number"
+        android:id="@+id/edit_sign_up_phone_number"
         style="@style/JoinEditText"
         android:ems="10"
         android:hint="@string/sign_up_my_phone_number_hint"
@@ -30,14 +30,11 @@
         android:imeOptions="actionNext"
         android:inputType="textPassword" />
 
-
-    <com.github.pinball83.maskededittext.MaskedEditText
+    <olab.ringring.join.customview.EditTextWithSubmitButtonView
         android:id="@+id/edit_sign_up_password_confirm"
-        style="@style/JoinEditText.SubmitEditText"
-        android:hint="@string/sign_up_password_confirm_hint"
-        android:inputType="textPassword"
-        app:maskIcon="@drawable/ic_masked_editText"
-        app:maskIconColor="@color/colorMaskedEditTextIcon" />
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+    </olab.ringring.join.customview.EditTextWithSubmitButtonView>
 
     <Button
         android:id="@+id/btn_sign_up_facebook"

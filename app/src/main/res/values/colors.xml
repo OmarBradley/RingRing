@@ -6,5 +6,5 @@
     <color name="colorRipple">#7DC7DB</color>
     <color name="colorBackground">#ffffff</color>
     <color name="colorMaskedEditTextIcon">#0087cf</color>
-
+    <color name="colorDialogDivider">#96a1a7</color>
 </resources>

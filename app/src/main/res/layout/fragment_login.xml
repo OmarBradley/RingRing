@@ -15,13 +15,11 @@
         android:imeOptions="actionNext"
         android:inputType="textEmailAddress" />
 
-    <com.github.pinball83.maskededittext.MaskedEditText
+
+    <olab.ringring.join.customview.EditTextWithSubmitButtonView
         android:id="@+id/edit_login_password"
-        style="@style/JoinEditText.SubmitEditText"
-        android:hint="@string/login_password_hint"
-        android:inputType="textPassword"
-        android:imeOptions="actionDone"
-        app:maskIcon="@drawable/ic_masked_editText"
-        app:maskIconColor="@color/colorMaskedEditTextIcon" />
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+    </olab.ringring.join.customview.EditTextWithSubmitButtonView>
 
 </LinearLayout>
