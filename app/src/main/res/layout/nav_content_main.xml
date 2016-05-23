@@ -2,21 +2,26 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colorNavElementBackground"
     android:orientation="vertical">
 
-    <olab.ringring.main.nav.NavMenuElementView
-        android:id="@+id/nav_menu_home"
+    <olab.ringring.main.nav.MainNavMenuView
+        android:id="@+id/nav_home"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
-    <olab.ringring.main.nav.NavMenuElementView
-        android:id="@+id/nav_menu_my_menu"
+    <olab.ringring.main.nav.MainNavMenuView
+        android:id="@+id/nav_my_menu"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
-    <olab.ringring.main.nav.NavMenuElementView
-        android:id="@+id/nav_menu_ring_design"
+    <olab.ringring.main.nav.MainNavMenuView
+        android:id="@+id/nav_ring_design"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 
 </LinearLayout>

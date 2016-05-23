@@ -2,36 +2,31 @@ package olab.ringring.main.mymenu;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.widget.Button;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import lombok.Getter;
 import olab.ringring.R;
-import olab.ringring.main.home.HomeActivity;
 import olab.ringring.main.mymenu.dday.DdaySettingActivity;
 import olab.ringring.main.mymenu.missionhistory.MissionHistoryActivity;
 import olab.ringring.main.mymenu.myaccount.MyAccountActivity;
-import olab.ringring.main.ringdesign.RingDesignActivity;
-import olab.ringring.main.visitor.Visitor;
-import olab.ringring.main.visitor.concretevisitior.NavigationVisitor;
-import olab.ringring.main.visitor.concretevisitior.SetToggleVisitor;
-import olab.ringring.main.visitor.element.MainActivityElement;
+import olab.ringring.main.nav.MainNavigationFragment;
+import olab.ringring.main.nav.visitor.Visitor;
+import olab.ringring.main.nav.visitor.concretevisitior.SetNavigationFragmentVisitor;
+import olab.ringring.main.nav.visitor.concretevisitior.SetToggleVisitor;
+import olab.ringring.main.nav.visitor.element.MainActivityElement;
 
 public class MyMenuActivity extends AppCompatActivity
         implements MainActivityElement {
 
     @Getter @Bind(R.id.toolbar) Toolbar toolbar;
     @Getter @Bind(R.id.drawer_layout) DrawerLayout drawer;
-    @Getter @Bind(R.id.nav_view) NavigationView navigationView;
+    @Getter MainNavigationFragment navigationView;
 
     @Bind(R.id.btn_goto_mission_history) Button btnGotoMissionHistoryPage;
     @Bind(R.id.btn_goto_my_account) Button btnGotoMyAccountPage;
@@ -43,7 +38,7 @@ public class MyMenuActivity extends AppCompatActivity
         setContentView(R.layout.activity_my_menu);
         ButterKnife.bind(this);
         setSupportActionBar(toolbar);
-        this.accept(new NavigationVisitor());
+        this.accept(new SetNavigationFragmentVisitor());
         this.accept(new SetToggleVisitor());
 
         btnGotoMissionHistoryPage.setOnClickListener((view) -> {

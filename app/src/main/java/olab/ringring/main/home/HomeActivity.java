@@ -1,36 +1,23 @@
 package olab.ringring.main.home;
 
-import android.content.Context;
 import android.os.Bundle;
-import android.support.design.widget.NavigationView;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.text.Editable;
-import android.text.TextWatcher;
-import android.view.View;
-import android.view.inputmethod.InputMethodManager;
-import android.widget.Button;
-import android.widget.EditText;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import lombok.Getter;
 import olab.ringring.R;
 import olab.ringring.main.home.chat.ChatFragment;
-import olab.ringring.main.home.chat.data.ChatContent;
-import olab.ringring.main.home.chat.view.adapter.ChatViewAdapter;
 import olab.ringring.main.home.customview.ChatProfileView;
-import olab.ringring.main.visitor.Visitor;
-import olab.ringring.main.visitor.concretevisitior.NavigationVisitor;
-import olab.ringring.main.visitor.concretevisitior.SetToggleVisitor;
-import olab.ringring.main.visitor.element.MainActivityElement;
-import olab.ringring.util.date.NowDateGetter;
+import olab.ringring.main.nav.visitor.Visitor;
+import olab.ringring.main.nav.visitor.concretevisitior.SetNavigationFragmentVisitor;
+import olab.ringring.main.nav.visitor.concretevisitior.SetToggleVisitor;
+import olab.ringring.main.nav.visitor.element.MainActivityElement;
 
 public class HomeActivity extends AppCompatActivity
         implements MainActivityElement {
@@ -41,7 +28,6 @@ public class HomeActivity extends AppCompatActivity
 
     @Getter @Bind(R.id.toolbar) Toolbar toolbar;
     @Getter @Bind(R.id.drawer_layout) DrawerLayout drawer;
-    @Getter @Bind(R.id.nav_view) NavigationView navigationView;
     @Bind(R.id.profile_view_user) ChatProfileView userProfileView;
     @Bind(R.id.profile_view_lover) ChatProfileView loverProfileView;
 
@@ -52,7 +38,7 @@ public class HomeActivity extends AppCompatActivity
         ButterKnife.bind(this);
         setSupportActionBar(toolbar);
         deleteActionBarTitle();
-        this.accept(new NavigationVisitor());
+        this.accept(new SetNavigationFragmentVisitor());
         this.accept(new SetToggleVisitor());
         setElevationInChatProfileView();
         setChatFragment();

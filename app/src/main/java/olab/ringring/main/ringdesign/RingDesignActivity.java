@@ -1,10 +1,8 @@
 package olab.ringring.main.ringdesign;
 
 import android.os.Bundle;
-import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -14,17 +12,18 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import lombok.Getter;
 import olab.ringring.R;
-import olab.ringring.main.visitor.concretevisitior.SetToggleVisitor;
-import olab.ringring.main.visitor.element.MainActivityElement;
-import olab.ringring.main.visitor.concretevisitior.NavigationVisitor;
-import olab.ringring.main.visitor.Visitor;
+import olab.ringring.main.nav.MainNavigationFragment;
+import olab.ringring.main.nav.visitor.concretevisitior.SetNavigationFragmentVisitor;
+import olab.ringring.main.nav.visitor.concretevisitior.SetToggleVisitor;
+import olab.ringring.main.nav.visitor.element.MainActivityElement;
+import olab.ringring.main.nav.visitor.Visitor;
 
 public class RingDesignActivity extends AppCompatActivity
         implements MainActivityElement {
 
     @Getter @Bind(R.id.toolbar) Toolbar toolbar;
     @Getter @Bind(R.id.drawer_layout) DrawerLayout drawer;
-    @Getter @Bind(R.id.nav_view) NavigationView navigationView;
+    @Getter MainNavigationFragment navigationView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,7 +31,7 @@ public class RingDesignActivity extends AppCompatActivity
         setContentView(R.layout.activity_ring_design);
         ButterKnife.bind(this);
         setSupportActionBar(toolbar);
-        this.accept(new NavigationVisitor());
+        this.accept(new SetNavigationFragmentVisitor());
         this.accept(new SetToggleVisitor());
     }
 

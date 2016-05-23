@@ -1,15 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <item
-        android:id="@+id/nav_home"
-        android:icon="@drawable/ic_menu_camera"
-        android:title="@string/nav_home_title" />
-    <item
-        android:id="@+id/nav_my_menu"
-        android:icon="@drawable/ic_menu_gallery"
-        android:title="@string/nav_my_menu_title" />
-    <item
-        android:id="@+id/nav_ring_design"
-        android:icon="@drawable/ic_menu_slideshow"
-        android:title="@string/nav_ring_design_title" />
+
 </menu>

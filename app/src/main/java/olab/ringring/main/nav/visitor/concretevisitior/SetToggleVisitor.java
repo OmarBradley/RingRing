@@ -1,4 +1,4 @@
-package olab.ringring.main.visitor.concretevisitior;
+package olab.ringring.main.nav.visitor.concretevisitior;
 
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -6,8 +6,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
 import olab.ringring.R;
-import olab.ringring.main.visitor.Visitor;
-import olab.ringring.main.visitor.element.MainActivityElement;
+import olab.ringring.main.nav.visitor.Visitor;
+import olab.ringring.main.nav.visitor.element.MainActivityElement;
 
 /**
  * Created by 재화 on 2016-05-19.
