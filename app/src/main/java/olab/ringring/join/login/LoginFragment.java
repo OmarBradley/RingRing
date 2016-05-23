@@ -3,6 +3,7 @@ package olab.ringring.join.login;
 
 import android.app.Dialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
@@ -16,6 +17,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import olab.ringring.R;
 import olab.ringring.join.customview.EditTextWithSubmitButtonView;
+import olab.ringring.main.home.HomeActivity;
 import olab.ringring.util.dialog.confirm.ConfirmDialogBuilder;
 import olab.ringring.util.dialog.confirm.ConfirmDialogFragment;
 import olab.ringring.util.dialog.yesorno.YesOrNoDialogBuilder;
@@ -36,51 +38,47 @@ public class LoginFragment extends Fragment {
         ButterKnife.bind(this, view);
         setHintInEditLoginPassword();
         setOnClickListenerOnEditLoginPassword();
-
         return view;
     }
 
     private void setOnClickListenerOnEditLoginPassword() {
         editLoginPassword.setOnButtonClickListener(view -> {
-            buildErrorDialog();
-            /*Intent intent = new Intent(getActivity(), HomeActivity.class);
+            Intent intent = new Intent(getActivity(), HomeActivity.class);
             startActivity(intent);
-            getActivity().finish();*/
+            getActivity().finish();
         });
     }
 
+    private void setHintInEditLoginPassword() {
+        editLoginPassword.setHint(getString(R.string.login_password_hint));
+    }
+
     private void buildErrorDialog() {
-        ConfirmDialogFragment errorDialog = new ConfirmDialogFragment();
-        ConfirmDialogBuilder dialogBuilder = new ConfirmDialogBuilder()
+        /*ConfirmDialogFragment errorDialog = new ConfirmDialogBuilder()
                 .setDialogTitleIcon(getResources().getDrawable(R.mipmap.ic_launcher))
                 .setDialogTitleTextColor(getResources().getColor(R.color.colorPrimary))
                 .setDialogTitleText("로그인 오류")
                 .setDialogMessage("해당 비밀번호와 id가\n 일치하지 않습니다.")
                 .setConfirmButtonTextColor(getResources().getColor(R.color.colorPrimary))
-                .setOnConfirmButtonClickListener(view -> {
-                    errorDialog.dismiss();
-                    Toast.makeText(getContext(), "긍정", Toast.LENGTH_SHORT).show();
+                .setOnConfirmButtonClickListener((dialog, dialogItemIndex) -> {
+                    dialog.dismiss();
                 }).build();
-        errorDialog.setDialogBuilder(dialogBuilder);
-        errorDialog.show(getActivity().getSupportFragmentManager(), "error dialog");
+        errorDialog.show(getActivity().getSupportFragmentManager(), "error dialog");*/
 
-/*        YesOrNoDialogFragment errorDialog = new YesOrNoDialogFragment();
-        YesOrNoDialogBuilder dialogBuilder = new YesOrNoDialogBuilder()
+        YesOrNoDialogFragment errorDialog = new YesOrNoDialogBuilder()
                 .setDialogTitleIcon(getResources().getDrawable(R.mipmap.ic_launcher))
                 .setDialogTitleText("로그인 오류")
                 .setDialogMessage("해당 비밀번호와 id가\n 일치하지 않습니다.")
-                .setOnNegativeButtonClickListener(view -> {
-                    errorDialog.dismiss();
+                .setOnNegativeButtonClickListener((dialog, dialogItemIndex) -> {
+                    dialog.dismiss();
                     Toast.makeText(getContext(), "부정", Toast.LENGTH_SHORT).show();
-                }).setOnPositiveButtonClickListener(view -> {
-                    errorDialog.dismiss();
+                }).setOnPositiveButtonClickListener((dialog, dialogItemIndex) -> {
+                    dialog.dismiss();
                     Toast.makeText(getContext(), "긍정", Toast.LENGTH_SHORT).show();
-                }).build();
-        errorDialog.setDialogBuilder(dialogBuilder);
-        errorDialog.show(getActivity().getSupportFragmentManager(), "error dialog");*/
+                }).setPositiveButtonTextColor(getResources().getColor(R.color.colorPrimary))
+                .setNegativeButtonTextColor(getResources().getColor(R.color.colorPrimary))
+                .build();
+        errorDialog.show(getActivity().getSupportFragmentManager(), "error dialog");
     }
 
-    private void setHintInEditLoginPassword(){
-        editLoginPassword.setHint(getString(R.string.login_password_hint));
-    }
 }

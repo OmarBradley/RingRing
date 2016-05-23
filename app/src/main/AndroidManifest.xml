@@ -36,7 +36,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".join.signup.partnerauthorization.DownloadLinkSendingActivity"
+            android:name=".join.signup.partnerauthorization.SendDownloadLinkActivity"
             android:theme="@style/AppTheme" />
         <activity
             android:name=".main.mymenu.dday.DdaySettingActivity"

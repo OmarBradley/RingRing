@@ -1,5 +1,6 @@
 package olab.ringring.util.dialog.confirm;
 
+import android.content.DialogInterface;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.ColorRes;
@@ -21,11 +22,13 @@ public class ConfirmDialogBuilder implements DialogBuilder{
     private String dialogTitleText;
     private @ColorRes int dialogTitleTextColor;
     private String dialogMessage;
-    private Consumer<View> onConfirmButtonClickListener;
+    private DialogInterface.OnClickListener onConfirmButtonClickListener;
     private @ColorRes int confirmButtonTextColor;
 
     @Override
-    public ConfirmDialogBuilder build() {
-        return this;
+    public ConfirmDialogFragment build() {
+        ConfirmDialogFragment confirmDialog = new ConfirmDialogFragment();
+        confirmDialog.setDialogBuilder(this);
+        return confirmDialog;
     }
 }

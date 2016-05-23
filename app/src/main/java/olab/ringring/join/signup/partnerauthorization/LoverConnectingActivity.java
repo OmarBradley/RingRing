@@ -12,7 +12,6 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import olab.ringring.R;
 import olab.ringring.join.JoinActivity;
-import olab.ringring.main.home.HomeActivity;
 
 public class LoverConnectingActivity extends AppCompatActivity {
 
@@ -27,7 +26,7 @@ public class LoverConnectingActivity extends AppCompatActivity {
         setActionBarIcon();
         setActionBarTitle();
         btnLoverConnect.setOnClickListener(view -> {
-            Intent nextPageIntent = new Intent(this, DownloadLinkSendingActivity.class);
+            Intent nextPageIntent = new Intent(this, SendDownloadLinkActivity.class);
             startActivity(nextPageIntent);
         });
     }

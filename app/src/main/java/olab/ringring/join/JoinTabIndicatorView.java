@@ -1,7 +1,6 @@
 package olab.ringring.join;
 
 import android.content.Context;
-import android.support.annotation.ColorInt;
 import android.support.annotation.ColorRes;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.StringRes;
@@ -12,8 +11,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.balysv.materialripple.MaterialRippleLayout;
-
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import olab.ringring.R;
@@ -23,7 +20,7 @@ import olab.ringring.R;
  */
 public class JoinTabIndicatorView extends LinearLayout {
 
-    @Bind(R.id.icon_tabIndicator) ImageView tabIndicatorIcon;
+    @Bind(R.id.image_tabIndicator) ImageView tabIndicatorIcon;
     @Bind(R.id.text_tabIndicator) TextView tabIndicatorText;
 
     public JoinTabIndicatorView(Context context, @StringRes int indicatorTextResource) {
@@ -52,5 +49,4 @@ public class JoinTabIndicatorView extends LinearLayout {
         tabIndicatorIcon.setVisibility(VISIBLE);
         tabIndicatorIcon.setImageResource(indicatorIconResource);
     }
-
 }

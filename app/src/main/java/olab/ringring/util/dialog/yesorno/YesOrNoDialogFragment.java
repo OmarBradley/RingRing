@@ -20,7 +20,9 @@ import olab.ringring.R;
  */
 public class YesOrNoDialogFragment extends DialogFragment {
 
-    @Bind(R.id.icon_dialog_title) ImageView iconDialogTitle;
+    private final static int DIALOG_ITEM_INDEX = 0;
+
+    @Bind(R.id.image_dialog_title) ImageView iconDialogTitle;
     @Bind(R.id.text_dialog_title) TextView textDialogTitle;
     @Bind(R.id.text_dialog_message) TextView textDialogMessage;
     @Bind(R.id.btn_dialog_positive) Button btnDialogPositive;
@@ -56,10 +58,12 @@ public class YesOrNoDialogFragment extends DialogFragment {
         textDialogTitle.setText(dialogBuilder.getDialogTitleText());
         textDialogMessage.setText(dialogBuilder.getDialogMessage());
         btnDialogPositive.setOnClickListener(view -> {
-            dialogBuilder.getOnPositiveButtonClickListener().accept(view);
+            dialogBuilder.getOnPositiveButtonClickListener().onClick(getDialog(), DIALOG_ITEM_INDEX);
         });
+        btnDialogPositive.setTextColor(dialogBuilder.getPositiveButtonTextColor());
         btnDialogNegative.setOnClickListener(view -> {
-            dialogBuilder.getOnNegativeButtonClickListener().accept(view);
+            dialogBuilder.getOnNegativeButtonClickListener().onClick(getDialog(), DIALOG_ITEM_INDEX);
         });
+        btnDialogNegative.setTextColor(dialogBuilder.getNegativeButtonTextColor());
     }
 }

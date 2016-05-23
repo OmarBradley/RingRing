@@ -14,7 +14,7 @@
         android:text="로그인" />
 
     <ImageView
-        android:id="@+id/icon_tabIndicator"
+        android:id="@+id/image_tabIndicator"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"

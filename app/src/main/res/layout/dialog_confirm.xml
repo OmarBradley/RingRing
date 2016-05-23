@@ -7,7 +7,7 @@
     tools:context=".util.dialog.confirm.ConfirmDialogFragment">
 
     <ImageView
-        android:id="@+id/icon_dialog_title"
+        android:id="@+id/image_dialog_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal" />

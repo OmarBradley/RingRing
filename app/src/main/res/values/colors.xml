@@ -7,6 +7,8 @@
     <color name="colorRipple">#7DC7DB</color>
     <color name="colorBackground">#ffffff</color>
 
+    <color name="colorNavHeaderBackground">#dfdfdf</color>
+    <color name="colorNavElementBackground">#ffffff</color>
     <color name="colorDialogDivider">#96a1a7</color>
     <color name="colorTextDialogMessage">#000000</color>
 </resources>
