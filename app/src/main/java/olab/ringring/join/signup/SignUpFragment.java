@@ -14,8 +14,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import olab.ringring.R;
 import olab.ringring.join.customview.EditTextWithSubmitButtonView;
-import olab.ringring.join.signup.partnerauthorization.PartnerConnectingActivity;
-import olab.ringring.util.inputtype.InputTypeConstant;
+import olab.ringring.join.signup.partnerauthorization.LoverConnectingActivity;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -42,7 +41,7 @@ public class SignUpFragment extends Fragment {
 
     private void setOnClickListenerOnEditLoginPassword() {
         editSignUpPasswordConfirm.setOnButtonClickListener(view -> {
-            Intent intent = new Intent(getActivity(), PartnerConnectingActivity.class);
+            Intent intent = new Intent(getActivity(), LoverConnectingActivity.class);
             startActivity(intent);
             getActivity().finish();
         });

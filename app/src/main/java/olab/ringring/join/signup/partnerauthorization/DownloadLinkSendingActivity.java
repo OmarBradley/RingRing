@@ -1,9 +1,12 @@
 package olab.ringring.join.signup.partnerauthorization;
 
 import android.content.Intent;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.widget.Button;
+import android.widget.EditText;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -27,7 +30,7 @@ public class DownloadLinkSendingActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        Intent pageMover = new Intent(this, PartnerConnectingActivity.class);
+        Intent pageMover = new Intent(this, LoverConnectingActivity.class);
         startActivity(pageMover);
     }
 }

@@ -1,19 +1,14 @@
-package olab.ringring.util.dialog;
+package olab.ringring.util.dialog.yesorno;
 
-import android.graphics.drawable.Drawable;
 import android.support.v4.app.DialogFragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v7.app.AlertDialog;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-
-import com.annimon.stream.function.Consumer;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -37,7 +32,7 @@ public class YesOrNoDialogFragment extends DialogFragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setStyle(DialogFragment.STYLE_NO_TITLE, R.style.YesOrNoDialogTheme);
+        setStyle(DialogFragment.STYLE_NO_TITLE, R.style.RingRingDialogTheme);
     }
 
     @Nullable @Override

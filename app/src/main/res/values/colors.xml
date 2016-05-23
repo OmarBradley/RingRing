@@ -3,8 +3,10 @@
     <color name="colorPrimary">#32b3f8</color>
     <color name="colorPrimaryDark">#0087cf</color>
     <color name="colorAccent">#FF4081</color>
+
     <color name="colorRipple">#7DC7DB</color>
     <color name="colorBackground">#ffffff</color>
-    <color name="colorMaskedEditTextIcon">#0087cf</color>
+
     <color name="colorDialogDivider">#96a1a7</color>
+    <color name="colorTextDialogMessage">#000000</color>
 </resources>

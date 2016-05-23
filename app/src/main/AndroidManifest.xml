@@ -29,7 +29,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".join.signup.partnerauthorization.PartnerConnectingActivity"
+            android:name=".join.signup.partnerauthorization.LoverConnectingActivity"
             android:theme="@style/AppTheme">
             <intent-filter>
                 <action android:name="olab.ringring.partnerauthorization.PartnerConnectingActivity" />

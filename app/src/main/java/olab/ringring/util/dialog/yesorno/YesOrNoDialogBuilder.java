@@ -1,5 +1,6 @@
-package olab.ringring.util.dialog;
+package olab.ringring.util.dialog.yesorno;
 
+import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.view.View;
 
@@ -7,6 +8,7 @@ import com.annimon.stream.function.Consumer;
 
 import lombok.Data;
 import lombok.experimental.Accessors;
+import olab.ringring.util.dialog.DialogBuilder;
 
 /**
  * Created by 재화 on 2016-05-22.
@@ -21,6 +23,7 @@ public class YesOrNoDialogBuilder {
     private String dialogMessage;
     private Consumer<View> onPositiveButtonClickListener;
     private Consumer<View> onNegativeButtonClickListener;
+
 
     public YesOrNoDialogBuilder build() {
         return this;

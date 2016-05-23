@@ -1,19 +1,15 @@
 package olab.ringring.join;
 
-import android.content.Intent;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.widget.Button;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import olab.ringring.R;
 import olab.ringring.join.login.LoginFragment;
 import olab.ringring.join.signup.SignUpFragment;
-import olab.ringring.join.signup.partnerauthorization.PartnerConnectingActivity;
-import olab.ringring.main.home.HomeActivity;
 
 public class JoinActivity extends AppCompatActivity {
 
