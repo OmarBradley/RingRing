@@ -1,7 +1,7 @@
 package olab.ringring.join.signup.partnerauthorization;
 
 import android.content.Intent;
-import android.support.v7.app.ActionBar;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -12,8 +12,12 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import olab.ringring.R;
 import olab.ringring.join.JoinActivity;
+import olab.ringring.util.actionbar.element.ActionBarElement;
+import olab.ringring.util.actionbar.visitor.ActionbarVisitor;
+import olab.ringring.util.actionbar.visitor.concretevisitor.SetActionBarIconVisitor;
+import olab.ringring.util.actionbar.visitor.concretevisitor.SetActionBarTitleVisitor;
 
-public class LoverConnectingActivity extends AppCompatActivity {
+public class LoverConnectingActivity extends AppCompatActivity implements ActionBarElement {
 
     @Bind(R.id.edit_lover_phone_number) EditText editLoverPhoneNumber;
     @Bind(R.id.btn_lover_connect) Button btnLoverConnect;
@@ -23,8 +27,8 @@ public class LoverConnectingActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lover_connecting);
         ButterKnife.bind(this);
-        setActionBarIcon();
-        setActionBarTitle();
+        this.accept(new SetActionBarIconVisitor(ContextCompat.getDrawable(this, R.mipmap.ic_launcher)));
+        this.accept(new SetActionBarTitleVisitor("회원가입"));
         btnLoverConnect.setOnClickListener(view -> {
             Intent nextPageIntent = new Intent(this, SendDownloadLinkActivity.class);
             startActivity(nextPageIntent);
@@ -37,18 +41,10 @@ public class LoverConnectingActivity extends AppCompatActivity {
         startActivity(pageMover);
     }
 
-    private void setActionBarIcon() {
-        ActionBar actionBar = getSupportActionBar();
-        actionBar.setHomeAsUpIndicator(getResources().getDrawable(android.R.mipmap.sym_def_app_icon));
-        actionBar.setDisplayHomeAsUpEnabled(true);
-        actionBar.setHomeButtonEnabled(true);
+    @Override
+    public void accept(ActionbarVisitor visitor) {
+        visitor.visit(this);
     }
-
-    private void setActionBarTitle(){
-        ActionBar actionBar = getSupportActionBar();
-        actionBar.setTitle("회원가입");
-    }
-
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {

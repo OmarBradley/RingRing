@@ -4,6 +4,7 @@ import android.content.Context;
 import android.support.annotation.ColorRes;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.StringRes;
+import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -40,12 +41,12 @@ public class JoinTabIndicatorView extends LinearLayout {
     }
 
     public void setTabIndicatorViewWhenNotFocused(@ColorRes int indicatorTextColorResource) {
-        tabIndicatorText.setTextColor(getResources().getColor(indicatorTextColorResource));
+        tabIndicatorText.setTextColor(ContextCompat.getColor(getContext(),indicatorTextColorResource));
         tabIndicatorIcon.setVisibility(INVISIBLE);
     }
 
     public void setTabIndicatorViewWhenFocused(@ColorRes int indicatorTextColorResource, @DrawableRes int indicatorIconResource) {
-        tabIndicatorText.setTextColor(getResources().getColor(indicatorTextColorResource));
+        tabIndicatorText.setTextColor(ContextCompat.getColor(getContext(),indicatorIconResource));
         tabIndicatorIcon.setVisibility(VISIBLE);
         tabIndicatorIcon.setImageResource(indicatorIconResource);
     }

@@ -6,10 +6,9 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,8 +25,6 @@ import lombok.Setter;
 import olab.ringring.R;
 import olab.ringring.main.home.HomeActivity;
 import olab.ringring.main.mymenu.MyMenuActivity;
-import olab.ringring.main.nav.visitor.Visitor;
-import olab.ringring.main.nav.visitor.element.MainActivityElement;
 import olab.ringring.main.ringdesign.RingDesignActivity;
 
 /**
@@ -63,11 +60,12 @@ public class MainNavigationFragment extends Fragment {
     }
 
     private void setNavMainMenu() {
-        navHome.setNavMenuAttributes(getResources().getDrawable(R.mipmap.ic_launcher), "Home", getResources().getDrawable(R.mipmap.ic_launcher));
-        navMyMenu.setNavMenuAttributes(getResources().getDrawable(R.mipmap.ic_launcher), "마이메뉴", getResources().getDrawable(R.mipmap.ic_launcher));
-        navRingDesign.setNavMenuAttributes(getResources().getDrawable(R.mipmap.ic_launcher), "반지만들기", getResources().getDrawable(R.mipmap.ic_launcher));
+        navHome.setNavMenuAttributes(ContextCompat.getDrawable(getContext(),R.mipmap.ic_launcher), "Home", ContextCompat.getDrawable(getContext(),R.mipmap.ic_launcher));
+        navMyMenu.setNavMenuAttributes(ContextCompat.getDrawable(getContext(),R.mipmap.ic_launcher), "마이메뉴", ContextCompat.getDrawable(getContext(),R.mipmap.ic_launcher));
+        navRingDesign.setNavMenuAttributes(ContextCompat.getDrawable(getContext(),R.mipmap.ic_launcher), "반지만들기", ContextCompat.getDrawable(getContext(),R.mipmap.ic_launcher));
     }
 
+    // TODO: 2016-05-23 네트워크 적용 시 Profile 사진과 이름을 받아올 수 있는 빌더 제작
     public void setNavUserProfileImage(Bitmap profileImage) {
         imageNavUserProfile.setImageBitmap(profileImage);
     }
@@ -84,12 +82,9 @@ public class MainNavigationFragment extends Fragment {
 
     private void moveToAnotherActivityWhenMenuClicked(MainNavMenuView navMainMenu, Class anotherActivity) {
         navMainMenu.setOnClickListener(view -> {
-            Log.e("sss", getActivity().getClass().toString());
             if (menuAndMatchingActivities.get(navMainMenu.hashCode()) == getActivity().getClass()) {
-                Log.e("sss", "ssss");
                 drawer.closeDrawer(GravityCompat.START);
             } else {
-                Log.e("hhh", "hhhh");
                 moveToAnotherActivity(getActivity(), anotherActivity);
             }
         });

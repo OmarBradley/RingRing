@@ -16,13 +16,13 @@ import olab.ringring.main.mymenu.dday.DdaySettingActivity;
 import olab.ringring.main.mymenu.missionhistory.MissionHistoryActivity;
 import olab.ringring.main.mymenu.myaccount.MyAccountActivity;
 import olab.ringring.main.nav.MainNavigationFragment;
-import olab.ringring.main.nav.visitor.Visitor;
+import olab.ringring.main.nav.visitor.MainNavigationVisitor;
 import olab.ringring.main.nav.visitor.concretevisitior.SetNavigationFragmentVisitor;
 import olab.ringring.main.nav.visitor.concretevisitior.SetToggleVisitor;
-import olab.ringring.main.nav.visitor.element.MainActivityElement;
+import olab.ringring.main.nav.visitor.element.MainNavigationElement;
 
 public class MyMenuActivity extends AppCompatActivity
-        implements MainActivityElement {
+        implements MainNavigationElement {
 
     @Getter @Bind(R.id.toolbar) Toolbar toolbar;
     @Getter @Bind(R.id.drawer_layout) DrawerLayout drawer;
@@ -54,7 +54,7 @@ public class MyMenuActivity extends AppCompatActivity
     }
 
     @Override
-    public void accept(Visitor visitor) {
+    public void accept(MainNavigationVisitor visitor) {
         visitor.visit(this, this);
     }
 

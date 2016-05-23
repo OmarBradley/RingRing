@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -75,8 +76,8 @@ public class LoginFragment extends Fragment {
                 }).setOnPositiveButtonClickListener((dialog, dialogItemIndex) -> {
                     dialog.dismiss();
                     Toast.makeText(getContext(), "긍정", Toast.LENGTH_SHORT).show();
-                }).setPositiveButtonTextColor(getResources().getColor(R.color.colorPrimary))
-                .setNegativeButtonTextColor(getResources().getColor(R.color.colorPrimary))
+                }).setPositiveButtonTextColor(ContextCompat.getColor(getContext(),R.color.colorPrimary))
+                .setNegativeButtonTextColor(ContextCompat.getColor(getContext(),R.color.colorPrimary))
                 .build();
         errorDialog.show(getActivity().getSupportFragmentManager(), "error dialog");
     }

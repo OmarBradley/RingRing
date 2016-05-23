@@ -5,16 +5,16 @@ import android.support.v7.app.AppCompatActivity;
 
 import olab.ringring.R;
 import olab.ringring.main.nav.MainNavigationFragment;
-import olab.ringring.main.nav.visitor.Visitor;
-import olab.ringring.main.nav.visitor.element.MainActivityElement;
+import olab.ringring.main.nav.visitor.MainNavigationVisitor;
+import olab.ringring.main.nav.visitor.element.MainNavigationElement;
 
 /**
  * Created by 재화 on 2016-05-23.
  */
-public class SetNavigationFragmentVisitor implements Visitor{
+public class SetNavigationFragmentVisitor implements MainNavigationVisitor {
 
     @Override
-    public void visit(MainActivityElement element, AppCompatActivity activity) {
+    public void visit(MainNavigationElement element, AppCompatActivity activity) {
         MainNavigationFragment navigationView = new MainNavigationFragment();
         navigationView.setDrawer(element.getDrawer());
         FragmentTransaction fragmentTransaction = activity.getSupportFragmentManager().beginTransaction();
