@@ -11,4 +11,7 @@
     <color name="colorNavElementBackground">#ffffff</color>
     <color name="colorDialogDivider">#96a1a7</color>
     <color name="colorTextDialogMessage">#000000</color>
+
+    <color name="colorProgress">#32b3f8</color>
+
 </resources>

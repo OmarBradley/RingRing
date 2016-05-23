@@ -35,9 +35,9 @@
 
     <android.support.v4.view.ViewPager
         android:id="@+id/pager"
-        android:paddingStart="@dimen/join_page_margin_start"
-        android:paddingEnd="@dimen/join_page_margin_end"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:paddingEnd="@dimen/join_page_margin_end"
+        android:paddingStart="@dimen/join_page_margin_start" />
 
 </LinearLayout>

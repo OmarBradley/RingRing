@@ -6,6 +6,7 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.widget.ImageView;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -16,6 +17,8 @@ import olab.ringring.main.nav.visitor.concretevisitior.SetNavigationFragmentVisi
 import olab.ringring.main.nav.visitor.concretevisitior.SetToggleVisitor;
 import olab.ringring.main.nav.visitor.element.MainNavigationElement;
 import olab.ringring.main.nav.visitor.MainNavigationVisitor;
+import olab.ringring.main.ringdesign.ringattribute.shape.RingShape;
+import olab.ringring.main.ringdesign.ringattribute.shape.RingShapeString;
 import olab.ringring.util.actionbar.element.ActionBarElement;
 import olab.ringring.util.actionbar.visitor.ActionbarVisitor;
 import olab.ringring.util.actionbar.visitor.concretevisitor.SetActionBarIconVisitor;
@@ -27,6 +30,7 @@ public class RingDesignActivity extends AppCompatActivity
     @Getter @Bind(R.id.toolbar) Toolbar toolbar;
     @Getter @Bind(R.id.drawer_layout) DrawerLayout drawer;
     @Getter MainNavigationFragment navigationView;
+    @Bind(R.id.test) ImageView testView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +42,7 @@ public class RingDesignActivity extends AppCompatActivity
         this.accept(new SetToggleVisitor());
         this.accept(new SetActionBarTitleVisitor("반지 디자인"));
         this.accept(new SetActionBarIconVisitor(ContextCompat.getDrawable(this, R.mipmap.ic_launcher)));
+        testView.setImageDrawable(ContextCompat.getDrawable(this, RingShape.valueOf(RingShapeString.PENTAGON).getRingShapeSmallImageRes()));
     }
 
     @Override

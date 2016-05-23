@@ -40,7 +40,6 @@ public class MyMenuActivity extends AppCompatActivity
         setSupportActionBar(toolbar);
         this.accept(new SetNavigationFragmentVisitor());
         this.accept(new SetToggleVisitor());
-
         btnGotoMissionHistoryPage.setOnClickListener((view) -> {
             moveToAnotherActivity(MissionHistoryActivity.class);
         });
