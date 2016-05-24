@@ -46,8 +46,8 @@ public class JoinTabIndicatorView extends LinearLayout {
     }
 
     public void setTabIndicatorViewWhenFocused(@ColorRes int indicatorTextColorResource, @DrawableRes int indicatorIconResource) {
-        tabIndicatorText.setTextColor(ContextCompat.getColor(getContext(),indicatorIconResource));
+        tabIndicatorText.setTextColor(ContextCompat.getColor(getContext(),indicatorTextColorResource));
         tabIndicatorIcon.setVisibility(VISIBLE);
-        tabIndicatorIcon.setImageResource(indicatorIconResource);
+        tabIndicatorIcon.setImageDrawable(ContextCompat.getDrawable(getContext(),indicatorIconResource ));
     }
 }

@@ -8,6 +8,8 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.daasuu.ahp.AnimateHorizontalProgressBar;
+
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import lombok.Getter;
@@ -20,24 +22,22 @@ import olab.ringring.main.ringdesign.levelpolicy.RingLevel;
  */
 public class RingLevelView extends LinearLayout{
 
-    @Bind(R.id.progress_bar_ring_level_gauge) ProgressBar progressBarRingLevelGauge;
+    @Bind(R.id.progress_bar_ring_level_gauge) AnimateHorizontalProgressBar progressBarRingLevelGauge;
     @Bind(R.id.text_ring_level_exp) TextView textRingLevelExp;
     private static final int MAX_LEVEL_EXP = RingLevel.EIGHTEEN.getLevelNumber();
-    @Setter private RingLevel presentRingLevel = RingLevel.ONE;
+    @Getter private RingLevel presentRingLevel = RingLevel.FIVE;
+    private static final String DIVIDER = " / ";
 
     public RingLevelView(Context context) {
         super(context);
         initView();
-        setMaxRingLevelGauge(RingLevel.EIGHTEEN);
-        setPresentRingLevelGauge(RingLevel.THREE);
+        initViewAttribute();
     }
 
     public RingLevelView(Context context, AttributeSet attrs) {
         super(context, attrs);
         initView();
-        setMaxRingLevelGauge(RingLevel.EIGHTEEN);
-        setPresentRingLevelGauge(RingLevel.THREE);
-        buildRingLevelExpText();
+        initViewAttribute();
     }
 
     private void initView() {
@@ -45,15 +45,14 @@ public class RingLevelView extends LinearLayout{
         ButterKnife.bind(this, view);
     }
 
-    private void buildRingLevelExpText() {
-        textRingLevelExp.setText(presentRingLevel.getLevelNumber() + " / " + MAX_LEVEL_EXP);
+    private void initViewAttribute(){
+        progressBarRingLevelGauge.setMax(MAX_LEVEL_EXP);
+        textRingLevelExp.setText(presentRingLevel.getLevelNumber() + DIVIDER + MAX_LEVEL_EXP);
     }
 
-    public void setMaxRingLevelGauge(RingLevel maxLevel) {
-        progressBarRingLevelGauge.setMax(maxLevel.getLevelNumber());
-    }
-
-    public void setPresentRingLevelGauge(RingLevel presentLevel) {
-        progressBarRingLevelGauge.setProgress(presentLevel.getLevelNumber());
+    public void setPresentRingLevel(RingLevel ringLevel){
+        presentRingLevel = ringLevel;
+        progressBarRingLevelGauge.setProgress(presentRingLevel.getLevelNumber());
+        textRingLevelExp.setText(presentRingLevel.getLevelNumber() + DIVIDER + MAX_LEVEL_EXP);
     }
 }

@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:gravity="center"
     android:orientation="horizontal">
 
@@ -10,14 +11,15 @@
         android:layout_height="wrap_content"
         android:text="Level" />
 
-    <ProgressBar
+    <com.daasuu.ahp.AnimateHorizontalProgressBar
         android:id="@+id/progress_bar_ring_level_gauge"
-        style="?android:attr/progressBarStyleHorizontal"
         android:layout_width="200dp"
-        android:layout_height="wrap_content"
-        android:indeterminate="false"
+        android:layout_height="15dp"
         android:padding="4dp"
-        android:progressDrawable="@drawable/progress_bar_ring_level_gauge" />
+        android:max="18"
+        android:progress="3"
+        app:ahp_backgroundColor="@android:color/white"
+        app:ahp_progressColor="@color/colorPrimaryDark" />
 
     <TextView
         android:id="@+id/text_ring_level_exp"

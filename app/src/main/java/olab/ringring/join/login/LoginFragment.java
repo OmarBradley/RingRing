@@ -43,11 +43,12 @@ public class LoginFragment extends Fragment {
     }
 
     private void setOnClickListenerOnEditLoginPassword() {
-        editLoginPassword.setOnButtonClickListener(view -> {
+        buildErrorDialog();
+        /*editLoginPassword.setOnButtonClickListener(view -> {
             Intent intent = new Intent(getActivity(), HomeActivity.class);
             startActivity(intent);
             getActivity().finish();
-        });
+        });*/
     }
 
     private void setHintInEditLoginPassword() {

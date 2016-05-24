@@ -17,11 +17,13 @@ import android.widget.EditText;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 import olab.ringring.R;
 import olab.ringring.main.home.chat.data.ChatContent;
 import olab.ringring.main.home.chat.view.adapter.ChatViewAdapter;
 import olab.ringring.util.date.NowDateGetter;
-
+@NoArgsConstructor(access = AccessLevel.PUBLIC)
 public class ChatFragment extends Fragment {
 
     public static final int USER_ID = 1;

@@ -43,7 +43,7 @@ public class HomeActivity extends AppCompatActivity
         this.accept(new SetToggleVisitor());
         this.accept(new DeleteActionBarTitleVisitor());
         setElevationInChatProfileView();
-        setChatFragment();
+        attachChatFragment();
     }
 
     @Override
@@ -70,7 +70,7 @@ public class HomeActivity extends AppCompatActivity
         }
     }
 
-    private void setChatFragment(){
+    private void attachChatFragment(){
         ChatFragment chatFragment = new ChatFragment();
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         fragmentTransaction.add(R.id.container_chat_fragment, chatFragment);

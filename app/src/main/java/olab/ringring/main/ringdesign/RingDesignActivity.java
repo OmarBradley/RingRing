@@ -1,24 +1,30 @@
 package olab.ringring.main.ringdesign;
 
 import android.os.Bundle;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.widget.ImageView;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import lombok.Getter;
 import olab.ringring.R;
+import olab.ringring.main.home.chat.ChatFragment;
 import olab.ringring.main.nav.MainNavigationFragment;
 import olab.ringring.main.nav.visitor.concretevisitior.SetNavigationFragmentVisitor;
 import olab.ringring.main.nav.visitor.concretevisitior.SetToggleVisitor;
 import olab.ringring.main.nav.visitor.element.MainNavigationElement;
 import olab.ringring.main.nav.visitor.MainNavigationVisitor;
+import olab.ringring.main.ringdesign.customview.BigRingView;
+import olab.ringring.main.ringdesign.customview.RingLevelView;
+import olab.ringring.main.ringdesign.levelpolicy.RingLevel;
+import olab.ringring.main.ringdesign.ringattribute.jewelry.RingJewelry;
+import olab.ringring.main.ringdesign.ringattribute.material.RingMaterial;
 import olab.ringring.main.ringdesign.ringattribute.shape.RingShape;
-import olab.ringring.main.ringdesign.ringattribute.shape.RingShapeString;
+import olab.ringring.main.ringdesign.ringfactory.contretefactory.BigRingFactory;
 import olab.ringring.util.actionbar.element.ActionBarElement;
 import olab.ringring.util.actionbar.visitor.ActionbarVisitor;
 import olab.ringring.util.actionbar.visitor.concretevisitor.SetActionBarIconVisitor;
@@ -30,7 +36,9 @@ public class RingDesignActivity extends AppCompatActivity
     @Getter @Bind(R.id.toolbar) Toolbar toolbar;
     @Getter @Bind(R.id.drawer_layout) DrawerLayout drawer;
     @Getter MainNavigationFragment navigationView;
-    @Bind(R.id.test) ImageView testView;
+    @Bind(R.id.view_ring_level) RingLevelView ringLevelView;
+    @Bind(R.id.view_big_ring) BigRingView bigRingView;
+    private BigRingFactory ringFactory;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,7 +50,9 @@ public class RingDesignActivity extends AppCompatActivity
         this.accept(new SetToggleVisitor());
         this.accept(new SetActionBarTitleVisitor("반지 디자인"));
         this.accept(new SetActionBarIconVisitor(ContextCompat.getDrawable(this, R.mipmap.ic_launcher)));
-        testView.setImageDrawable(ContextCompat.getDrawable(this, RingShape.valueOf(RingShapeString.PENTAGON).getRingShapeSmallImageRes()));
+        displayPresentRingLevel();
+        initBigRingView();
+        attachSetRingAttributeFragment();
     }
 
     @Override
@@ -55,6 +65,14 @@ public class RingDesignActivity extends AppCompatActivity
         visitor.visit(this);
     }
 
+    private void displayPresentRingLevel(){
+        ringLevelView.setPresentRingLevel(RingLevel.FIFTEEN);
+    }
+
+    private void initBigRingView(){
+        ringFactory = new BigRingFactory(bigRingView, RingJewelry.EMERALD,RingMaterial.COPPER,RingShape.OCTAGON);
+    }
+
     @Override
     public void onBackPressed() {
         if (drawer.isDrawerOpen(GravityCompat.START)) {
@@ -63,4 +81,12 @@ public class RingDesignActivity extends AppCompatActivity
             super.onBackPressed();
         }
     }
+
+    private void attachSetRingAttributeFragment() {
+        SetRingAttributeFragment setRingAttributeFragment = new SetRingAttributeFragment();
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.add(R.id.container_set_ring_attribute_fragment, setRingAttributeFragment);
+        fragmentTransaction.commit();
+    }
+
 }

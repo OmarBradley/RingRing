@@ -39,4 +39,5 @@ dependencies {
     compile 'com.github.pinball83:masked-edittext:1.0.3'
     compile 'com.google.code.gson:gson:2.6.2'
     compile 'de.hdodenhof:circleimageview:2.0.0'
+    compile 'com.daasuu:animateHorizontalProgressBar:0.2.4'
 }
