@@ -9,4 +9,8 @@
 
     <dimen name="dialog_width">240dp</dimen>
     <dimen name="dialog_height">135dp</dimen>
+
+    <dimen name="dialog_choice_ring_attribute_width">270dp</dimen>
+    <dimen name="dialog_choice_ring_attribute_height">480dp</dimen>
+
 </resources>

@@ -1,42 +1,52 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="center">
+
 
     <LinearLayout
         android:id="@+id/layout_detail_ring_attribute"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:gravity="center"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:layout_gravity="center"
         android:orientation="vertical">
 
         <TextView
             android:id="@+id/text_detail_ring_attribute"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="진주" />
+            android:layout_gravity="center"
+            android:text="진주"
+            android:textColor="@color/colorPrimaryDark" />
 
         <ImageView
             android:id="@+id/image_detail_ring_attribute"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:src="@mipmap/ic_launcher" />
 
         <TextView
             android:id="@+id/text_detail_ring_attribute_collecting_count"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="3/10" />
+            android:layout_gravity="center"
+            android:text="3/10"
+            android:textColor="@color/colorPrimaryDark" />
 
     </LinearLayout>
 
     <ImageView
         android:id="@+id/image_check_detail_attribute"
-        android:layout_width="36dp"
-        android:layout_height="36dp"
-        android:layout_alignParentTop="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:layout_marginStart="50dp"
-        android:layout_marginTop="10dp"
+        android:layout_centerVertical="true"
+        android:layout_gravity="center"
+        android:paddingStart="24dp"
+        android:paddingBottom="24dp"
         android:src="@android:drawable/btn_star" />
 </RelativeLayout>

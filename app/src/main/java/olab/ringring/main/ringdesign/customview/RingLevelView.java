@@ -16,6 +16,7 @@ import lombok.Getter;
 import lombok.Setter;
 import olab.ringring.R;
 import olab.ringring.main.ringdesign.levelpolicy.RingLevel;
+import olab.ringring.main.ringdesign.util.ExpStringMaker;
 
 /**
  * Created by 재화 on 2016-05-23.
@@ -24,7 +25,7 @@ public class RingLevelView extends LinearLayout{
 
     @Bind(R.id.progress_bar_ring_level_gauge) AnimateHorizontalProgressBar progressBarRingLevelGauge;
     @Bind(R.id.text_ring_level_exp) TextView textRingLevelExp;
-    private static final int MAX_LEVEL_EXP = RingLevel.EIGHTEEN.getLevelNumber();
+    private static final RingLevel MAX_LEVEL_EXP = RingLevel.EIGHTEEN;
     @Getter private RingLevel presentRingLevel = RingLevel.FIVE;
     private static final String DIVIDER = " / ";
 
@@ -46,13 +47,14 @@ public class RingLevelView extends LinearLayout{
     }
 
     private void initViewAttribute(){
-        progressBarRingLevelGauge.setMax(MAX_LEVEL_EXP);
-        textRingLevelExp.setText(presentRingLevel.getLevelNumber() + DIVIDER + MAX_LEVEL_EXP);
+        progressBarRingLevelGauge.setMax(MAX_LEVEL_EXP.getLevelNumber());
+        textRingLevelExp.setText(ExpStringMaker.getExpString(presentRingLevel.getLevelNumber(),DIVIDER , MAX_LEVEL_EXP.getLevelNumber()));
     }
 
     public void setPresentRingLevel(RingLevel ringLevel){
         presentRingLevel = ringLevel;
         progressBarRingLevelGauge.setProgress(presentRingLevel.getLevelNumber());
-        textRingLevelExp.setText(presentRingLevel.getLevelNumber() + DIVIDER + MAX_LEVEL_EXP);
+        textRingLevelExp.setText(ExpStringMaker.getExpString(presentRingLevel.getLevelNumber(),DIVIDER , MAX_LEVEL_EXP.getLevelNumber()));
     }
+
 }

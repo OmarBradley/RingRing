@@ -4,20 +4,24 @@ package olab.ringring.main.ringdesign;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.annimon.stream.function.Consumer;
+
+import java.util.Arrays;
+
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import lombok.AccessLevel;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import olab.ringring.R;
-import olab.ringring.main.home.chat.ChatFragment;
-import olab.ringring.main.nav.MainNavigationFragment;
-import olab.ringring.main.nav.visitor.element.MainNavigationElement;
+import olab.ringring.main.ringdesign.choicedialog.ChoiceRingAttributeDialogBuilder;
+import olab.ringring.main.ringdesign.choicedialog.ChoiceRingAttributeDialogFragment;
+import olab.ringring.main.ringdesign.choicedialog.attributeview.RingDetailAttributeViewData;
 import olab.ringring.main.ringdesign.customview.SetRingAttributeView;
 import olab.ringring.main.ringdesign.levelpolicy.RingCollectCount;
 import olab.ringring.main.ringdesign.ringattribute.jewelry.RingJewelry;
@@ -33,6 +37,8 @@ public class SetRingAttributeFragment extends Fragment {
     @Bind(R.id.view_set_ring_shape) SetRingAttributeView setRingShapeView;
     @Bind(R.id.view_set_ring_material) SetRingAttributeView setRingMaterialView;
     @Bind(R.id.view_set_ring_jewelry) SetRingAttributeView setRingJewelryView;
+    ChoiceRingAttributeDialogFragment choiceDialog;
+    @Setter @Getter private Consumer<RingDetailAttributeViewData> onDataReceiveListener;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -51,4 +57,30 @@ public class SetRingAttributeFragment extends Fragment {
         setRingAttributeView.setRingLevelExpText(ringCollectCount);
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        buildJewelryDialog();
+    }
+
+    private void buildJewelryDialog(){
+        setRingShapeView.setOnClickListenerInView(view->{
+            choiceDialog = new ChoiceRingAttributeDialogBuilder()
+                    .setTitle("보석 설정")
+                    .setCheckClickListener((dialog, data)->{
+                        dialog.dismiss();
+                        setRingShapeView.setRingAttributeImage(data.getAttributeImage());
+                        setRingShapeView.setRingLevelExpText(data.getCollectCount());
+                        onDataReceiveListener.accept(data);
+                    }).setTitleImageRes(R.drawable.ic_menu_gallery)
+                    .setAttributeItems(Arrays.asList(new RingDetailAttributeViewData(RingJewelry.CRYSTAL.getRingJewelryName(),RingJewelry.CRYSTAL.getRingJewelryImage(), RingCollectCount.FOUR),
+                            new RingDetailAttributeViewData(RingJewelry.DIAMOND.getRingJewelryName(),RingJewelry.DIAMOND.getRingJewelryImage(), RingCollectCount.FIVE),
+                            new RingDetailAttributeViewData(RingJewelry.EMERALD.getRingJewelryName(),RingJewelry.EMERALD.getRingJewelryImage(), RingCollectCount.EIGHT),
+                            new RingDetailAttributeViewData(RingJewelry.SAPPHIRE.getRingJewelryName(),RingJewelry.SAPPHIRE.getRingJewelryImage(), RingCollectCount.ONE),
+                            new RingDetailAttributeViewData(RingJewelry.RUBY.getRingJewelryName(),RingJewelry.RUBY.getRingJewelryImage(), RingCollectCount.NINE),
+                            new RingDetailAttributeViewData(RingJewelry.PERL.getRingJewelryName(),RingJewelry.PERL.getRingJewelryImage(), RingCollectCount.ONE)))
+                    .build();
+            choiceDialog.show(getActivity().getSupportFragmentManager(), "choice dialog");
+        });
+    }
 }

@@ -28,9 +28,7 @@ public class MyMenuActivity extends AppCompatActivity
     @Getter @Bind(R.id.drawer_layout) DrawerLayout drawer;
     @Getter MainNavigationFragment navigationView;
 
-    @Bind(R.id.btn_goto_mission_history) Button btnGotoMissionHistoryPage;
-    @Bind(R.id.btn_goto_my_account) Button btnGotoMyAccountPage;
-    @Bind(R.id.btn_goto_d_day_page) Button btnGotoSetDdayPage;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,16 +38,7 @@ public class MyMenuActivity extends AppCompatActivity
         setSupportActionBar(toolbar);
         this.accept(new SetNavigationFragmentVisitor());
         this.accept(new SetToggleVisitor());
-        btnGotoMissionHistoryPage.setOnClickListener((view) -> {
-            moveToAnotherActivity(MissionHistoryActivity.class);
-        });
-        btnGotoMyAccountPage.setOnClickListener((view) -> {
-            moveToAnotherActivity(MyAccountActivity.class);
-        });
 
-        btnGotoSetDdayPage.setOnClickListener((view) -> {
-            moveToAnotherActivity(DdaySettingActivity.class);
-        });
     }
 
     @Override

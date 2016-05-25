@@ -11,10 +11,13 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.annimon.stream.function.Consumer;
+
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import olab.ringring.R;
 import olab.ringring.main.ringdesign.levelpolicy.RingCollectCount;
+import olab.ringring.main.ringdesign.util.ExpStringMaker;
 
 /**
  * Created by 재화 on 2016-05-24.
@@ -51,7 +54,13 @@ public class SetRingAttributeView extends LinearLayout {
     }
 
     public void setRingLevelExpText(RingCollectCount ringCollectCount) {
-        textRingLevelExp.setText(ringCollectCount.getCountNumber() + DIVIDER + RingCollectCount.MAX_COUNTING_NUMBER.getCountNumber());
+        textRingLevelExp.setText(ExpStringMaker.getExpString(ringCollectCount.getCountNumber(),DIVIDER,  RingCollectCount.MAX_COUNTING_NUMBER.getCountNumber()));
+    }
+
+    public void setOnClickListenerInView(Consumer<View> onClickListener) {
+        imageRingAttribute.setOnClickListener(view -> {
+            onClickListener.accept(view);
+        });
     }
 
 }

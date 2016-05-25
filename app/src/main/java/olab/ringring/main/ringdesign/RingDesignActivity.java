@@ -87,6 +87,13 @@ public class RingDesignActivity extends AppCompatActivity
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         fragmentTransaction.add(R.id.container_set_ring_attribute_fragment, setRingAttributeFragment);
         fragmentTransaction.commit();
+        changeBigRingJewelryImage(setRingAttributeFragment);
+    }
+
+    private void changeBigRingJewelryImage(SetRingAttributeFragment setRingAttributeFragment){
+        setRingAttributeFragment.setOnDataReceiveListener(data->{
+            bigRingView.setJewelryDrawable(data.getAttributeImage());
+        });
     }
 
 }

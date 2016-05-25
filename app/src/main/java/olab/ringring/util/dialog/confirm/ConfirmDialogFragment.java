@@ -23,10 +23,10 @@ public class ConfirmDialogFragment extends DialogFragment {
 
     private final static int DIALOG_ITEM_INDEX = 0;
 
-    @Getter @Bind(R.id.image_dialog_title) ImageView iconDialogTitle;
-    @Getter @Bind(R.id.text_dialog_title) TextView textDialogTitle;
-    @Getter @Bind(R.id.text_dialog_message) TextView textDialogMessage;
-    @Getter @Bind(R.id.btn_dialog_confirm) Button btnDialogConfirm;
+    @Bind(R.id.image_dialog_title) ImageView iconDialogTitle;
+    @Bind(R.id.text_dialog_title) TextView textDialogTitle;
+    @Bind(R.id.text_dialog_message) TextView textDialogMessage;
+    @Bind(R.id.btn_dialog_confirm) Button btnDialogConfirm;
     @Setter private ConfirmDialogBuilder dialogBuilder;
 
     @Override

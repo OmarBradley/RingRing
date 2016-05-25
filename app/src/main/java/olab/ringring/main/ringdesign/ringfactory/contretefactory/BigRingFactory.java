@@ -1,6 +1,5 @@
 package olab.ringring.main.ringdesign.ringfactory.contretefactory;
 
-import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 
@@ -28,18 +27,18 @@ public class BigRingFactory implements RingFactory {
 
     @Override
     public void createRingJewelry(RingJewelry jewelry) {
-        ringView.getImageBigRingJewelry().setImageDrawable(jewelry.getRingJewelryImage());
-    }
-
-    @Override
-    public void createRingMaterial(RingMaterial material) {
-        Drawable presentImage = ringView.getImageBigRingShape().getDrawable();
-        Bitmap imageAfterColorChange = ColorChanger.changeImageColor(presentImage, material.getRingMaterialColor());
-        ringView.getImageBigRingShape().setImageBitmap(imageAfterColorChange);
+        ringView.setJewelryDrawable(jewelry);
     }
 
     @Override
     public void createRingShape(RingShape shape) {
-        ringView.getImageBigRingShape().setImageDrawable(shape.getRingShapeBigImage());
+        ringView.setShapeDrawable(shape);
+    }
+
+    @Override
+    public void createRingMaterial(RingMaterial material) {
+        Drawable presentImage = ringView.getShapeDrawable();
+        Bitmap imageAfterColorChange = ColorChanger.changeImageColor(presentImage, material.getRingMaterialColor());
+        ringView.setShapeImageBitmap(imageAfterColorChange);
     }
 }

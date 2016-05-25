@@ -16,17 +16,19 @@ import olab.ringring.util.application.RingRingApplication;
  */
 public enum RingMaterial {
 
-    PLASTIC(R.color.colorAccent, R.mipmap.ic_launcher), IRON(R.color.colorPrimary, R.mipmap.ic_launcher),
-    COPPER(R.color.colorPrimary, R.mipmap.ic_launcher), SILVER(R.color.colorRipple, R.mipmap.ic_launcher),
-    WHITEGOLD(R.color.colorPrimaryDark, R.mipmap.ic_launcher), GOLD(R.color.colorBackground, R.mipmap.ic_launcher);
+    PLASTIC(R.color.colorAccent, R.mipmap.ic_launcher, "플라스틱"), IRON(R.color.colorPrimary, R.mipmap.ic_launcher, "철"),
+    COPPER(R.color.colorPrimary, R.mipmap.ic_launcher, "동"), SILVER(R.color.colorRipple, R.mipmap.ic_launcher, "은"),
+    WHITEGOLD(R.color.colorPrimaryDark, R.mipmap.ic_launcher, "화이트골드"), GOLD(R.color.colorBackground, R.mipmap.ic_launcher,"금");
 
-    RingMaterial(@ColorRes int ringMaterialColorRes, @DrawableRes int ringMaterialSetViewImageRes) {
+    RingMaterial(@ColorRes int ringMaterialColorRes, @DrawableRes int ringMaterialSetViewImageRes, String ringMaterialName) {
         this.ringMaterialColor = ContextCompat.getColor(RESOURCE_CONTEXT, ringMaterialColorRes);
         this.ringMaterialSetViewImage = ContextCompat.getDrawable(RESOURCE_CONTEXT, ringMaterialSetViewImageRes);
+        this.ringMaterialName = ringMaterialName;
     }
 
     @Getter @Setter private @ColorRes int ringMaterialColor;
     @Getter @Setter private @DrawableRes Drawable ringMaterialSetViewImage;
+    @Getter @Setter private String ringMaterialName;
     private final Context RESOURCE_CONTEXT = RingRingApplication.getContext();
 
 }
