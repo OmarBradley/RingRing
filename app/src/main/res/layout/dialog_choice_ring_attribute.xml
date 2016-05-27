@@ -16,10 +16,12 @@
             <LinearLayout
                 android:id="@+id/layout_choice_dialog_title"
                 android:layout_width="match_parent"
-                android:layout_height="150dp"
+                android:layout_height="126dp"
                 android:background="@drawable/shape_dialog_choice_title_background"
                 android:orientation="horizontal"
-                android:padding="20dp">
+                android:paddingEnd="15dp"
+                android:paddingStart="30dp"
+                android:paddingTop="17dp">
 
                 <TextView
                     android:id="@+id/text_choice_dialog_title"
@@ -31,31 +33,32 @@
 
                 <ImageView
                     android:id="@+id/btn_choice_dialog_check"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@mipmap/ic_launcher" />
-
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:src="@drawable/ripple_choice_dialog_confirm_check" />
             </LinearLayout>
 
             <GridView
+                android:layout_marginStart="30dp"
+                android:layout_marginEnd="30dp"
                 android:id="@+id/list_attribute_view"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/textView"
                 android:layout_gravity="center"
                 android:choiceMode="singleChoice"
-                android:horizontalSpacing="10dp"
+                android:horizontalSpacing="12.5dp"
                 android:numColumns="3"
-                android:paddingTop="80dp"
+                android:paddingTop="78dp"
                 android:stretchMode="columnWidth"
-                android:verticalSpacing="20dp" />
+                android:verticalSpacing="23dp" />
 
         </LinearLayout>
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/image_choice_dialog_title"
-            android:layout_width="70dp"
-            android:layout_height="70dp"
+            android:layout_width="101dp"
+            android:layout_height="101dp"
             android:src="@mipmap/ic_launcher"
             app:layout_anchor="@+id/layout_choice_dialog_title"
             app:layout_anchorGravity="bottom|center" />

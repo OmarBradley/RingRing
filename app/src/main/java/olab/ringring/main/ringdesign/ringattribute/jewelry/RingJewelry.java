@@ -36,4 +36,5 @@ public enum RingJewelry {
     @Setter @Getter private Drawable bigImage;
     @Setter @Getter private Drawable setImage;
     private final Context RESOURCE_CONTEXT = RingRingApplication.getContext();
+
 }

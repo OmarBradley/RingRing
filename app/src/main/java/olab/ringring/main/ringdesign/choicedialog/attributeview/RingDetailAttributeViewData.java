@@ -14,5 +14,7 @@ import olab.ringring.main.ringdesign.levelpolicy.RingCollectCount;
 public class RingDetailAttributeViewData {
     private String attributeName;
     private Drawable attributeImage;
+    private Drawable setImage;
+    private Drawable bigImage;
     private RingCollectCount collectCount;
 }

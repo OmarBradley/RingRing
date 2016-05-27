@@ -2,8 +2,8 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_gravity="center">
-
+    android:layout_gravity="center"
+    android:background="@drawable/ripple_view_ring_detail_attribute">
 
     <LinearLayout
         android:id="@+id/layout_detail_ring_attribute"
@@ -20,7 +20,8 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:text="진주"
-            android:textColor="@color/colorPrimaryDark" />
+            android:textColor="@color/colorTextColor"
+            android:textSize="13sp" />
 
         <ImageView
             android:id="@+id/image_detail_ring_attribute"
@@ -35,18 +36,19 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:text="3/10"
-            android:textColor="@color/colorPrimaryDark" />
+            android:textColor="@color/colorTextColor"
+            android:textSize="13sp" />
 
     </LinearLayout>
 
     <ImageView
         android:id="@+id/image_check_detail_attribute"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
+        android:layout_width="31dp"
+        android:layout_height="31dp"
+        android:layout_alignTop="@+id/layout_detail_ring_attribute"
         android:layout_gravity="center"
-        android:paddingStart="24dp"
-        android:paddingBottom="24dp"
-        android:src="@android:drawable/btn_star" />
+        android:layout_marginStart="-25dp"
+        android:layout_marginTop="23dp"
+        android:layout_toEndOf="@+id/layout_detail_ring_attribute"
+        android:src="@drawable/choice_dialog_popup_check_button" />
 </RelativeLayout>

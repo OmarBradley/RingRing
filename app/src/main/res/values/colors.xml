@@ -1,16 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="colorPrimary">#55B5F4</color>
-    <color name="colorPrimaryDark">#0087cf</color>
+    <color name="colorPrimaryDark">#328acc</color>
     <color name="colorAccent">#FF4081</color>
     <color name="colorDefault">#bebebe</color>
 
-
+    <color name="colorGrayBackground">#f3f2f2</color>
     <color name="colorRipple">#7DC7DB</color>
+    <color name="colorTextColor">#5e5e5e</color>
+    <color name="colorWhiteBackground">#ffffff</color>
+
     <color name="colorBackground">#ffffff</color>
 
-    <color name="colorNavHeaderBackground">#dfdfdf</color>
-    <color name="colorNavElementBackground">#ffffff</color>
+
+
+
+
     <color name="colorDialogDivider">#96a1a7</color>
     <color name="colorTextDialogMessage">#000000</color>
 

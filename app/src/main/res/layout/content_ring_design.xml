@@ -12,19 +12,20 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/colorNavHeaderBackground"
+        android:background="@color/colorGrayBackground"
         android:elevation="3dp"
         android:orientation="vertical">
 
         <olab.ringring.main.ringdesign.customview.RingLevelView
             android:id="@+id/view_ring_level"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:paddingTop="16dp" />
 
         <olab.ringring.main.ringdesign.customview.BigRingView
             android:id="@+id/view_big_ring"
             android:layout_width="match_parent"
-            android:layout_height="201dp" />
+            android:layout_height="wrap_content" />
     </LinearLayout>
 
     <FrameLayout

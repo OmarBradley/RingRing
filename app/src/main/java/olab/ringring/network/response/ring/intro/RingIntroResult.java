@@ -25,8 +25,8 @@ public class RingIntroResult {
     @SerializedName("RING_MATERIAL")
     private String ringMaterial;
 
-    @SerializedName("RING_MATERIAL_NAME")
-    private String ringMaterialName;
+    @SerializedName("RING_MATERIAL_LEVEL")
+    private String ringMaterialLevel;
 
     @SerializedName("RING_JEWELRY")
     private String ringJewelry;

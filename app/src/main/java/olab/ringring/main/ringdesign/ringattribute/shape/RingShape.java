@@ -18,10 +18,14 @@ import olab.ringring.util.colorchanger.ColorChanger;
  */
 
 public enum RingShape {
+
     // TODO: 2016-05-27 default image와 선택은 색깔로 구분하기
-    CIRCLE(R.drawable.circle_big_image, R.drawable.circle_image, R.drawable.circle_set_image, "원"), TRIANGLE(R.drawable.triangle_big_image, R.drawable.triangle_image, R.drawable.triangle_set_image, "삼각형"),
-    RECTANGLE(R.drawable.rectangle_big_image, R.drawable.rectangle_image, R.drawable.rectangle_set_image, "사각형"), PENTAGON(R.drawable.pentagon_big_image, R.drawable.pantagon_image, R.drawable.pentagon_set_image, "오각형"),
-    HEXAGON(R.drawable.hexagon_big_image, R.drawable.hexagon_image, R.drawable.hexagon_set_image, "육각형"), OCTAGON(R.drawable.octagon_big_image, R.drawable.octagon_image, R.drawable.octagon_set_image, "팔각형");
+    CIRCLE(R.drawable.circle_big_image, R.drawable.circle_image, R.drawable.circle_set_image, "원"),
+    TRIANGLE(R.drawable.triangle_big_image, R.drawable.triangle_image, R.drawable.triangle_set_image, "삼각형"),
+    RECTANGLE(R.drawable.rectangle_big_image, R.drawable.rectangle_image, R.drawable.rectangle_set_image, "사각형"),
+    PENTAGON(R.drawable.pentagon_big_image, R.drawable.pantagon_image, R.drawable.pentagon_set_image, "오각형"),
+    HEXAGON(R.drawable.hexagon_big_image, R.drawable.hexagon_image, R.drawable.hexagon_set_image, "육각형"),
+    OCTAGON(R.drawable.octagon_big_image, R.drawable.octagon_image, R.drawable.octagon_set_image, "팔각형");
 
     RingShape(@DrawableRes int bigImageRes, @DrawableRes int choiceImageRes, @DrawableRes int setImageRes, String name) {
         this.bigImage = ContextCompat.getDrawable(RESOURCE_CONTEXT, bigImageRes);

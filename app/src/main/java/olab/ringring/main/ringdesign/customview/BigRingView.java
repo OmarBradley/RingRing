@@ -39,7 +39,7 @@ public class BigRingView extends LinearLayout {
     }
 
     public void setJewelryDrawable(RingJewelry jewelry){
-        jewelryImage.setImageDrawable(jewelry.getChoiceImage());
+        jewelryImage.setImageDrawable(jewelry.getBigImage());
     }
 
     public void setJewelryDrawable(Drawable jewelryDrawable){
