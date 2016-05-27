@@ -21,19 +21,18 @@ import olab.ringring.R;
 /**
  * Created by 재화 on 2016-05-23.
  */
-public class MainNavMenuView extends LinearLayout {
+public class NavMenuView extends LinearLayout {
 
-    @Bind(R.id.image_nav_menu_icon) ImageView imageNavMenuIcon;
-    @Bind(R.id.text_nav_menu_text) TextView textNavMenuText;
-    @Bind(R.id.image_nav_menu_arrow_icon) ImageView imageNavMenuArrowIcon;
-    @Getter @Setter private Consumer<View> viewOnClickListener;
+    @Bind(R.id.image_nav_menu_icon) ImageView menuIconImage;
+    @Bind(R.id.text_nav_menu_title) TextView menuTitleText;
+    @Bind(R.id.image_nav_menu_arrow_icon) ImageView menuArrowIconImage;
 
-    public MainNavMenuView(Context context) {
+    public NavMenuView(Context context) {
         super(context);
         initView();
     }
 
-    public MainNavMenuView(Context context, AttributeSet attrs) {
+    public NavMenuView(Context context, AttributeSet attrs) {
         super(context, attrs);
         initView();
     }
@@ -41,31 +40,27 @@ public class MainNavMenuView extends LinearLayout {
     private void initView() {
         View view = LayoutInflater.from(getContext()).inflate(R.layout.nav_menu_element, this);
         ButterKnife.bind(this, view);
-        setOnClickListenerInView(view);
-    }
 
-    private void setOnClickListenerInView(View navMenuElementView) {
-        navMenuElementView.setOnClickListener(view -> {
-            viewOnClickListener.accept(view);
-        });
     }
 
     public void setNavMenuIcon(@DrawableRes Drawable menuIcon) {
-        imageNavMenuIcon.setImageDrawable(menuIcon);
+        menuIconImage.setImageDrawable(menuIcon);
     }
 
     public void setNavMenuText(String menuText) {
-        textNavMenuText.setText(menuText);
+        this.menuTitleText.setText(menuText);
     }
 
     public void setNavMenuArrowIcon(@DrawableRes Drawable menuArrowIcon) {
-        imageNavMenuArrowIcon.setImageDrawable(menuArrowIcon);
+        menuArrowIconImage.setImageDrawable(menuArrowIcon);
     }
 
     public void setNavMenuAttributes(@DrawableRes Drawable menuIcon, String menuText, @DrawableRes Drawable menuArrowIcon) {
-        imageNavMenuIcon.setImageDrawable(menuIcon);
-        textNavMenuText.setText(menuText);
-        imageNavMenuArrowIcon.setImageDrawable(menuArrowIcon);
+        menuIconImage.setImageDrawable(menuIcon);
+        this.menuTitleText.setText(menuText);
+        menuArrowIconImage.setImageDrawable(menuArrowIcon);
     }
+
+
 
 }

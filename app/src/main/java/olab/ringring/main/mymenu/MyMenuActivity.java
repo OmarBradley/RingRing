@@ -1,20 +1,16 @@
 package olab.ringring.main.mymenu;
 
-import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.widget.Button;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import lombok.Getter;
 import olab.ringring.R;
-import olab.ringring.main.mymenu.dday.DdaySettingActivity;
-import olab.ringring.main.mymenu.missionhistory.MissionHistoryActivity;
-import olab.ringring.main.mymenu.myaccount.MyAccountActivity;
 import olab.ringring.main.nav.MainNavigationFragment;
 import olab.ringring.main.nav.visitor.MainNavigationVisitor;
 import olab.ringring.main.nav.visitor.concretevisitior.SetNavigationFragmentVisitor;
@@ -28,8 +24,6 @@ public class MyMenuActivity extends AppCompatActivity
     @Getter @Bind(R.id.drawer_layout) DrawerLayout drawer;
     @Getter MainNavigationFragment navigationView;
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,7 +32,7 @@ public class MyMenuActivity extends AppCompatActivity
         setSupportActionBar(toolbar);
         this.accept(new SetNavigationFragmentVisitor());
         this.accept(new SetToggleVisitor());
-
+        attachMyMenuFragment();
     }
 
     @Override
@@ -55,9 +49,11 @@ public class MyMenuActivity extends AppCompatActivity
         }
     }
 
-    private void moveToAnotherActivity(Class anotherActivity) {
-        Intent destinationActivityIntent = new Intent(this, anotherActivity);
-        startActivity(destinationActivityIntent);
-        finish();
+    private void attachMyMenuFragment(){
+        MyMenuFragment myMenuFragment = new MyMenuFragment();
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.add(R.id.container_my_menu_fragment, myMenuFragment);
+        fragmentTransaction.commit();
     }
+
 }

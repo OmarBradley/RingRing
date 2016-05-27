@@ -1,11 +1,7 @@
 package olab.ringring.join.login;
 
 
-import android.app.Dialog;
-import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
@@ -18,17 +14,14 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import olab.ringring.R;
 import olab.ringring.join.customview.EditTextWithSubmitButtonView;
-import olab.ringring.main.home.HomeActivity;
-import olab.ringring.util.dialog.confirm.ConfirmDialogBuilder;
-import olab.ringring.util.dialog.confirm.ConfirmDialogFragment;
 import olab.ringring.util.dialog.yesorno.YesOrNoDialogBuilder;
 import olab.ringring.util.dialog.yesorno.YesOrNoDialogFragment;
 
 public class LoginFragment extends Fragment {
 
     // TODO: 2016-05-18 view들의 id 선언해주기..
-    @Bind(R.id.edit_login_password) EditTextWithSubmitButtonView editLoginPassword;
-    @Bind(R.id.edit_content_text) EditText editLoginEmail;
+    @Bind(R.id.edit_login_password) EditTextWithSubmitButtonView passwordEdit;
+    @Bind(R.id.edit_content_text) EditText emailEdit;
 
     public LoginFragment() {}
 
@@ -43,16 +36,13 @@ public class LoginFragment extends Fragment {
     }
 
     private void setOnClickListenerOnEditLoginPassword() {
-        buildErrorDialog();
-        /*editLoginPassword.setOnButtonClickListener(view -> {
-            Intent intent = new Intent(getActivity(), HomeActivity.class);
-            startActivity(intent);
-            getActivity().finish();
-        });*/
+        passwordEdit.setOnButtonClickListener(view -> {
+            buildErrorDialog();
+        });
     }
 
     private void setHintInEditLoginPassword() {
-        editLoginPassword.setHint(getString(R.string.login_password_hint));
+        passwordEdit.setHint(getString(R.string.login_password_hint));
     }
 
     private void buildErrorDialog() {

@@ -21,8 +21,8 @@ import olab.ringring.R;
  */
 public class JoinTabIndicatorView extends LinearLayout {
 
-    @Bind(R.id.image_tabIndicator) ImageView tabIndicatorIcon;
-    @Bind(R.id.text_tabIndicator) TextView tabIndicatorText;
+    @Bind(R.id.image_tabIndicator) ImageView tabViewIcon;
+    @Bind(R.id.text_tabIndicator) TextView tabViewText;
 
     public JoinTabIndicatorView(Context context, @StringRes int indicatorTextResource) {
         super(context);
@@ -37,17 +37,17 @@ public class JoinTabIndicatorView extends LinearLayout {
     private void initView(@StringRes int indicatorTextResource) {
         View JoinTabIndicatorView = LayoutInflater.from(getContext()).inflate(R.layout.view_join_tab_indicator, this);
         ButterKnife.bind(JoinTabIndicatorView, this);
-        tabIndicatorText.setText(indicatorTextResource);
+        tabViewText.setText(indicatorTextResource);
     }
 
     public void setTabIndicatorViewWhenNotFocused(@ColorRes int indicatorTextColorResource) {
-        tabIndicatorText.setTextColor(ContextCompat.getColor(getContext(),indicatorTextColorResource));
-        tabIndicatorIcon.setVisibility(INVISIBLE);
+        tabViewText.setTextColor(ContextCompat.getColor(getContext(),indicatorTextColorResource));
+        tabViewIcon.setVisibility(INVISIBLE);
     }
 
     public void setTabIndicatorViewWhenFocused(@ColorRes int indicatorTextColorResource, @DrawableRes int indicatorIconResource) {
-        tabIndicatorText.setTextColor(ContextCompat.getColor(getContext(),indicatorTextColorResource));
-        tabIndicatorIcon.setVisibility(VISIBLE);
-        tabIndicatorIcon.setImageDrawable(ContextCompat.getDrawable(getContext(),indicatorIconResource ));
+        tabViewText.setTextColor(ContextCompat.getColor(getContext(),indicatorTextColorResource));
+        tabViewIcon.setVisibility(VISIBLE);
+        tabViewIcon.setImageDrawable(ContextCompat.getDrawable(getContext(),indicatorIconResource ));
     }
 }

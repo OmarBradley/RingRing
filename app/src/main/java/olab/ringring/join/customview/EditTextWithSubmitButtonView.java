@@ -24,8 +24,8 @@ import olab.ringring.util.inputtype.InputTypeConstant;
  */
 public class EditTextWithSubmitButtonView extends LinearLayout{
 
-    @Bind(R.id.edit_content_text) EditText editContentText;
-    @Bind(R.id.btn_submit) Button btnSubmit;
+    @Bind(R.id.edit_content_text) EditText contentTextEdit;
+    @Bind(R.id.btn_submit) Button submitBtn;
     @Getter @Setter private Consumer<View> onButtonClickListener;
 
 
@@ -51,7 +51,7 @@ public class EditTextWithSubmitButtonView extends LinearLayout{
     }
 
     private void displaySubmitButton(){
-        editContentText.addTextChangedListener(new TextWatcher() {
+        contentTextEdit.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
 
@@ -59,9 +59,9 @@ public class EditTextWithSubmitButtonView extends LinearLayout{
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 String text = s.toString();
                 if(text.length() > 4){
-                    btnSubmit.setVisibility(VISIBLE);
+                    submitBtn.setVisibility(VISIBLE);
                 } else {
-                    btnSubmit.setVisibility(INVISIBLE);
+                    submitBtn.setVisibility(INVISIBLE);
                 }
             }
 
@@ -71,20 +71,20 @@ public class EditTextWithSubmitButtonView extends LinearLayout{
     }
 
     private void initSubmitButtonDisplayState(){
-        btnSubmit.setVisibility(INVISIBLE);
+        submitBtn.setVisibility(INVISIBLE);
     }
 
     public void setHint(String text){
-        editContentText.setHint(text);
+        contentTextEdit.setHint(text);
     }
 
     public void setInputType(InputTypeConstant inputtypeConstant) {
-        editContentText.setInputType(inputtypeConstant.getTypeConstantValue());
+        contentTextEdit.setInputType(inputtypeConstant.getTypeConstantValue());
     }
 
     // TODO: 2016-05-21 주의 !! 메소드 레퍼런스 기능 적용 안됨
     private void setOnClickListenerInSubmitButton(){
-        btnSubmit.setOnClickListener(view->{
+        submitBtn.setOnClickListener(view->{
             onButtonClickListener.accept(view);
         });
     }

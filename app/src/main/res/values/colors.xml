@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#32b3f8</color>
+    <color name="colorPrimary">#55B5F4</color>
     <color name="colorPrimaryDark">#0087cf</color>
     <color name="colorAccent">#FF4081</color>
+    <color name="colorDefault">#bebebe</color>
+
 
     <color name="colorRipple">#7DC7DB</color>
     <color name="colorBackground">#ffffff</color>
@@ -14,4 +16,10 @@
 
     <color name="colorProgress">#32b3f8</color>
 
+    <color name="colorGold">#f5af3e</color>
+    <color name="colorWhiteGold">#ffffff</color>
+    <color name="colorSliver">#969796</color>
+    <color name="colorCopper">#b04427</color>
+    <color name="colorIron">#646464</color>
+    <color name="colorPlastic">#cac38b</color>
 </resources>

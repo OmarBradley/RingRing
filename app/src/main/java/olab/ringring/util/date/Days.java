@@ -2,13 +2,11 @@ package olab.ringring.util.date;
 
 import android.content.Context;
 
-import java.util.Arrays;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import olab.ringring.R;
-import olab.ringring.util.application.RingRingApplication;
+import olab.ringring.init.application.RingRingApplication;
 
 /**
  * Created by 재화 on 2016-05-20.

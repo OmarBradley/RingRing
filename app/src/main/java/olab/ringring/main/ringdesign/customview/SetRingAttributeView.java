@@ -2,8 +2,6 @@ package olab.ringring.main.ringdesign.customview;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
-import android.support.annotation.DrawableRes;
-import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,7 +15,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import olab.ringring.R;
 import olab.ringring.main.ringdesign.levelpolicy.RingCollectCount;
-import olab.ringring.main.ringdesign.util.ExpStringMaker;
+import olab.ringring.main.ringdesign.util.StringMaker;
 
 /**
  * Created by 재화 on 2016-05-24.
@@ -54,7 +52,7 @@ public class SetRingAttributeView extends LinearLayout {
     }
 
     public void setRingLevelExpText(RingCollectCount ringCollectCount) {
-        textRingLevelExp.setText(ExpStringMaker.getExpString(ringCollectCount.getCountNumber(),DIVIDER,  RingCollectCount.MAX_COUNTING_NUMBER.getCountNumber()));
+        textRingLevelExp.setText(StringMaker.getExpString(ringCollectCount.getCountNumber(),DIVIDER,  RingCollectCount.MAX_COUNTING_NUMBER.getCountNumber()));
     }
 
     public void setOnClickListenerInView(Consumer<View> onClickListener) {

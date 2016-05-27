@@ -5,17 +5,17 @@
     android:background="@color/colorNavElementBackground"
     android:orientation="vertical">
 
-    <olab.ringring.main.nav.MainNavMenuView
+    <olab.ringring.main.nav.NavMenuView
         android:id="@+id/nav_home"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
-    <olab.ringring.main.nav.MainNavMenuView
+    <olab.ringring.main.nav.NavMenuView
         android:id="@+id/nav_my_menu"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
-    <olab.ringring.main.nav.MainNavMenuView
+    <olab.ringring.main.nav.NavMenuView
         android:id="@+id/nav_ring_design"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />

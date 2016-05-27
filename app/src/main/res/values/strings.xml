@@ -16,8 +16,11 @@
 
     <string name="action_share">Share</string>
     <string name="action_reply">Reply</string>
-    <string name="title_activity_my_menu">MyMenuActivity</string>
-    <string name="title_activity_ring_design">RingDesignActivity</string>
+    <string name="title_activity_my_menu">마이메뉴</string>
+    <string name="title_activity_ring_design">반지 만들기</string>
+    <string name="title_activity_my_account">나의 계정</string>
+    <string name="title_activity_set_d_day">사귄날 설정</string>
+    <string name="title_activity_mission_history">히스토리</string>
 
     <!-- use util.date.Days.java -->
     <string name="monday_string">월요일</string>

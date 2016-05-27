@@ -1,0 +1,91 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="olab.ringring.main.mymenu.MyMenuFragment"
+    tools:showIn="@layout/app_bar_my_menu">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorNavHeaderBackground"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:padding="10dp">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/image_my_menu_user_profile"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:src="@drawable/test_user_profile_image" />
+
+        <TextView
+            android:id="@+id/text_my_menu_user_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Sara kim" />
+
+        <TextView
+            android:id="@+id/text_my_menu_lover_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="jack님의 애인" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <olab.ringring.main.ringdesign.customview.MyMenuRingView
+            android:id="@+id/view_my_menu_ring"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="My Level" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="나의 반지 레벨" />
+
+            <TextView
+                android:id="@+id/text_my_menu_ring_level"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="2" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <olab.ringring.main.nav.NavMenuView
+        android:id="@+id/view_nav_my_account"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <olab.ringring.main.nav.NavMenuView
+        android:id="@+id/view_nav_setting_d_day"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <olab.ringring.main.nav.NavMenuView
+        android:id="@+id/view_nav_mission_history"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+
+</LinearLayout>
+

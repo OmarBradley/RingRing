@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context=".main.mymenu.dday.DDaySettingActivity">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="우리 처음 만난날" />
+
+    <com.samsistemas.calendarview.widget.CalendarView
+        android:id="@+id/calendar_view"
+        android:layout_marginTop="56dp"
+        android:layout_marginEnd="2dp"
+        android:layout_marginLeft="2dp"
+        android:layout_marginRight="2dp"
+        android:layout_marginStart="2dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimary"
+        app:calendarBackgroundColor="@color/colorPrimary"
+        app:calendarTitleTextColor="@color/colorAccent"
+        app:currentDayOfMonthColor="@android:color/white"
+        app:dayOfMonthTextColor="@android:color/white"
+        app:dayOfWeekTextColor="@android:color/white"
+        app:disabledDayBackgroundColor="@color/colorPrimary"
+        app:disabledDayTextColor="@color/colorAccent"
+        app:selectedDayBackgroundColor="@color/colorAccent"
+        app:titleLayoutBackgroundColor="@color/colorPrimary"
+        app:weekLayoutBackgroundColor="@color/colorPrimary"
+        >
+    </com.samsistemas.calendarview.widget.CalendarView>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="처음 만나 사귄날의 기준일을 설정해주세요.\n설정된 날짜는 채팅화면 상단에 보여집니다." />
+
+
+</LinearLayout>

@@ -5,8 +5,8 @@
 
     <ImageView
         android:id="@+id/image_big_ring_shape"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="@dimen/image_big_ring_shape_width"
+        android:layout_height="@dimen/image_big_ring_shape_height"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:src="@mipmap/ic_launcher" />

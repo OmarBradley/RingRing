@@ -17,7 +17,7 @@ import olab.ringring.util.actionbar.visitor.concretevisitor.SetActionBarTitleVis
 
 public class SendDownloadLinkActivity extends AppCompatActivity implements ActionBarElement {
 
-    @Bind(R.id.btn_send_download_link) Button btnSendDownloadLink;
+    @Bind(R.id.btn_send_download_link) Button sendDownloadLinkBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,7 +26,7 @@ public class SendDownloadLinkActivity extends AppCompatActivity implements Actio
         ButterKnife.bind(this);
         this.accept(new SetActionBarTitleVisitor("회원가입"));
         this.accept(new SetActionBarIconVisitor(ContextCompat.getDrawable(this, R.mipmap.ic_launcher)));
-        btnSendDownloadLink.setOnClickListener(view -> {
+        sendDownloadLinkBtn.setOnClickListener(view -> {
             Intent pageMover = new Intent(this, HomeActivity.class);
             startActivity(pageMover);
         });
@@ -36,6 +36,7 @@ public class SendDownloadLinkActivity extends AppCompatActivity implements Actio
     public void onBackPressed() {
         Intent pageMover = new Intent(this, LoverConnectingActivity.class);
         startActivity(pageMover);
+        finish();
     }
 
     @Override

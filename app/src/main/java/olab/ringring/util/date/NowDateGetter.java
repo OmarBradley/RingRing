@@ -5,7 +5,7 @@ import android.content.Context;
 import org.joda.time.DateTime;
 
 import olab.ringring.R;
-import olab.ringring.util.application.RingRingApplication;
+import olab.ringring.init.application.RingRingApplication;
 
 /**
  * Created by 재화 on 2016-05-20.

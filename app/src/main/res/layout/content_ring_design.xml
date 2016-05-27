@@ -24,7 +24,7 @@
         <olab.ringring.main.ringdesign.customview.BigRingView
             android:id="@+id/view_big_ring"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="201dp" />
     </LinearLayout>
 
     <FrameLayout

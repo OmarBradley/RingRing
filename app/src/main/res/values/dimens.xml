@@ -10,7 +10,17 @@
     <dimen name="dialog_width">240dp</dimen>
     <dimen name="dialog_height">135dp</dimen>
 
+    <dimen name="app_bar_height">55dp</dimen>
+
     <dimen name="dialog_choice_ring_attribute_width">270dp</dimen>
     <dimen name="dialog_choice_ring_attribute_height">480dp</dimen>
 
+    <dimen name="image_detail_ring_attribute_width">55dp</dimen>
+    <dimen name="image_detail_ring_attribute_height">55dp</dimen>
+
+    <dimen name="image_ring_attribute_width">85dp</dimen>
+    <dimen name="image_ring_attribute_height">85dp</dimen>
+
+    <dimen name="image_big_ring_shape_width">125dp</dimen>
+    <dimen name="image_big_ring_shape_height">125dp</dimen>
 </resources>

@@ -20,8 +20,8 @@ public class JoinActivity extends AppCompatActivity {
     @Bind(R.id.tabLayout) TabLayout tabLayout;
     @Bind(R.id.pager) ViewPager pager;
     JoinPageAdapter pageAdapter;
-    JoinTabIndicatorView loginTabIndicatorView;
-    JoinTabIndicatorView signUpTabIndicatorView;
+    JoinTabIndicatorView loginTabView;
+    JoinTabIndicatorView signUpTabView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,7 +31,7 @@ public class JoinActivity extends AppCompatActivity {
         addFragmentPageInAdapter();
         setAdapterInPager();
         setTabLayout();
-        changeTabIndicator();
+        changeTabView();
     }
 
     private void addFragmentPageInAdapter() {
@@ -47,23 +47,23 @@ public class JoinActivity extends AppCompatActivity {
     private void setTabLayout() {
         tabLayout.setupWithViewPager(pager);
         tabLayout.setSelectedTabIndicatorColor(ContextCompat.getColor(this,android.R.color.transparent));
-        initIndicatorView();
-        attachIndicatorViewOnTabLayout();
+        initTabView();
+        attachTabViewOnTabLayout();
     }
 
-    private void initIndicatorView() {
-        loginTabIndicatorView = new JoinTabIndicatorView(this, R.string.login_tab_indicator);
-        loginTabIndicatorView.setTabIndicatorViewWhenFocused(R.color.colorTabFocused, android.R.drawable.btn_radio);
-        signUpTabIndicatorView = new JoinTabIndicatorView(this, R.string.sign_up_tab_indicator);
-        signUpTabIndicatorView.setTabIndicatorViewWhenNotFocused(R.color.colorTabNotFocused);
+    private void initTabView() {
+        loginTabView = new JoinTabIndicatorView(this, R.string.login_tab_indicator);
+        loginTabView.setTabIndicatorViewWhenFocused(R.color.colorTabFocused, android.R.drawable.btn_radio);
+        signUpTabView = new JoinTabIndicatorView(this, R.string.sign_up_tab_indicator);
+        signUpTabView.setTabIndicatorViewWhenNotFocused(R.color.colorTabNotFocused);
     }
 
-    private void attachIndicatorViewOnTabLayout(){
-        tabLayout.getTabAt(LOGIN_TAB_INDICATOR_VIEW_LOCATION).setCustomView(loginTabIndicatorView);
-        tabLayout.getTabAt(SIGN_UP_INDICATOR_VIEW_LOCATION).setCustomView(signUpTabIndicatorView);
+    private void attachTabViewOnTabLayout(){
+        tabLayout.getTabAt(LOGIN_TAB_INDICATOR_VIEW_LOCATION).setCustomView(loginTabView);
+        tabLayout.getTabAt(SIGN_UP_INDICATOR_VIEW_LOCATION).setCustomView(signUpTabView);
     }
 
-    private void changeTabIndicator() {
+    private void changeTabView() {
         pager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {}
@@ -71,11 +71,11 @@ public class JoinActivity extends AppCompatActivity {
             @Override
             public void onPageSelected(int position) {
                 if (position == LOGIN_TAB_INDICATOR_VIEW_LOCATION) {
-                    loginTabIndicatorView.setTabIndicatorViewWhenFocused(R.color.colorTabFocused, android.R.drawable.btn_radio);
-                    signUpTabIndicatorView.setTabIndicatorViewWhenNotFocused(R.color.colorTabNotFocused);
+                    loginTabView.setTabIndicatorViewWhenFocused(R.color.colorTabFocused, android.R.drawable.btn_radio);
+                    signUpTabView.setTabIndicatorViewWhenNotFocused(R.color.colorTabNotFocused);
                 } else {
-                    signUpTabIndicatorView.setTabIndicatorViewWhenFocused(R.color.colorTabFocused, android.R.drawable.btn_radio);
-                    loginTabIndicatorView.setTabIndicatorViewWhenNotFocused(R.color.colorTabNotFocused);
+                    signUpTabView.setTabIndicatorViewWhenFocused(R.color.colorTabFocused, android.R.drawable.btn_radio);
+                    loginTabView.setTabIndicatorViewWhenNotFocused(R.color.colorTabNotFocused);
                 }
             }
             @Override

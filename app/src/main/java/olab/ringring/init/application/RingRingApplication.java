@@ -1,4 +1,4 @@
-package olab.ringring.util.application;
+package olab.ringring.init.application;
 
 import android.content.Context;
 

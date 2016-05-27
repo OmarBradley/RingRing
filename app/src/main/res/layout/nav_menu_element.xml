@@ -12,7 +12,7 @@
         android:src="@mipmap/ic_launcher" />
 
     <TextView
-        android:id="@+id/text_nav_menu_text"
+        android:id="@+id/text_nav_menu_title"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center"

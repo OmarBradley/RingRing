@@ -45,7 +45,6 @@ public class ChatFragment extends Fragment {
         setChatMessageListView();
         setOnClickListenerOnButtons();
         executeActionWhenTextTyping();
-
         return chatFragmentView;
     }
 

@@ -29,14 +29,14 @@ import olab.ringring.main.ringdesign.choicedialog.attributeview.RingDetailAttrib
  */
 public class ChoiceRingAttributeDialogFragment extends DialogFragment {
 
-    @Bind(R.id.text_choice_dialog_title) TextView textChoiceDialogTitle;
-    @Bind(R.id.btn_choice_dialog_check) ImageView btnChoiceDialogCheck;
-    @Bind(R.id.image_choice_dialog_title) CircleImageView imageChoiceDialogTitle;
+    @Bind(R.id.text_choice_dialog_title) TextView dialogTitleText;
+    @Bind(R.id.btn_choice_dialog_check) ImageView dialogCheckBtn;
+    @Bind(R.id.image_choice_dialog_title) CircleImageView dialogTitleImage;
     @Bind(R.id.list_attribute_view) GridView listAttributeView;
     RingDetailAttributeViewAdapter adapter;
     @Setter private ChoiceRingAttributeDialogBuilder dialogBuilder;
     @Setter @Getter Consumer<RingDetailAttributeViewData> onDataReceiveListener;
-    @Bind(R.id.image_choice_dialog_background) ImageView imageChoiceDialogBackground;
+    @Bind(R.id.image_choice_dialog_background) ImageView dialogBackgroundImage;
 
     private final static int DIALOG_ITEM_INDEX = 0;
     private final static int SHOW_BACKGROUND_IMAGE_TIME = 2000;
@@ -67,7 +67,7 @@ public class ChoiceRingAttributeDialogFragment extends DialogFragment {
     }
 
     private void initChoiceDialogBackground(){
-        imageChoiceDialogBackground.setVisibility(View.GONE);
+        dialogBackgroundImage.setVisibility(View.GONE);
     }
 
 
@@ -77,13 +77,13 @@ public class ChoiceRingAttributeDialogFragment extends DialogFragment {
     }
 
     private void setAttributeInDialog(){
-        textChoiceDialogTitle.setText(dialogBuilder.getTitle());
-        btnChoiceDialogCheck.setOnClickListener(view ->{
+        dialogTitleText.setText(dialogBuilder.getTitle());
+        dialogCheckBtn.setOnClickListener(view ->{
             int position = getSelectedPosition();
             showBackGroundImage();
             executeCallbackAction(position);
         });
-        imageChoiceDialogTitle.setImageDrawable(ContextCompat.getDrawable(getContext(), dialogBuilder.getTitleImageRes()));
+        dialogTitleImage.setImageDrawable(ContextCompat.getDrawable(getContext(), dialogBuilder.getTitleImageRes()));
         adapter.addAll(dialogBuilder.getAttributeItems());
     }
 
@@ -96,7 +96,7 @@ public class ChoiceRingAttributeDialogFragment extends DialogFragment {
     }
 
     private void showBackGroundImage(){
-        imageChoiceDialogBackground.setVisibility(View.VISIBLE);
+        dialogBackgroundImage.setVisibility(View.VISIBLE);
     }
 
     private void executeCallbackAction(int position){

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+    <com.mikhaellopez.circularprogressbar.CircularProgressBar
+        android:id="@+id/progress_bar_my_menu_ring_collecting_count"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        app:cpb_background_progressbar_color="#FFCDD2"
+        app:cpb_background_progressbar_width="15dp"
+        app:cpb_progressbar_color="#F44336"
+        app:cpb_progressbar_width="13dp"
+        app:cpb_progress="100"
+        />
+
+    <ImageView
+        android:id="@+id/image_my_menu_ring_shape"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:layout_gravity="center"
+        android:src="@drawable/test_small_ring" />
+
+    <ImageView
+        android:id="@+id/image_my_menu_ring_jewelry"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/image_my_menu_ring_collecting_count"
+        android:layout_centerHorizontal="true"
+        android:layout_gravity="center_horizontal|top"
+        android:src="@mipmap/ic_launcher" />
+
+    <TextView
+        android:id="@+id/image_my_menu_ring_collecting_count"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/image_my_menu_ring_shape"
+        android:layout_centerHorizontal="true"
+        android:paddingTop="50dp"
+        android:text="2/18" />
+
+</RelativeLayout>

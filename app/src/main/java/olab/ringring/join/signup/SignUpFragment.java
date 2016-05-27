@@ -21,11 +21,11 @@ import olab.ringring.join.signup.partnerauthorization.LoverConnectingActivity;
  */
 public class SignUpFragment extends Fragment {
 
-    @Bind(R.id.edit_sign_up_email) EditText editSignUpEmail;
-    @Bind(R.id.edit_sign_up_phone_number) EditText editSignUpPhoneNumber;
-    @Bind(R.id.edit_sign_up_password) EditText editSignUpPassword;
-    @Bind(R.id.edit_sign_up_password_confirm) EditTextWithSubmitButtonView editSignUpPasswordConfirm;
-    @Bind(R.id.btn_sign_up_facebook) Button btnSignUpFacebook;
+    @Bind(R.id.edit_sign_up_email) EditText emailEdit;
+    @Bind(R.id.edit_sign_up_phone_number) EditText phoneNumberEdit;
+    @Bind(R.id.edit_sign_up_password) EditText passwordEdit;
+    @Bind(R.id.edit_sign_up_password_confirm) EditTextWithSubmitButtonView passwordConfirmEdit;
+    @Bind(R.id.btn_sign_up_facebook) Button facebookSingUpBtn;
 
     public SignUpFragment() {}
 
@@ -40,7 +40,7 @@ public class SignUpFragment extends Fragment {
     }
 
     private void setOnClickListenerOnEditLoginPassword() {
-        editSignUpPasswordConfirm.setOnButtonClickListener(view -> {
+        passwordConfirmEdit.setOnButtonClickListener(view -> {
             Intent intent = new Intent(getActivity(), LoverConnectingActivity.class);
             startActivity(intent);
             getActivity().finish();
@@ -48,6 +48,6 @@ public class SignUpFragment extends Fragment {
     }
 
     private void setBasicAttributesOnEditLoginPassword(){
-        editSignUpPasswordConfirm.setHint(getString(R.string.sign_up_password_confirm_hint));
+        passwordConfirmEdit.setHint(getString(R.string.sign_up_password_confirm_hint));
     }
 }

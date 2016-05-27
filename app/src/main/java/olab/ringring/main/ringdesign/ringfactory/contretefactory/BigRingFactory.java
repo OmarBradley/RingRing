@@ -38,7 +38,7 @@ public class BigRingFactory implements RingFactory {
     @Override
     public void createRingMaterial(RingMaterial material) {
         Drawable presentImage = ringView.getShapeDrawable();
-        Bitmap imageAfterColorChange = ColorChanger.changeImageColor(presentImage, material.getRingMaterialColor());
+        Bitmap imageAfterColorChange = ColorChanger.changeImageColor(presentImage, material.getColor());
         ringView.setShapeImageBitmap(imageAfterColorChange);
     }
 }

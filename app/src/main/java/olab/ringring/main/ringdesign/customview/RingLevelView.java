@@ -5,7 +5,6 @@ import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.LinearLayout;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.daasuu.ahp.AnimateHorizontalProgressBar;
@@ -13,10 +12,9 @@ import com.daasuu.ahp.AnimateHorizontalProgressBar;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import lombok.Getter;
-import lombok.Setter;
 import olab.ringring.R;
 import olab.ringring.main.ringdesign.levelpolicy.RingLevel;
-import olab.ringring.main.ringdesign.util.ExpStringMaker;
+import olab.ringring.main.ringdesign.util.StringMaker;
 
 /**
  * Created by 재화 on 2016-05-23.
@@ -48,13 +46,13 @@ public class RingLevelView extends LinearLayout{
 
     private void initViewAttribute(){
         progressBarRingLevelGauge.setMax(MAX_LEVEL_EXP.getLevelNumber());
-        textRingLevelExp.setText(ExpStringMaker.getExpString(presentRingLevel.getLevelNumber(),DIVIDER , MAX_LEVEL_EXP.getLevelNumber()));
+        textRingLevelExp.setText(StringMaker.getExpString(presentRingLevel.getLevelNumber(),DIVIDER , MAX_LEVEL_EXP.getLevelNumber()));
     }
 
     public void setPresentRingLevel(RingLevel ringLevel){
         presentRingLevel = ringLevel;
         progressBarRingLevelGauge.setProgress(presentRingLevel.getLevelNumber());
-        textRingLevelExp.setText(ExpStringMaker.getExpString(presentRingLevel.getLevelNumber(),DIVIDER , MAX_LEVEL_EXP.getLevelNumber()));
+        textRingLevelExp.setText(StringMaker.getExpString(presentRingLevel.getLevelNumber(),DIVIDER , MAX_LEVEL_EXP.getLevelNumber()));
     }
 
 }

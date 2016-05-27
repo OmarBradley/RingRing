@@ -19,8 +19,8 @@ import olab.ringring.util.actionbar.visitor.concretevisitor.SetActionBarTitleVis
 
 public class LoverConnectingActivity extends AppCompatActivity implements ActionBarElement {
 
-    @Bind(R.id.edit_lover_phone_number) EditText editLoverPhoneNumber;
-    @Bind(R.id.btn_lover_connect) Button btnLoverConnect;
+    @Bind(R.id.edit_lover_phone_number) EditText loverPhoneNumberEdit;
+    @Bind(R.id.btn_lover_connect) Button loverConnectBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,7 +29,7 @@ public class LoverConnectingActivity extends AppCompatActivity implements Action
         ButterKnife.bind(this);
         this.accept(new SetActionBarIconVisitor(ContextCompat.getDrawable(this, R.mipmap.ic_launcher)));
         this.accept(new SetActionBarTitleVisitor("회원가입"));
-        btnLoverConnect.setOnClickListener(view -> {
+        loverConnectBtn.setOnClickListener(view -> {
             Intent nextPageIntent = new Intent(this, SendDownloadLinkActivity.class);
             startActivity(nextPageIntent);
         });

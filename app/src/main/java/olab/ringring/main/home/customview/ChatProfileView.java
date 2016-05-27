@@ -19,8 +19,8 @@ import olab.ringring.R;
  */
 public class ChatProfileView extends LinearLayout {
 
-    @Bind(R.id.text_user_name) TextView textUserName;
-    @Bind(R.id.image_user_profile) CircleImageView imageUserProfile;
+    @Bind(R.id.text_user_name) TextView userNameText;
+    @Bind(R.id.image_user_profile) CircleImageView userProfileImage;
     float elevation = 0;
 
     public ChatProfileView(Context context) {
@@ -39,11 +39,11 @@ public class ChatProfileView extends LinearLayout {
     }
 
     public void setUserName(String userName) {
-        textUserName.setText(userName);
+        userNameText.setText(userName);
     }
 
     public void setUserProfile(Bitmap bitmap) {
-        imageUserProfile.setImageBitmap(bitmap);
+        userProfileImage.setImageBitmap(bitmap);
     }
 
     public float getElevation() {
