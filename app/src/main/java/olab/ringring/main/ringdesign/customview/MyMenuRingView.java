@@ -20,7 +20,7 @@ import olab.ringring.main.ringdesign.ringattribute.jewelry.RingJewelry;
 import olab.ringring.main.ringdesign.ringattribute.material.RingMaterial;
 import olab.ringring.main.ringdesign.ringattribute.shape.RingShape;
 import olab.ringring.main.ringdesign.util.StringMaker;
-import olab.ringring.util.colorchanger.ColorChanger;
+import olab.ringring.util.colorchanger.ImageColorChanger;
 
 /**
  * Created by 재화 on 2016-05-26.
@@ -61,7 +61,7 @@ public class MyMenuRingView extends LinearLayout {
 
     public void setMaterialColor(RingMaterial material) {
         Drawable shapeDrawable = shapeImage.getDrawable();
-        shapeImage.setImageBitmap(ColorChanger.changeImageColor(shapeDrawable, material.getColor()));
+        shapeImage.setImageBitmap(ImageColorChanger.changeImageColor(shapeDrawable, material.getColor()));
     }
 
     public Drawable getShapeDrawable() {

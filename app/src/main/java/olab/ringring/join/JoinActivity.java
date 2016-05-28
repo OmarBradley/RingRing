@@ -1,5 +1,6 @@
 package olab.ringring.join;
 
+import android.support.annotation.DrawableRes;
 import android.support.design.widget.TabLayout;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
@@ -16,6 +17,7 @@ public class JoinActivity extends AppCompatActivity {
 
     private final static int LOGIN_TAB_INDICATOR_VIEW_LOCATION = 0;
     private final static int SIGN_UP_INDICATOR_VIEW_LOCATION = 1;
+    private final static @DrawableRes int TAB_INDICATOR_NAV_IMAGE = R.drawable.join_tab_indicator_nav_image;
 
     @Bind(R.id.tabLayout) TabLayout tabLayout;
     @Bind(R.id.pager) ViewPager pager;
@@ -53,9 +55,9 @@ public class JoinActivity extends AppCompatActivity {
 
     private void initTabView() {
         loginTabView = new JoinTabIndicatorView(this, R.string.login_tab_indicator);
-        loginTabView.setTabIndicatorViewWhenFocused(R.color.colorTabFocused, android.R.drawable.btn_radio);
+        loginTabView.setTabIndicatorViewWhenFocused(R.color.colorWhiteTextColor, TAB_INDICATOR_NAV_IMAGE);
         signUpTabView = new JoinTabIndicatorView(this, R.string.sign_up_tab_indicator);
-        signUpTabView.setTabIndicatorViewWhenNotFocused(R.color.colorTabNotFocused);
+        signUpTabView.setTabIndicatorViewWhenNotFocused(R.color.colorNotFocusedColor);
     }
 
     private void attachTabViewOnTabLayout(){
@@ -71,11 +73,11 @@ public class JoinActivity extends AppCompatActivity {
             @Override
             public void onPageSelected(int position) {
                 if (position == LOGIN_TAB_INDICATOR_VIEW_LOCATION) {
-                    loginTabView.setTabIndicatorViewWhenFocused(R.color.colorTabFocused, android.R.drawable.btn_radio);
-                    signUpTabView.setTabIndicatorViewWhenNotFocused(R.color.colorTabNotFocused);
+                    loginTabView.setTabIndicatorViewWhenFocused(R.color.colorWhiteTextColor, TAB_INDICATOR_NAV_IMAGE);
+                    signUpTabView.setTabIndicatorViewWhenNotFocused(R.color.colorNotFocusedColor);
                 } else {
-                    signUpTabView.setTabIndicatorViewWhenFocused(R.color.colorTabFocused, android.R.drawable.btn_radio);
-                    loginTabView.setTabIndicatorViewWhenNotFocused(R.color.colorTabNotFocused);
+                    signUpTabView.setTabIndicatorViewWhenFocused(R.color.colorWhiteTextColor, TAB_INDICATOR_NAV_IMAGE);
+                    loginTabView.setTabIndicatorViewWhenNotFocused(R.color.colorNotFocusedColor);
                 }
             }
             @Override

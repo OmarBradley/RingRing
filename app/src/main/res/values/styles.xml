@@ -17,6 +17,13 @@
         <item name="drawerArrowStyle">@style/DrawerArrowStyle</item>
     </style>
 
+    <style name="JoinActivityTheme" parent="@style/AppTheme">
+        <item name="colorPrimaryDark">@color/colorJoinActivityStatusBar</item>
+        <item name="colorPrimary">@color/colorJoinActivityAppbarBackGround</item>
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
     <style name="DrawerArrowStyle" parent="@style/Widget.AppCompat.DrawerArrowToggle">
         <item name="spinBars">true</item>
         <item name="color">@android:color/white</item>
@@ -27,17 +34,25 @@
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
     <style name="JoinEditText">
-        <item name="android:layout_marginBottom">20dp</item>
-        <item name="android:textColorHint">@android:color/black</item>
-        <item name="android:textSize">20sp</item>
-        <item name="android:textColor">@color/colorPrimaryDark</item>
-        <item name="android:paddingBottom">10dp</item>
+        <item name="android:textColorHint">@color/colorInputText</item>
+        <item name="android:textSize">17sp</item>
+        <item name="android:textColor">@color/colorInputText</item>
+        <item name="android:paddingBottom">20dp</item>
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
     </style>
 
     <style name="JoinEditText.SubmitEditText">
         <item name="android:imeOptions">actionDone</item>
+    </style>
+
+    <style name="JoinCaptionText">
+        <item name="android:paddingStart">3dp</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:layout_marginTop">-4dp</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/colorAccent</item>
     </style>
 
     <style name="ShowDdayViewText">

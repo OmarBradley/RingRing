@@ -1,5 +1,6 @@
 package olab.ringring.main.ringdesign.choicedialog;
 
+import android.media.Image;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -30,17 +31,19 @@ import olab.ringring.main.ringdesign.choicedialog.attributeview.RingDetailAttrib
 public class ChoiceRingAttributeDialogFragment extends DialogFragment {
 
     @Bind(R.id.text_choice_dialog_title) TextView dialogTitleText;
-    @Bind(R.id.btn_choice_dialog_check) ImageView dialogCheckBtn;
+    @Bind(R.id.btn_choice_dialog_cancel) ImageView dialogCancelBtn;
     @Bind(R.id.image_choice_dialog_title) CircleImageView dialogTitleImage;
     @Bind(R.id.list_attribute_view) GridView listAttributeView;
-    RingDetailAttributeViewAdapter adapter;
-    @Setter private ChoiceRingAttributeDialogBuilder dialogBuilder;
-    @Setter @Getter Consumer<RingDetailAttributeViewData> onDataReceiveListener;
     @Bind(R.id.image_choice_dialog_background) ImageView dialogBackgroundImage;
+    @Bind(R.id.btn_choice_dialog_check) ImageView dialogCheckBtn;
+
+    private RingDetailAttributeViewAdapter adapter;
+    @Setter private ChoiceRingAttributeDialogBuilder dialogBuilder;
+    @Setter @Getter private Consumer<RingDetailAttributeViewData> onDataReceiveListener;
+
 
     private final static int DIALOG_ITEM_INDEX = 0;
     private final static int SHOW_BACKGROUND_IMAGE_TIME = 2000;
-
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -78,6 +81,9 @@ public class ChoiceRingAttributeDialogFragment extends DialogFragment {
 
     private void setAttributeInDialog(){
         dialogTitleText.setText(dialogBuilder.getTitle());
+        dialogCancelBtn.setOnClickListener(view ->{
+            dialogBuilder.getCancelButtonClickListener().accept(getDialog());
+        });
         dialogCheckBtn.setOnClickListener(view ->{
             int position = getSelectedPosition();
             showBackGroundImage();
@@ -96,13 +102,14 @@ public class ChoiceRingAttributeDialogFragment extends DialogFragment {
     }
 
     private void showBackGroundImage(){
+        dialogBackgroundImage.setOnClickListener(view->{});
         dialogBackgroundImage.setVisibility(View.VISIBLE);
     }
 
     private void executeCallbackAction(int position){
         Handler handler = new Handler(Looper.getMainLooper());
         handler.postDelayed(()->{
-            dialogBuilder.getCheckClickListener().accept(getDialog(), adapter.getItem(position));
+            dialogBuilder.getCheckButtonClickListener().accept(getDialog(), adapter.getItem(position));
         },SHOW_BACKGROUND_IMAGE_TIME);
     }
 }

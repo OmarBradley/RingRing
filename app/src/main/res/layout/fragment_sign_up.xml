@@ -15,6 +15,10 @@
         android:imeOptions="actionNext"
         android:inputType="textEmailAddress" />
 
+    <TextView
+        style="@style/JoinCaptionText"
+        android:text="이메일 정보가 올바르지 않습니다" />
+
     <EditText
         android:id="@+id/edit_sign_up_phone_number"
         style="@style/JoinEditText"
@@ -23,6 +27,11 @@
         android:imeOptions="actionNext"
         android:inputType="phone" />
 
+    <TextView
+        style="@style/JoinCaptionText"
+        android:text="'-' 제외하고 입력해주세요"
+        android:textColor="@color/colorJoinCaptionText" />
+
     <EditText
         android:id="@+id/edit_sign_up_password"
         style="@style/JoinEditText"
@@ -30,11 +39,19 @@
         android:imeOptions="actionNext"
         android:inputType="textPassword" />
 
+    <TextView
+        style="@style/JoinCaptionText"
+        android:text="비밀번호는 4자 이상입니다"
+        android:textColor="@color/colorJoinCaptionText" />
+
     <olab.ringring.join.customview.EditTextWithSubmitButtonView
         android:id="@+id/edit_sign_up_password_confirm"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-    </olab.ringring.join.customview.EditTextWithSubmitButtonView>
+        android:layout_height="wrap_content"/>
+
+    <TextView
+        style="@style/JoinCaptionText"
+        android:text="해당 비밀번호와 일치하지 않습니다" />
 
     <Button
         android:id="@+id/btn_sign_up_facebook"

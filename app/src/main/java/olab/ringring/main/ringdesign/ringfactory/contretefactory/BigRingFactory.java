@@ -8,7 +8,7 @@ import olab.ringring.main.ringdesign.ringattribute.jewelry.RingJewelry;
 import olab.ringring.main.ringdesign.ringattribute.material.RingMaterial;
 import olab.ringring.main.ringdesign.ringattribute.shape.RingShape;
 import olab.ringring.main.ringdesign.ringfactory.RingFactory;
-import olab.ringring.util.colorchanger.ColorChanger;
+import olab.ringring.util.colorchanger.ImageColorChanger;
 
 /**
  * Created by 재화 on 2016-05-24.
@@ -38,7 +38,8 @@ public class BigRingFactory implements RingFactory {
     @Override
     public void createRingMaterial(RingMaterial material) {
         Drawable presentImage = ringView.getShapeDrawable();
-        Bitmap imageAfterColorChange = ColorChanger.changeImageColor(presentImage, material.getColor());
+        Bitmap imageAfterColorChange = ImageColorChanger.changeImageColor(presentImage, material.getColor());
         ringView.setShapeImageBitmap(imageAfterColorChange);
     }
+
 }

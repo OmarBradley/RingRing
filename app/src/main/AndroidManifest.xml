@@ -26,7 +26,9 @@
             android:theme="@style/JoinActivityTheme"
             android:windowSoftInputMode="adjustPan">
             <intent-filter>
-                <action android:name="olab.ringring.join.JoinActivity" />
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
@@ -70,11 +72,11 @@
             android:name=".main.ringdesign.RingDesignActivity"
             android:label="@string/title_activity_ring_design"
             android:theme="@style/AppTheme.NoTitleActionBar">
-            <intent-filter>
+            <!--<intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+            </intent-filter>-->
         </activity>
 
         <meta-data android:name="olab.ringring.init.glide.RingRingGlideModule" android:value="GlideModule"/>

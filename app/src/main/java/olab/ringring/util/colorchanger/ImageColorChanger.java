@@ -9,14 +9,18 @@ import android.graphics.Paint;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.ColorRes;
+import android.support.v4.content.ContextCompat;
 
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
+import olab.ringring.init.application.RingRingApplication;
 
 /**
  * Created by 재화 on 2016-05-23.
  */
-public class ColorChanger {
+public class ImageColorChanger {
+
+    private static final @ColorRes int WHITE_COLOR = ContextCompat.getColor(RingRingApplication.getContext(), android.R.color.white);
 
     public static Bitmap changeImageColor(Bitmap sourceBitmap, @ColorRes int color) {
         Bitmap resultBitmap = Bitmap.createBitmap(sourceBitmap, 0, 0, sourceBitmap.getWidth() - 1, sourceBitmap.getHeight() - 1);
@@ -49,7 +53,13 @@ public class ColorChanger {
         return changeImageColor(drawableToBitmap, color);
     };
 
+    public static Drawable changeDrawableImageColor(Drawable drawable, @ColorRes int color){
+        Bitmap drawableToBitmap =  convertDrawableToBitmap(drawable);
+        return covertBitmapToDrawable(RingRingApplication.getContext(),changeImageColor(drawableToBitmap, color));
+    };
 
-
-
+    public static Drawable changeWhiteImage(Drawable drawable) {
+        Bitmap drawableToBitmap = convertDrawableToBitmap(drawable);
+        return covertBitmapToDrawable(RingRingApplication.getContext(), changeImageColor(drawableToBitmap, WHITE_COLOR));
+    }
 }

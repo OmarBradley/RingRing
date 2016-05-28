@@ -9,6 +9,8 @@ import com.annimon.stream.Stream;
 import java.util.ArrayList;
 import java.util.List;
 
+import olab.ringring.main.ringdesign.levelpolicy.RingCollectCount;
+
 /**
  * Created by 재화 on 2016-05-25.
  */
@@ -53,6 +55,17 @@ public class RingDetailAttributeViewAdapter extends BaseAdapter {
         itemView.setAttributeName(items.get(position).getAttributeName());
         itemView.setAttributeImage(items.get(position).getAttributeImage());
         itemView.setCollectingCountText(items.get(position).getCollectCount());
+        setItemViewCheckable(itemView, items.get(position).getCollectCount());
         return itemView;
     }
+
+    private void setItemViewCheckable(RingDetailAttributeView itemView, RingCollectCount count){
+        if(count == RingCollectCount.MAX_COUNTING_NUMBER){
+            itemView.setClickable(false);
+        } else {
+            itemView.setClickable(true);
+        }
+    }
+
+
 }

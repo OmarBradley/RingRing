@@ -10,14 +10,15 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:textSize="@dimen/join_tab_indicator_text_size"
-        android:text="로그인" />
+        android:layout_marginBottom="6dp"
+        android:text="로그인"
+        android:textSize="17sp" />
 
     <ImageView
         android:id="@+id/image_tabIndicator"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="43dp"
+        android:layout_height="17dp"
         android:layout_gravity="center"
-        android:src="@android:drawable/btn_radio"/>
+        android:src="@drawable/join_tab_indicator_nav_image" />
 
 </LinearLayout>

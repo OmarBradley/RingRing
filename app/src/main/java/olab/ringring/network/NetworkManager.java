@@ -23,7 +23,6 @@ import olab.ringring.network.okhttpclient.RingRingHttpClientFactory;
  * Created by 재화 on 2016-05-18.
  */
 
-// TODO: 2016-05-18 뷰부분 끝난 후 network manager 만들기
 public class NetworkManager {
 
     private OkHttpClient client;

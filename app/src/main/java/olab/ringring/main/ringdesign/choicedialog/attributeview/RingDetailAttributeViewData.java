@@ -4,6 +4,7 @@ import android.graphics.drawable.Drawable;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.experimental.Accessors;
 import olab.ringring.main.ringdesign.levelpolicy.RingCollectCount;
 
 /**
@@ -11,10 +12,14 @@ import olab.ringring.main.ringdesign.levelpolicy.RingCollectCount;
  */
 @Data
 @AllArgsConstructor
+@Accessors(chain = true)
 public class RingDetailAttributeViewData {
     private String attributeName;
     private Drawable attributeImage;
     private Drawable setImage;
     private Drawable bigImage;
     private RingCollectCount collectCount;
+
+
+
 }

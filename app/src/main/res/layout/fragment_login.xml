@@ -3,8 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:gravity="center_vertical"
     android:orientation="vertical"
+    android:paddingTop="116dp"
     tools:context="olab.ringring.join.login.LoginFragment">
 
     <EditText
@@ -15,11 +15,18 @@
         android:imeOptions="actionNext"
         android:inputType="textEmailAddress" />
 
+    <TextView
+        android:id="@+id/text_login_email_validate"
+        style="@style/JoinCaptionText"
+        android:text="이메일 정보가 올바르지 않습니다" />
 
     <olab.ringring.join.customview.EditTextWithSubmitButtonView
         android:id="@+id/edit_login_password"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-    </olab.ringring.join.customview.EditTextWithSubmitButtonView>
+        android:layout_height="wrap_content" />
+
+    <TextView
+        style="@style/JoinCaptionText"
+        android:text="해당 비밀번호와 일치하지 않습니다" />
 
 </LinearLayout>

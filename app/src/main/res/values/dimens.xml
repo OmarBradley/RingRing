@@ -13,7 +13,7 @@
     <dimen name="app_bar_height">55dp</dimen>
 
     <dimen name="dialog_choice_ring_attribute_width">281dp</dimen>
-    <dimen name="dialog_choice_ring_attribute_height">460dp</dimen>
+    <dimen name="dialog_choice_ring_attribute_height">457dp</dimen>
 
     <dimen name="image_detail_ring_attribute_width">55dp</dimen>
     <dimen name="image_detail_ring_attribute_height">55dp</dimen>

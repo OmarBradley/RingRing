@@ -8,12 +8,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import olab.ringring.R;
 import olab.ringring.join.customview.EditTextWithSubmitButtonView;
+import olab.ringring.join.util.Validator;
 import olab.ringring.util.dialog.yesorno.YesOrNoDialogBuilder;
 import olab.ringring.util.dialog.yesorno.YesOrNoDialogFragment;
 
@@ -22,6 +24,7 @@ public class LoginFragment extends Fragment {
     // TODO: 2016-05-18 view들의 id 선언해주기..
     @Bind(R.id.edit_login_password) EditTextWithSubmitButtonView passwordEdit;
     @Bind(R.id.edit_content_text) EditText emailEdit;
+    @Bind(R.id.text_login_email_validate) TextView emailValidateText;
 
     public LoginFragment() {}
 
@@ -32,6 +35,7 @@ public class LoginFragment extends Fragment {
         ButterKnife.bind(this, view);
         setHintInEditLoginPassword();
         setOnClickListenerOnEditLoginPassword();
+
         return view;
     }
 
@@ -73,4 +77,9 @@ public class LoginFragment extends Fragment {
         errorDialog.show(getActivity().getSupportFragmentManager(), "error dialog");
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        Validator.validateEmail(emailEdit,emailValidateText);
+    }
 }

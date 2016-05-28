@@ -11,11 +11,11 @@
 
     <Button
         android:id="@+id/btn_submit"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
+        android:layout_width="14dp"
+        android:layout_height="17dp"
         android:layout_gravity="right|top"
-        android:layout_marginTop="4dp"
+        android:layout_marginTop="13dp"
         android:background="@drawable/ripple_edit_text_submit_button"
-        android:paddingEnd="2dp" />
+        android:layout_marginEnd="6dp" />
 
 </FrameLayout>

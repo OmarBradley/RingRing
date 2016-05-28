@@ -24,7 +24,8 @@ import olab.ringring.util.dialog.DialogBuilder;
 public class ChoiceRingAttributeDialogBuilder implements DialogBuilder {
 
     private String title;
-    private BiConsumer<Dialog, RingDetailAttributeViewData> checkClickListener;
+    private BiConsumer<Dialog, RingDetailAttributeViewData> checkButtonClickListener;
+    private Consumer<Dialog> cancelButtonClickListener;
     private @DrawableRes int titleImageRes;
     private List<RingDetailAttributeViewData> attributeItems;
 

@@ -32,26 +32,36 @@
                     android:textSize="16sp" />
 
                 <ImageView
-                    android:id="@+id/btn_choice_dialog_check"
+                    android:id="@+id/btn_choice_dialog_cancel"
                     android:layout_width="25dp"
                     android:layout_height="25dp"
-                    android:src="@drawable/ripple_choice_dialog_confirm_check" />
+                    android:src="@drawable/ripple_choice_dialog_cancel_button" />
             </LinearLayout>
 
             <GridView
-                android:layout_marginStart="30dp"
-                android:layout_marginEnd="30dp"
                 android:id="@+id/list_attribute_view"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/textView"
                 android:layout_gravity="center"
+                android:layout_marginEnd="30dp"
+                android:layout_marginStart="30dp"
                 android:choiceMode="singleChoice"
                 android:horizontalSpacing="12.5dp"
                 android:numColumns="3"
                 android:paddingTop="78dp"
                 android:stretchMode="columnWidth"
                 android:verticalSpacing="23dp" />
+
+            <ImageView
+                android:id="@+id/btn_choice_dialog_check"
+                android:layout_width="70dp"
+                android:layout_height="25dp"
+                android:layout_gravity="end"
+                android:layout_marginBottom="15dp"
+                android:layout_marginEnd="30dp"
+                android:layout_marginTop="10dp"
+                android:src="@drawable/ripple_choice_dialog_check_button" />
 
         </LinearLayout>
 
@@ -69,7 +79,7 @@
         android:id="@+id/image_choice_dialog_background"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:src="@drawable/choice_dialog_background" />
+        android:src="@drawable/choice_dialog_complate_wating_image" />
 
 
 </FrameLayout>

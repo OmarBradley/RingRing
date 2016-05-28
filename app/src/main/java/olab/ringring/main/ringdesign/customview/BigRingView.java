@@ -58,4 +58,9 @@ public class BigRingView extends LinearLayout {
         shapeImage.setImageDrawable(shape.getBigImage());
     }
 
+    public void setShapeDrawable(Drawable drawable){
+        shapeImage.setImageDrawable(drawable);
+    }
+
+
 }

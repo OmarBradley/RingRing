@@ -11,33 +11,40 @@
         android:id="@+id/upper_content_join_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/colorJoinActivityUpperLayoutBackGround"
+        android:background="@color/colorJoinActivityAppbarBackGround"
         android:orientation="vertical">
 
         <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="96dp"
+            android:layout_height="90dp"
             android:layout_gravity="center_horizontal"
-            android:layout_marginBottom="@dimen/join_logo_margin_top"
-            android:layout_marginTop="@dimen/join_logo_margin_bottom"
-            android:background="@android:mipmap/sym_def_app_icon" />
+            android:layout_marginBottom="21dp"
+            android:layout_marginTop="36dp"
+            android:background="@drawable/join_title_image" />
 
     </LinearLayout>
 
     <android.support.design.widget.TabLayout
         android:id="@+id/tabLayout"
-        style="@style/JoinTabLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@drawable/ripple_join_tab_layout"
         android:fillViewport="true"
         app:tabGravity="fill"
         app:tabMode="fixed" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_marginTop="-2dp"
+        android:layout_height="1dp"
+        android:background="@color/colorWhiteBackground" />
 
     <android.support.v4.view.ViewPager
         android:id="@+id/pager"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingEnd="@dimen/join_page_margin_end"
-        android:paddingStart="@dimen/join_page_margin_start" />
+        android:background="@color/colorWhiteBackground"
+        android:paddingEnd="30dp"
+        android:paddingStart="30dp" />
 
 </LinearLayout>

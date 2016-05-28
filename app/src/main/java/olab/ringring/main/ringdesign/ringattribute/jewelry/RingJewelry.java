@@ -9,6 +9,8 @@ import lombok.Getter;
 import lombok.Setter;
 import olab.ringring.R;
 import olab.ringring.init.application.RingRingApplication;
+import olab.ringring.main.ringdesign.levelpolicy.RingCollectCount;
+import olab.ringring.util.colorchanger.ImageColorChanger;
 
 /**
  * Created by 재화 on 2016-05-23.
@@ -36,5 +38,22 @@ public enum RingJewelry {
     @Setter @Getter private Drawable bigImage;
     @Setter @Getter private Drawable setImage;
     private final Context RESOURCE_CONTEXT = RingRingApplication.getContext();
+
+    public static final Drawable getJewelryImageUsingChoiceDialog(RingJewelry jewelry, RingCollectCount count) {
+        if (count == RingCollectCount.MAX_COUNTING_NUMBER) {
+            return getSelectedShapeImage(jewelry);
+        } else {
+            return getNotSelectedShapeImage(jewelry);
+        }
+    }
+
+    public static final Drawable getSelectedShapeImage(RingJewelry jewelry){
+        return jewelry.getChoiceImage();
+    }
+
+    public static final Drawable getNotSelectedShapeImage(RingJewelry jewelry){
+        return jewelry.getDefaultImage();
+    }
+
 
 }
