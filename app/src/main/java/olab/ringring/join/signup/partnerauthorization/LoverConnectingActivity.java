@@ -27,7 +27,7 @@ public class LoverConnectingActivity extends AppCompatActivity implements Action
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lover_connecting);
         ButterKnife.bind(this);
-        this.accept(new SetActionBarIconVisitor(ContextCompat.getDrawable(this, R.mipmap.ic_launcher)));
+        this.accept(new SetActionBarIconVisitor(ContextCompat.getDrawable(this, R.drawable.actionbar_home_as_up_image)));
         this.accept(new SetActionBarTitleVisitor("회원가입"));
         loverConnectBtn.setOnClickListener(view -> {
             Intent nextPageIntent = new Intent(this, SendDownloadLinkActivity.class);

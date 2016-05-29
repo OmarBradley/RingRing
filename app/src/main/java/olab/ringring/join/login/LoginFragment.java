@@ -4,6 +4,8 @@ package olab.ringring.join.login;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -64,6 +66,23 @@ public class LoginFragment extends Fragment {
                 buildInfoErrorDialog();
                 passwordValidateText.setVisibility(View.VISIBLE);
             }
+        });
+        passwordEdit.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                passwordEdit.hideSubmitButton();
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                String text = s.toString();
+                if(text.length() >= Validator.MIN_PASSWORD_TEXT_LENGTH){
+                    passwordEdit.showSubmitButton();
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {}
         });
     }
 

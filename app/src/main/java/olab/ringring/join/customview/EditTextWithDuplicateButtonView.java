@@ -60,4 +60,11 @@ public class EditTextWithDuplicateButtonView extends LinearLayout {
         contentTextEdit.addTextChangedListener(textWatcher);
     }
 
+    public void setDuplicateCheckButtonClickable(boolean isClickable){
+        duplicateCheckBtn.setEnabled(isClickable);
+    }
+
+    public void setInputType(int inputType){
+        contentTextEdit.setInputType(inputType);
+    }
 }

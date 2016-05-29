@@ -41,27 +41,6 @@ public class EditTextWithSubmitButtonView extends LinearLayout{
         View view = LayoutInflater.from(getContext()).inflate(R.layout.view_edit_text_with_submit_button, this);
         ButterKnife.bind(this, view);
         initSubmitButtonDisplayState();
-        displaySubmitButton();
-    }
-
-    private void displaySubmitButton(){
-        contentTextEdit.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                String text = s.toString();
-                if(text.length() >= 4){
-                    submitBtn.setVisibility(VISIBLE);
-                } else {
-                    submitBtn.setVisibility(INVISIBLE);
-                }
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {}
-        });
     }
 
     private void initSubmitButtonDisplayState(){
@@ -72,10 +51,6 @@ public class EditTextWithSubmitButtonView extends LinearLayout{
         contentTextEdit.setHint(text);
     }
 
-    public void setInputType(InputTypeConstant inputtypeConstant) {
-        contentTextEdit.setInputType(inputtypeConstant.getTypeConstantValue());
-    }
-
     public String getInputString(){
         return contentTextEdit.getText().toString();
     }
@@ -83,4 +58,18 @@ public class EditTextWithSubmitButtonView extends LinearLayout{
     public void setOnSubmitButtonClickListener(OnClickListener clickListener){
         submitBtn.setOnClickListener(clickListener);
     }
+
+    public void hideSubmitButton(){
+        submitBtn.setVisibility(INVISIBLE);
+    }
+
+    public void showSubmitButton(){
+        submitBtn.setVisibility(VISIBLE);
+    }
+
+    public void addTextChangedListener(TextWatcher textWatcher){
+        contentTextEdit.addTextChangedListener(textWatcher);
+    }
+
+
 }
