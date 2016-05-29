@@ -25,29 +25,23 @@ import olab.ringring.util.inputtype.InputTypeConstant;
 public class EditTextWithSubmitButtonView extends LinearLayout{
 
     @Bind(R.id.edit_content_text) EditText contentTextEdit;
-    @Bind(R.id.btn_submit) Button submitBtn;
-    @Getter @Setter private Consumer<View> onButtonClickListener;
-
+    @Bind(R.id.btn_duplicate_check) Button submitBtn;
 
     public EditTextWithSubmitButtonView(Context context) {
         super(context);
         initView();
-        initSubmitButtonDisplayState();
-        displaySubmitButton();
-        setOnClickListenerInSubmitButton();
     }
 
     public EditTextWithSubmitButtonView(Context context, AttributeSet attrs) {
         super(context, attrs);
         initView();
-        initSubmitButtonDisplayState();
-        displaySubmitButton();
-        setOnClickListenerInSubmitButton();
     }
 
     private void initView(){
         View view = LayoutInflater.from(getContext()).inflate(R.layout.view_edit_text_with_submit_button, this);
         ButterKnife.bind(this, view);
+        initSubmitButtonDisplayState();
+        displaySubmitButton();
     }
 
     private void displaySubmitButton(){
@@ -58,7 +52,7 @@ public class EditTextWithSubmitButtonView extends LinearLayout{
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 String text = s.toString();
-                if(text.length() > 4){
+                if(text.length() >= 4){
                     submitBtn.setVisibility(VISIBLE);
                 } else {
                     submitBtn.setVisibility(INVISIBLE);
@@ -82,10 +76,11 @@ public class EditTextWithSubmitButtonView extends LinearLayout{
         contentTextEdit.setInputType(inputtypeConstant.getTypeConstantValue());
     }
 
-    // TODO: 2016-05-21 주의 !! 메소드 레퍼런스 기능 적용 안됨
-    private void setOnClickListenerInSubmitButton(){
-        submitBtn.setOnClickListener(view->{
-            onButtonClickListener.accept(view);
-        });
+    public String getInputString(){
+        return contentTextEdit.getText().toString();
+    }
+
+    public void setOnSubmitButtonClickListener(OnClickListener clickListener){
+        submitBtn.setOnClickListener(clickListener);
     }
 }

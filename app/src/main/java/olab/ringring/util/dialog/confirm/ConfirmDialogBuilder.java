@@ -11,6 +11,7 @@ import com.annimon.stream.function.Consumer;
 import lombok.Data;
 import lombok.experimental.Accessors;
 import olab.ringring.util.dialog.DialogBuilder;
+import olab.ringring.util.dialog.infomation.DialogInfoPool;
 
 /**
  * Created by 재화 on 2016-05-22.
@@ -18,10 +19,7 @@ import olab.ringring.util.dialog.DialogBuilder;
 @Accessors(chain=true)
 @Data
 public class ConfirmDialogBuilder implements DialogBuilder{
-    private Drawable dialogTitleIcon;
-    private String dialogTitleText;
-    private @ColorRes int dialogTitleTextColor;
-    private String dialogMessage;
+    private DialogInfoPool dialogInfo;
     private DialogInterface.OnClickListener onConfirmButtonClickListener;
     private @ColorRes int confirmButtonTextColor;
 

@@ -35,8 +35,8 @@ public class JoinTabIndicatorView extends LinearLayout {
     }
 
     private void initView(@StringRes int indicatorTextResource) {
-        View JoinTabIndicatorView = LayoutInflater.from(getContext()).inflate(R.layout.view_join_tab_indicator, this);
-        ButterKnife.bind(JoinTabIndicatorView, this);
+        View joinTabIndicatorView = LayoutInflater.from(getContext()).inflate(R.layout.view_join_tab_indicator, this);
+        ButterKnife.bind(joinTabIndicatorView, this);
         tabViewText.setText(indicatorTextResource);
     }
 

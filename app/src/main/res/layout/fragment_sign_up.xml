@@ -7,27 +7,23 @@
     android:orientation="vertical"
     tools:context="olab.ringring.join.signup.SignUpFragment">
 
-    <EditText
+    <olab.ringring.join.customview.EditTextWithDuplicateButtonView
         android:id="@+id/edit_sign_up_email"
-        style="@style/JoinEditText"
-        android:ems="10"
-        android:hint="@string/sign_up_email_hint"
-        android:imeOptions="actionNext"
-        android:inputType="textEmailAddress" />
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
 
     <TextView
+        android:id="@+id/text_sign_up_email_validate"
         style="@style/JoinCaptionText"
-        android:text="이메일 정보가 올바르지 않습니다" />
+        android:text="이메일 형식이 올바르지 않습니다" />
 
-    <EditText
+    <olab.ringring.join.customview.EditTextWithDuplicateButtonView
         android:id="@+id/edit_sign_up_phone_number"
-        style="@style/JoinEditText"
-        android:ems="10"
-        android:hint="@string/sign_up_my_phone_number_hint"
-        android:imeOptions="actionNext"
-        android:inputType="phone" />
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
 
     <TextView
+        android:id="@+id/text_sign_up_phone_number_validate"
         style="@style/JoinCaptionText"
         android:text="'-' 제외하고 입력해주세요"
         android:textColor="@color/colorJoinCaptionText" />
@@ -40,6 +36,7 @@
         android:inputType="textPassword" />
 
     <TextView
+        android:id="@+id/text_sign_up_password_validate"
         style="@style/JoinCaptionText"
         android:text="비밀번호는 4자 이상입니다"
         android:textColor="@color/colorJoinCaptionText" />
@@ -47,9 +44,10 @@
     <olab.ringring.join.customview.EditTextWithSubmitButtonView
         android:id="@+id/edit_sign_up_password_confirm"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content" />
 
     <TextView
+        android:id="@+id/text_sign_up_password_confirm_validate"
         style="@style/JoinCaptionText"
         android:text="해당 비밀번호와 일치하지 않습니다" />
 

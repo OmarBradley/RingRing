@@ -7,15 +7,15 @@
     <EditText
         android:id="@+id/edit_content_text"
         style="@style/JoinEditText.SubmitEditText"
-        android:inputType="textPassword" />
+        android:imeOptions="actionDone" />
 
     <Button
         android:id="@+id/btn_duplicate_check"
-        android:layout_width="14dp"
+        android:layout_width="50dp"
         android:layout_height="17dp"
         android:layout_gravity="right|top"
         android:layout_marginTop="13dp"
-        android:background="@drawable/ripple_edit_text_submit_button"
+        android:background="@drawable/duplicate_button_image"
         android:layout_marginEnd="6dp" />
 
 </FrameLayout>

@@ -55,7 +55,7 @@ public class JoinActivity extends AppCompatActivity {
 
     private void initTabView() {
         loginTabView = new JoinTabIndicatorView(this, R.string.login_tab_indicator);
-        loginTabView.setTabIndicatorViewWhenFocused(R.color.colorWhiteTextColor, TAB_INDICATOR_NAV_IMAGE);
+        loginTabView.setTabIndicatorViewWhenFocused(R.color.colorWhiteTextColor, R.drawable.join_tab_indicator_nav_image);
         signUpTabView = new JoinTabIndicatorView(this, R.string.sign_up_tab_indicator);
         signUpTabView.setTabIndicatorViewWhenNotFocused(R.color.colorNotFocusedColor);
     }
@@ -73,10 +73,10 @@ public class JoinActivity extends AppCompatActivity {
             @Override
             public void onPageSelected(int position) {
                 if (position == LOGIN_TAB_INDICATOR_VIEW_LOCATION) {
-                    loginTabView.setTabIndicatorViewWhenFocused(R.color.colorWhiteTextColor, TAB_INDICATOR_NAV_IMAGE);
+                    loginTabView.setTabIndicatorViewWhenFocused(R.color.colorWhiteTextColor, R.drawable.join_tab_indicator_nav_image);
                     signUpTabView.setTabIndicatorViewWhenNotFocused(R.color.colorNotFocusedColor);
                 } else {
-                    signUpTabView.setTabIndicatorViewWhenFocused(R.color.colorWhiteTextColor, TAB_INDICATOR_NAV_IMAGE);
+                    signUpTabView.setTabIndicatorViewWhenFocused(R.color.colorWhiteTextColor, R.drawable.join_tab_indicator_nav_image);
                     loginTabView.setTabIndicatorViewWhenNotFocused(R.color.colorNotFocusedColor);
                 }
             }

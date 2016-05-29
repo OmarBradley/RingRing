@@ -18,7 +18,7 @@
     <TextView
         android:id="@+id/text_login_email_validate"
         style="@style/JoinCaptionText"
-        android:text="이메일 정보가 올바르지 않습니다" />
+        android:text="이메일 형식이 올바르지 않습니다" />
 
     <olab.ringring.join.customview.EditTextWithSubmitButtonView
         android:id="@+id/edit_login_password"
@@ -26,6 +26,7 @@
         android:layout_height="wrap_content" />
 
     <TextView
+        android:id="@+id/text_login_password_validate"
         style="@style/JoinCaptionText"
         android:text="해당 비밀번호와 일치하지 않습니다" />
 

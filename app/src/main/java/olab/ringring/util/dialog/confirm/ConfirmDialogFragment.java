@@ -52,12 +52,12 @@ public class ConfirmDialogFragment extends DialogFragment {
     }
 
     private void setAttributeInDialog() {
-        iconDialogTitle.setImageDrawable(dialogBuilder.getDialogTitleIcon());
-        textDialogTitle.setText(dialogBuilder.getDialogTitleText());
-        textDialogTitle.setTextColor(dialogBuilder.getDialogTitleTextColor());
-        textDialogMessage.setText(dialogBuilder.getDialogMessage());
+        iconDialogTitle.setImageDrawable(dialogBuilder.getDialogInfo().getDialogTitleIcon());
+        textDialogTitle.setText(dialogBuilder.getDialogInfo().getDialogTitle());
+        textDialogTitle.setTextColor(dialogBuilder.getDialogInfo().getDialogTitleTextColor());
+        textDialogMessage.setText(dialogBuilder.getDialogInfo().getDialogMessage());
         btnDialogConfirm.setOnClickListener(view -> {
-            dialogBuilder.getOnConfirmButtonClickListener().onClick(getDialog(),DIALOG_ITEM_INDEX);
+            dialogBuilder.getOnConfirmButtonClickListener().onClick(getDialog(), DIALOG_ITEM_INDEX);
         });
         btnDialogConfirm.setTextColor(dialogBuilder.getConfirmButtonTextColor());
     }
