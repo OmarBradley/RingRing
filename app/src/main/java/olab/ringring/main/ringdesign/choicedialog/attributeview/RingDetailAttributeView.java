@@ -66,11 +66,11 @@ public class RingDetailAttributeView extends LinearLayout implements Checkable{
         return attributeCheckImage.getVisibility() == VISIBLE;
     }
 
-    private void showCheckImage() {
+    public void showCheckImage() {
         attributeCheckImage.setVisibility(VISIBLE);
     }
 
-    private void hideCheckImage() {
+    public void hideCheckImage() {
         attributeCheckImage.setVisibility(INVISIBLE);
     }
 

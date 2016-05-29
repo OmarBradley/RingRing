@@ -4,29 +4,25 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context=".join.signup.partnerauthorization.SendDownloadLinkActivity">
+    android:paddingBottom="26dp"
+    android:paddingLeft="25dp"
+    android:paddingRight="25dp"
+    android:paddingTop="26dp"
+    tools:context=".join.signup.loverauthorization.SendDownloadLinkActivity">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="상대방 인증" />
+    <TextView style="@style/LoverAuthorizationTitleText" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:gravity="center"
-        android:text="상대방은 가입하셨나요?\n상대방도 가입을 하여 연결 신청을 보내야 합니다.\n상대방에게 App다운로드 링크를 보내보세요!" />
+        android:text="상대방은 가입하셨나요?\n상대방도 가입을 하여 연결 신청을 보내야 합니다.\n상대방에게 App다운로드 링크를 보내보세요!"
+        android:textSize="15sp" />
 
     <Button
         android:id="@+id/btn_send_download_link"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:text="다운로드 링크 보내기" />
-
+        style="@style/LoverAuthorizationSubmitButton"
+        android:background="@drawable/ripple_send_download_button"
+        android:layout_marginTop="32dp" />
 </LinearLayout>

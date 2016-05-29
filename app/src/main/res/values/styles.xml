@@ -91,4 +91,20 @@
         <item name="android:layout_height">wrap_content</item>
     </style>
 
+    <style name="LoverAuthorizationTitleText">
+        <item name="android:text">상대방 인증</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/colorPrimaryDark</item>
+        <item name="android:paddingBottom">48dp</item>
+    </style>
+
+    <style name="LoverAuthorizationSubmitButton">
+        <item name="android:layout_width">250dp</item>
+        <item name="android:layout_height">51dp</item>
+        <item name="android:layout_gravity">center_horizontal</item>
+    </style>
+
+
 </resources>

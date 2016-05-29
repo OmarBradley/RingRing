@@ -9,6 +9,8 @@ import com.annimon.stream.Stream;
 import java.util.ArrayList;
 import java.util.List;
 
+import lombok.Getter;
+import lombok.Setter;
 import olab.ringring.main.ringdesign.levelpolicy.RingCollectCount;
 
 /**
@@ -18,6 +20,12 @@ public class RingDetailAttributeViewAdapter extends BaseAdapter {
 
     List<RingDetailAttributeViewData> items = new ArrayList<>();
     private int checkPosition;
+    private String checkedItemTag;
+    @Getter @Setter private int initCheckedItemPosition;
+
+    public RingDetailAttributeViewAdapter(String checkedItemTag) {
+        this.checkedItemTag = checkedItemTag;
+    }
 
     public void add(RingDetailAttributeViewData item){
         items.add(item);
@@ -56,6 +64,10 @@ public class RingDetailAttributeViewAdapter extends BaseAdapter {
         itemView.setAttributeImage(items.get(position).getAttributeImage());
         itemView.setCollectingCountText(items.get(position).getCollectCount());
         setItemViewCheckable(itemView, items.get(position).getCollectCount());
+        if(items.get(position).getTag().equals(checkedItemTag)){
+            itemView.showCheckImage();
+            setInitCheckedItemPosition(position);
+        }
         return itemView;
     }
 

@@ -87,6 +87,7 @@ public class RingDesignActivity extends AppCompatActivity
             Toast.makeText(this, "알수 없는 에러" + integer, Toast.LENGTH_SHORT).show();
         }));
     }
+
     private void attachSetRingAttributeFragment(RingIntroResult data) {
         SetRingAttributeFragment setRingAttributeFragment = new SetRingAttributeFragment();
         setRingAttributeFragment.setViewData(data);
@@ -111,6 +112,7 @@ public class RingDesignActivity extends AppCompatActivity
     @Override
     protected void onResume() {
         super.onResume();
+        /*initBigRingView();*/
     }
 
     @Override

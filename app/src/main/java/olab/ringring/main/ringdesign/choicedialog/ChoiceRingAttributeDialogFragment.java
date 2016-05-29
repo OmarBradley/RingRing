@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.GridView;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.annimon.stream.function.Consumer;
@@ -40,7 +41,8 @@ public class ChoiceRingAttributeDialogFragment extends DialogFragment {
     private RingDetailAttributeViewAdapter adapter;
     @Setter private ChoiceRingAttributeDialogBuilder dialogBuilder;
     @Setter @Getter private Consumer<RingDetailAttributeViewData> onDataReceiveListener;
-
+    private String checkedItemTag;
+    private int checkedPosition;
 
     private final static int DIALOG_ITEM_INDEX = 0;
     private final static int SHOW_BACKGROUND_IMAGE_TIME = 2000;
@@ -75,9 +77,12 @@ public class ChoiceRingAttributeDialogFragment extends DialogFragment {
 
 
     private void initListAttributeView(){
-        adapter = new RingDetailAttributeViewAdapter();
+        checkedItemTag = dialogBuilder.getCheckedItemTag();
+        adapter = new RingDetailAttributeViewAdapter(checkedItemTag);
         listAttributeView.setAdapter(adapter);
+        listAttributeView.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
     }
+
 
     private void setAttributeInDialog(){
         dialogTitleText.setText(dialogBuilder.getTitle());
@@ -85,20 +90,22 @@ public class ChoiceRingAttributeDialogFragment extends DialogFragment {
             dialogBuilder.getCancelButtonClickListener().accept(getDialog());
         });
         dialogCheckBtn.setOnClickListener(view ->{
-            int position = getSelectedPosition();
+            getSelectedPosition();
             showBackGroundImage();
-            executeCallbackAction(position);
+            executeCallbackAction(checkedPosition);
         });
         dialogTitleImage.setImageDrawable(ContextCompat.getDrawable(getContext(), dialogBuilder.getTitleImageRes()));
         adapter.addAll(dialogBuilder.getAttributeItems());
+
     }
 
-    private int getSelectedPosition(){
-        int position = 0;
-        if(listAttributeView.getChoiceMode() == GridView.CHOICE_MODE_SINGLE){
-            position = listAttributeView.getCheckedItemPosition();
+    private void getSelectedPosition() {
+        if (listAttributeView.getChoiceMode() == GridView.CHOICE_MODE_SINGLE) {
+            checkedPosition = listAttributeView.getCheckedItemPosition();
+            if (checkedPosition == -1) {
+                checkedPosition = adapter.getInitCheckedItemPosition();
+            }
         }
-        return position;
     }
 
     private void showBackGroundImage(){

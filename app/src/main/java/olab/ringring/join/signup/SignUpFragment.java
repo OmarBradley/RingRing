@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.text.InputType;
-import android.util.Log;
 import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,7 +19,7 @@ import butterknife.ButterKnife;
 import olab.ringring.R;
 import olab.ringring.join.customview.EditTextWithDuplicateButtonView;
 import olab.ringring.join.customview.EditTextWithSubmitButtonView;
-import olab.ringring.join.signup.partnerauthorization.LoverConnectingActivity;
+import olab.ringring.join.signup.loverauthorization.LoverConnectingActivity;
 import olab.ringring.join.util.Validator;
 
 /**

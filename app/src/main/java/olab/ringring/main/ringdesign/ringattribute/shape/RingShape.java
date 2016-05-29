@@ -9,6 +9,7 @@ import lombok.Getter;
 import lombok.Setter;
 import olab.ringring.R;
 import olab.ringring.init.application.RingRingApplication;
+import olab.ringring.main.ringdesign.choicedialog.attributeview.RingDetailAttributeViewData;
 import olab.ringring.main.ringdesign.levelpolicy.RingCollectCount;
 import olab.ringring.util.colorchanger.ImageColorChanger;
 
@@ -19,24 +20,38 @@ import olab.ringring.util.colorchanger.ImageColorChanger;
 public enum RingShape {
 
     // TODO: 2016-05-27 default image와 선택은 색깔로 구분하기
-    CIRCLE(R.drawable.circle_big_image, R.drawable.circle_image, R.drawable.circle_set_image, "원"),
-    TRIANGLE(R.drawable.triangle_big_image, R.drawable.triangle_image, R.drawable.triangle_set_image, "삼각형"),
-    RECTANGLE(R.drawable.rectangle_big_image, R.drawable.rectangle_image, R.drawable.rectangle_set_image, "사각형"),
-    PENTAGON(R.drawable.pentagon_big_image, R.drawable.pantagon_image, R.drawable.pentagon_set_image, "오각형"),
-    HEXAGON(R.drawable.hexagon_big_image, R.drawable.hexagon_image, R.drawable.hexagon_set_image, "육각형"),
-    OCTAGON(R.drawable.octagon_big_image, R.drawable.octagon_image, R.drawable.octagon_set_image, "팔각형");
+    CIRCLE(R.drawable.circle_big_image, R.drawable.circle_image, R.drawable.circle_set_image, "원", "CIRCLE"),
+    TRIANGLE(R.drawable.triangle_big_image, R.drawable.triangle_image, R.drawable.triangle_set_image, "삼각형", "TRIANGLE"),
+    RECTANGLE(R.drawable.rectangle_big_image, R.drawable.rectangle_image, R.drawable.rectangle_set_image, "사각형", "RECTANGLE"),
+    PENTAGON(R.drawable.pentagon_big_image, R.drawable.pantagon_image, R.drawable.pentagon_set_image, "오각형", "PENTAGON"),
+    HEXAGON(R.drawable.hexagon_big_image, R.drawable.hexagon_image, R.drawable.hexagon_set_image, "육각형", "HEXAGON"),
+    OCTAGON(R.drawable.octagon_big_image, R.drawable.octagon_image, R.drawable.octagon_set_image, "팔각형", "OCTAGON");
 
-    RingShape(@DrawableRes int bigImageRes, @DrawableRes int choiceImageRes, @DrawableRes int setImageRes, String name) {
+    RingShape(@DrawableRes int bigImageRes, @DrawableRes int choiceImageRes, @DrawableRes int setImageRes, String name, String tag) {
         this.bigImage = ContextCompat.getDrawable(RingRingApplication.getContext(), bigImageRes);
         this.choiceImage = ContextCompat.getDrawable(RingRingApplication.getContext(), choiceImageRes);
         this.setImage = ContextCompat.getDrawable(RingRingApplication.getContext(), setImageRes);
         this.name = name;
+        this.tag = tag;
     }
 
     @Getter @Setter private @DrawableRes Drawable bigImage;
     @Getter @Setter private @DrawableRes Drawable choiceImage;
     @Getter @Setter private @DrawableRes Drawable setImage;
     @Getter @Setter private String name;
+    @Getter @Setter private String tag;
+
+
+    public RingDetailAttributeViewData getAttributeData(RingCollectCount count){
+        return new RingDetailAttributeViewData.Builder()
+                .setAttributeImage(getShapeImageUsingChoiceDialog(this, count))
+                .setSetImage(setImage)
+                .setCollectCount(count)
+                .setBigImage(bigImage)
+                .setAttributeName(name)
+                .setTag(tag).build();
+    }
+
     private static final Context RESOURCE_CONTEXT = RingRingApplication.getContext();
 
     private static final int SELECTED_SHAPE_COLOR = ContextCompat.getColor(RESOURCE_CONTEXT, R.color.colorPrimary);

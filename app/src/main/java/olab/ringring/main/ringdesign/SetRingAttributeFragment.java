@@ -7,6 +7,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.annimon.stream.function.BiConsumer;
 
@@ -28,8 +29,12 @@ import olab.ringring.main.ringdesign.ringattribute.RingAttributeListConstant;
 import olab.ringring.main.ringdesign.ringattribute.jewelry.RingJewelry;
 import olab.ringring.main.ringdesign.ringattribute.material.RingMaterial;
 import olab.ringring.main.ringdesign.ringattribute.shape.RingShape;
+import olab.ringring.network.NetworkManager;
+import olab.ringring.network.request.ring.RingProtocol;
 import olab.ringring.network.response.ring.intro.RingIntroResult;
-import olab.ringring.util.colorchanger.ImageColorChanger;
+import olab.ringring.network.response.ring.setwindow.jewelry.RingJewelryResult;
+import olab.ringring.network.response.ring.setwindow.material.RingMaterialResult;
+import olab.ringring.network.response.ring.setwindow.shape.RingShapeResult;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -44,18 +49,21 @@ public class SetRingAttributeFragment extends Fragment {
     private ChoiceRingAttributeDialogFragment choiceDialog;
     @Setter @Getter private BiConsumer<RingDetailAttributeViewData, RingAttributeListConstant> onDataReceiveListener;
     @Setter private RingIntroResult viewData;
+    @Setter private RingShapeResult shapeData;
+    @Setter private RingMaterialResult materialData;
+    @Setter private RingJewelryResult jewelryData;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View setRingAttributeView = inflater.inflate(R.layout.fragment_set_ring_attribute, container, false);
         ButterKnife.bind(this, setRingAttributeView);
-        initSetRingAttributeView(shapeView, "링 모양", RingShape.valueOf(viewData.getRingShape()).getSetImage(), RingCollectCount.valueOf(viewData.getRingShapeLevel()));
-        initSetRingAttributeView(materialView, "링 재질", RingMaterial.valueOf(viewData.getRingMaterial()).getImage(), RingCollectCount.valueOf(viewData.getRingMaterialLevel()));
-        initSetRingAttributeView(jewelryView, "보석",RingJewelry.valueOf(viewData.getRingJewelry()).getSetImage(), RingCollectCount.valueOf(viewData.getRingJewelryLevel()));
-        buildJewelryDialog();
-        buildMaterialDialog();
-        buildShapeDialog();
+        initSetRingAttributeView(shapeView, "링 모양", RingShape.valueOf(viewData.getRingShape()).getSetImage(), RingCollectCount.MAX_COUNTING_NUMBER);
+        initSetRingAttributeView(materialView, "링 재질", RingMaterial.valueOf(viewData.getRingMaterial()).getImage(),RingCollectCount.MAX_COUNTING_NUMBER);
+        initSetRingAttributeView(jewelryView, "보석",RingJewelry.valueOf(viewData.getRingJewelry()).getSetImage(), RingCollectCount.MAX_COUNTING_NUMBER);
+        initShapeData();
+        initMaterialData();
+        initJewelryData();
         return setRingAttributeView;
     }
 
@@ -65,34 +73,62 @@ public class SetRingAttributeFragment extends Fragment {
         setRingAttributeView.setRingLevelExpText(ringCollectCount);
     }
 
+    private void initShapeData() {
+        NetworkManager.getInstance().getResult(RingProtocol.SetWindow.makeSetShapeWindowRequest(getActivity()), RingShapeResult.class, (request, result) -> {
+            shapeData = result;
+        }, ((request, integer, throwable) -> {
+            Toast.makeText(getActivity(), "알수 없는 에러" + integer, Toast.LENGTH_SHORT).show();
+        }));
+    }
+
+    private void initMaterialData() {
+        NetworkManager.getInstance().getResult(RingProtocol.SetWindow.makeSetMaterialWindowRequest(getActivity()), RingMaterialResult.class, (request, result) -> {
+            materialData = result;
+        }, ((request, integer, throwable) -> {
+            Toast.makeText(getActivity(), "알수 없는 에러" + integer, Toast.LENGTH_SHORT).show();
+        }));
+    }
+
+    private void initJewelryData() {
+        NetworkManager.getInstance().getResult(RingProtocol.SetWindow.makeSetJewelryWindowRequest(getActivity()), RingJewelryResult.class, (request, result) -> {
+            jewelryData = result;
+        }, ((request, integer, throwable) -> {
+            Toast.makeText(getActivity(), "알수 없는 에러" + integer, Toast.LENGTH_SHORT).show();
+        }));
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        buildJewelryDialog();
+        buildMaterialDialog();
+        buildShapeDialog();
+    }
+
     private void buildJewelryDialog() {
         jewelryView.setOnClickListenerInView(view -> {
             choiceDialog = new ChoiceRingAttributeDialogBuilder()
                     .setTitle(RingAttributeListConstant.JEWELRY.getChoiceDialogTitle())
                     .setCheckButtonClickListener((dialog, data) -> {
                         dialog.dismiss();
+
                         jewelryView.setRingAttributeImage(data.getSetImage());
                         jewelryView.setRingLevelExpText(data.getCollectCount());
                         onDataReceiveListener.accept(data, RingAttributeListConstant.JEWELRY);
-                    }).setCancelButtonClickListener((dialog)->{
+                    }).setCancelButtonClickListener((dialog) -> {
                         dialog.dismiss();
                     }).setTitleImageRes(RingAttributeListConstant.JEWELRY.getChoiceDialogTitleImageRes())
-                    .setAttributeItems(Arrays.asList(new RingDetailAttributeViewData(RingJewelry.CRYSTAL.getName(), RingJewelry.getJewelryImageUsingChoiceDialog(RingJewelry.CRYSTAL,RingCollectCount.FOUR),
-                            RingJewelry.CRYSTAL.getSetImage(),RingJewelry.CRYSTAL.getBigImage(), RingCollectCount.FOUR),
-                            new RingDetailAttributeViewData(RingJewelry.DIAMOND.getName(), RingJewelry.getJewelryImageUsingChoiceDialog(RingJewelry.DIAMOND,RingCollectCount.TEN),
-                                    RingJewelry.DIAMOND.getSetImage(), RingJewelry.DIAMOND.getBigImage(),RingCollectCount.TEN),
-                            new RingDetailAttributeViewData(RingJewelry.EMERALD.getName(), RingJewelry.getJewelryImageUsingChoiceDialog(RingJewelry.EMERALD,RingCollectCount.TEN),
-                                    RingJewelry.EMERALD.getSetImage(), RingJewelry.EMERALD.getBigImage(),RingCollectCount.TEN),
-                            new RingDetailAttributeViewData(RingJewelry.SAPPHIRE.getName(), RingJewelry.getJewelryImageUsingChoiceDialog(RingJewelry.SAPPHIRE,RingCollectCount.ONE),
-                                    RingJewelry.SAPPHIRE.getSetImage(), RingJewelry.SAPPHIRE.getBigImage(),RingCollectCount.ONE),
-                            new RingDetailAttributeViewData(RingJewelry.RUBY.getName(), RingJewelry.getJewelryImageUsingChoiceDialog(RingJewelry.RUBY,RingCollectCount.NINE),
-                                    RingJewelry.RUBY.getSetImage(), RingJewelry.RUBY.getBigImage(),RingCollectCount.NINE),
-                            new RingDetailAttributeViewData(RingJewelry.PERL.getName(), RingJewelry.getJewelryImageUsingChoiceDialog(RingJewelry.PERL,RingCollectCount.ONE),
-                                    RingJewelry.PERL.getSetImage(),RingJewelry.PERL.getBigImage(), RingCollectCount.ONE)))
-                    .build();
+                    .setAttributeItems(Arrays.asList(RingJewelry.CRYSTAL.getAttributeData(RingCollectCount.valueOf(jewelryData.getJewelryCrystalLevel())),
+                            RingJewelry.DIAMOND.getAttributeData(RingCollectCount.valueOf(jewelryData.getJewelryDiamondLevel())),
+                            RingJewelry.EMERALD.getAttributeData(RingCollectCount.valueOf(jewelryData.getJewelryEmeraldLevel())),
+                            RingJewelry.SAPPHIRE.getAttributeData(RingCollectCount.valueOf(jewelryData.getJewelrySapphireLevel())),
+                            RingJewelry.RUBY.getAttributeData(RingCollectCount.valueOf(jewelryData.getJewelryRubyLevel())),
+                            RingJewelry.PERL.getAttributeData(RingCollectCount.valueOf(jewelryData.getJewelryPerlLevel()))))
+                    .setCheckedItemTag(jewelryData.getRingJewelry()).build();
             choiceDialog.show(getActivity().getSupportFragmentManager(), "choice dialog");
         });
     }
+
     private void buildMaterialDialog() {
         materialView.setOnClickListenerInView(view -> {
             choiceDialog = new ChoiceRingAttributeDialogBuilder()
@@ -102,22 +138,16 @@ public class SetRingAttributeFragment extends Fragment {
                         materialView.setRingAttributeImage(data.getSetImage());
                         materialView.setRingLevelExpText(data.getCollectCount());
                         onDataReceiveListener.accept(data, RingAttributeListConstant.MATERIAL);
-                    }).setCancelButtonClickListener((dialog)->{
+                    }).setCancelButtonClickListener((dialog) -> {
                         dialog.dismiss();
                     }).setTitleImageRes(RingAttributeListConstant.MATERIAL.getChoiceDialogTitleImageRes())
-                    .setAttributeItems(Arrays.asList(new RingDetailAttributeViewData(RingMaterial.PLASTIC.getName(), RingMaterial.getMaterialImageUsingChoiceDialog(RingMaterial.PLASTIC, RingCollectCount.FOUR),
-                            RingMaterial.PLASTIC.getImage(), ImageColorChanger.changeDrawableImageColor(RingShape.valueOf(viewData.getRingShape()).getBigImage(),RingMaterial.PLASTIC.getColor()) , RingCollectCount.FOUR),
-                            new RingDetailAttributeViewData(RingMaterial.IRON.getName(), RingMaterial.getMaterialImageUsingChoiceDialog(RingMaterial.IRON, RingCollectCount.SEVEN),
-                                    RingMaterial.IRON.getImage(), ImageColorChanger.changeDrawableImageColor(RingShape.valueOf(viewData.getRingShape()).getBigImage(),RingMaterial.IRON.getColor()) , RingCollectCount.SEVEN),
-                            new RingDetailAttributeViewData(RingMaterial.COPPER.getName(), RingMaterial.getMaterialImageUsingChoiceDialog(RingMaterial.COPPER, RingCollectCount.TEN),
-                                    RingMaterial.COPPER.getImage(), ImageColorChanger.changeDrawableImageColor(RingShape.valueOf(viewData.getRingShape()).getBigImage(),RingMaterial.COPPER.getColor()) , RingCollectCount.TEN),
-                            new RingDetailAttributeViewData(RingMaterial.SILVER.getName(), RingMaterial.getMaterialImageUsingChoiceDialog(RingMaterial.SILVER, RingCollectCount.TEN),
-                                    RingMaterial.SILVER.getImage(), ImageColorChanger.changeDrawableImageColor(RingShape.valueOf(viewData.getRingShape()).getBigImage(),RingMaterial.SILVER.getColor()) , RingCollectCount.TEN),
-                            new RingDetailAttributeViewData(RingMaterial.WHITEGOLD.getName(), RingMaterial.getMaterialImageUsingChoiceDialog(RingMaterial.WHITEGOLD, RingCollectCount.FOUR),
-                                    RingMaterial.WHITEGOLD.getImage(), ImageColorChanger.changeDrawableImageColor(RingShape.valueOf(viewData.getRingShape()).getBigImage(),RingMaterial.WHITEGOLD.getColor()) , RingCollectCount.EIGHT),
-                            new RingDetailAttributeViewData(RingMaterial.GOLD.getName(), RingMaterial.getMaterialImageUsingChoiceDialog(RingMaterial.GOLD, RingCollectCount.TEN),
-                                    RingMaterial.GOLD.getImage(), ImageColorChanger.changeDrawableImageColor(RingShape.valueOf(viewData.getRingShape()).getBigImage(),RingMaterial.GOLD.getColor()) , RingCollectCount.TEN)))
-                    .build();
+                    .setAttributeItems(Arrays.asList(RingMaterial.PLASTIC.getAttributeData(RingCollectCount.valueOf(materialData.getMaterialPlasticLevel()), viewData)
+                            , RingMaterial.IRON.getAttributeData(RingCollectCount.valueOf(materialData.getMaterialIronLevel()), viewData)
+                            , RingMaterial.COPPER.getAttributeData(RingCollectCount.valueOf(materialData.getMaterialCopperLevel()), viewData)
+                            , RingMaterial.SILVER.getAttributeData(RingCollectCount.valueOf(materialData.getMaterialSilverLevel()), viewData)
+                            , RingMaterial.WHITEGOLD.getAttributeData(RingCollectCount.valueOf(materialData.getMaterialWhiteGoldLevel()), viewData)
+                            , RingMaterial.GOLD.getAttributeData(RingCollectCount.valueOf(materialData.getMaterialGoldLevel()), viewData)))
+                    .setCheckedItemTag(materialData.getRingMaterial()).build();
             choiceDialog.show(getActivity().getSupportFragmentManager(), "choice dialog");
         });
     }
@@ -134,26 +164,14 @@ public class SetRingAttributeFragment extends Fragment {
                     }).setCancelButtonClickListener((dialog) -> {
                         dialog.dismiss();
                     }).setTitleImageRes(RingAttributeListConstant.SHAPE.getChoiceDialogTitleImageRes())
-                    .setAttributeItems(Arrays.asList(new RingDetailAttributeViewData(RingShape.CIRCLE.getName(), RingShape.getShapeImageUsingChoiceDialog(RingShape.CIRCLE, RingCollectCount.FOUR),
-                            RingShape.CIRCLE.getSetImage(), RingShape.CIRCLE.getBigImage(), RingCollectCount.FOUR),
-                            new RingDetailAttributeViewData(RingShape.TRIANGLE.getName(), RingShape.getShapeImageUsingChoiceDialog(RingShape.TRIANGLE, RingCollectCount.FIVE),
-                                    RingShape.TRIANGLE.getSetImage(), RingShape.TRIANGLE.getBigImage(), RingCollectCount.FIVE),
-                            new RingDetailAttributeViewData(RingShape.RECTANGLE.getName(), RingShape.getShapeImageUsingChoiceDialog(RingShape.RECTANGLE, RingCollectCount.EIGHT),
-                                    RingShape.RECTANGLE.getSetImage(), RingShape.RECTANGLE.getBigImage(), RingCollectCount.EIGHT),
-                            new RingDetailAttributeViewData(RingShape.PENTAGON.getName(), RingShape.getShapeImageUsingChoiceDialog(RingShape.PENTAGON, RingCollectCount.TEN),
-                                    RingShape.PENTAGON.getSetImage(), RingShape.PENTAGON.getBigImage(), RingCollectCount.TEN),
-                            new RingDetailAttributeViewData(RingShape.HEXAGON.getName(), RingShape.getShapeImageUsingChoiceDialog(RingShape.HEXAGON, RingCollectCount.TEN),
-                                    RingShape.HEXAGON.getSetImage(), RingShape.HEXAGON.getBigImage(), RingCollectCount.TEN),
-                            new RingDetailAttributeViewData(RingShape.OCTAGON.getName(), RingShape.getShapeImageUsingChoiceDialog(RingShape.OCTAGON, RingCollectCount.ONE),
-                                    RingShape.OCTAGON.getSetImage(), RingShape.OCTAGON.getBigImage(), RingCollectCount.ONE)))
-                    .build();
+                    .setAttributeItems(Arrays.asList(RingShape.CIRCLE.getAttributeData(RingCollectCount.valueOf(shapeData.getShapeCircleLevel()))
+                            ,RingShape.TRIANGLE.getAttributeData(RingCollectCount.valueOf(shapeData.getShapeTriangleLevel()))
+                            ,RingShape.RECTANGLE.getAttributeData(RingCollectCount.valueOf(shapeData.getShapeRectangleLevel()))
+                            ,RingShape.PENTAGON.getAttributeData(RingCollectCount.valueOf(shapeData.getShapePentagonLevel()))
+                            ,RingShape.HEXAGON.getAttributeData(RingCollectCount.valueOf(shapeData.getShapeHexagonLevel()))
+                            ,RingShape.OCTAGON.getAttributeData(RingCollectCount.valueOf(shapeData.getShapeOctagonLevel()))))
+                    .setCheckedItemTag(shapeData.getRingShape()).build();
             choiceDialog.show(getActivity().getSupportFragmentManager(), "choice dialog");
         });
-    }
-
-    // TODO: 2016-05-28 반지 설정 변경 후 갱신되는 로직 삽입하기..
-    @Override
-    public void onResume() {
-        super.onResume();
     }
 }

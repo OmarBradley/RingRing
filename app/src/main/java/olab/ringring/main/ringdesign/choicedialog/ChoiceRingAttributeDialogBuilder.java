@@ -28,6 +28,7 @@ public class ChoiceRingAttributeDialogBuilder implements DialogBuilder {
     private Consumer<Dialog> cancelButtonClickListener;
     private @DrawableRes int titleImageRes;
     private List<RingDetailAttributeViewData> attributeItems;
+    private String checkedItemTag;
 
     @Override
     public ChoiceRingAttributeDialogFragment build() {

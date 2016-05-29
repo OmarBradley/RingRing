@@ -21,6 +21,8 @@
     <string name="title_activity_my_account">나의 계정</string>
     <string name="title_activity_set_d_day">사귄날 설정</string>
     <string name="title_activity_mission_history">히스토리</string>
+    <string name="title_activity_lover_connecting">회원가입</string>
+    <string name="title_activity_send_download">회원가입</string>
 
     <!-- use util.date.Days.java -->
     <string name="monday_string">월요일</string>
