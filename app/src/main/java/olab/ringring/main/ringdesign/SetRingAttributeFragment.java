@@ -1,9 +1,11 @@
 package olab.ringring.main.ringdesign;
 
 
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -76,6 +78,8 @@ public class SetRingAttributeFragment extends Fragment {
     private void initShapeData() {
         NetworkManager.getInstance().getResult(RingProtocol.SetWindow.makeSetShapeWindowRequest(getActivity()), RingShapeResult.class, (request, result) -> {
             shapeData = result;
+            initSetRingAttributeView(shapeView, "링 모양", RingShape.valueOf(shapeData.getRingShape()).getSetImage(),  RingCollectCount.MAX_COUNTING_NUMBER);
+            ((RingDesignActivity) getActivity()).getRingFactory().createRingShape(RingShape.valueOf(shapeData.getRingShape()));
         }, ((request, integer, throwable) -> {
             Toast.makeText(getActivity(), "알수 없는 에러" + integer, Toast.LENGTH_SHORT).show();
         }));
@@ -84,6 +88,8 @@ public class SetRingAttributeFragment extends Fragment {
     private void initMaterialData() {
         NetworkManager.getInstance().getResult(RingProtocol.SetWindow.makeSetMaterialWindowRequest(getActivity()), RingMaterialResult.class, (request, result) -> {
             materialData = result;
+            initSetRingAttributeView(materialView, "링 재질", RingMaterial.valueOf(materialData.getRingMaterial()).getImage(),  RingCollectCount.MAX_COUNTING_NUMBER);
+            ((RingDesignActivity) getActivity()).getRingFactory().createRingMaterial(RingMaterial.valueOf(materialData.getRingMaterial()));
         }, ((request, integer, throwable) -> {
             Toast.makeText(getActivity(), "알수 없는 에러" + integer, Toast.LENGTH_SHORT).show();
         }));
@@ -92,6 +98,9 @@ public class SetRingAttributeFragment extends Fragment {
     private void initJewelryData() {
         NetworkManager.getInstance().getResult(RingProtocol.SetWindow.makeSetJewelryWindowRequest(getActivity()), RingJewelryResult.class, (request, result) -> {
             jewelryData = result;
+            initSetRingAttributeView(jewelryView, "보석", RingJewelry.valueOf(jewelryData.getRingJewelry()).getSetImage(),  RingCollectCount.MAX_COUNTING_NUMBER);
+            ((RingDesignActivity) getActivity()).getRingFactory().createRingJewelry(RingJewelry.valueOf(jewelryData.getRingJewelry()));
+
         }, ((request, integer, throwable) -> {
             Toast.makeText(getActivity(), "알수 없는 에러" + integer, Toast.LENGTH_SHORT).show();
         }));
@@ -100,10 +109,16 @@ public class SetRingAttributeFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
+
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
         buildJewelryDialog();
         buildMaterialDialog();
         buildShapeDialog();
-    }
+     }
 
     private void buildJewelryDialog() {
         jewelryView.setOnClickListenerInView(view -> {
@@ -111,10 +126,7 @@ public class SetRingAttributeFragment extends Fragment {
                     .setTitle(RingAttributeListConstant.JEWELRY.getChoiceDialogTitle())
                     .setCheckButtonClickListener((dialog, data) -> {
                         dialog.dismiss();
-
-                        jewelryView.setRingAttributeImage(data.getSetImage());
-                        jewelryView.setRingLevelExpText(data.getCollectCount());
-                        onDataReceiveListener.accept(data, RingAttributeListConstant.JEWELRY);
+                        initJewelryData();
                     }).setCancelButtonClickListener((dialog) -> {
                         dialog.dismiss();
                     }).setTitleImageRes(RingAttributeListConstant.JEWELRY.getChoiceDialogTitleImageRes())
@@ -135,9 +147,7 @@ public class SetRingAttributeFragment extends Fragment {
                     .setTitle(RingAttributeListConstant.MATERIAL.getChoiceDialogTitle())
                     .setCheckButtonClickListener((dialog, data) -> {
                         dialog.dismiss();
-                        materialView.setRingAttributeImage(data.getSetImage());
-                        materialView.setRingLevelExpText(data.getCollectCount());
-                        onDataReceiveListener.accept(data, RingAttributeListConstant.MATERIAL);
+                        initMaterialData();
                     }).setCancelButtonClickListener((dialog) -> {
                         dialog.dismiss();
                     }).setTitleImageRes(RingAttributeListConstant.MATERIAL.getChoiceDialogTitleImageRes())
@@ -158,9 +168,7 @@ public class SetRingAttributeFragment extends Fragment {
                     .setTitle(RingAttributeListConstant.SHAPE.getChoiceDialogTitle())
                     .setCheckButtonClickListener((dialog, data) -> {
                         dialog.dismiss();
-                        shapeView.setRingAttributeImage(data.getSetImage());
-                        shapeView.setRingLevelExpText(data.getCollectCount());
-                        onDataReceiveListener.accept(data, RingAttributeListConstant.SHAPE);
+                        initShapeData();
                     }).setCancelButtonClickListener((dialog) -> {
                         dialog.dismiss();
                     }).setTitleImageRes(RingAttributeListConstant.SHAPE.getChoiceDialogTitleImageRes())

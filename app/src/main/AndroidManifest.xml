@@ -56,7 +56,13 @@
             android:name=".main.mymenu.myaccount.MyAccountActivity"
             android:label="@string/title_activity_my_account"
             android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustResize" />
+            android:windowSoftInputMode="adjustResize" >
+            <!--<intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>-->
+        </activity>
         <activity
             android:name=".main.mymenu.missionhistory.MissionHistoryActivity"
             android:label="@string/title_activity_mission_history"
@@ -68,21 +74,21 @@
             android:name=".main.mymenu.MyMenuActivity"
             android:label="@string/title_activity_my_menu"
             android:theme="@style/AppTheme.NoTitleActionBar">
-            <!--<intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>-->
-        </activity>
-        <activity
-            android:name=".main.ringdesign.RingDesignActivity"
-            android:label="@string/title_activity_ring_design"
-            android:theme="@style/AppTheme.NoTitleActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity
+            android:name=".main.ringdesign.RingDesignActivity"
+            android:label="@string/title_activity_ring_design"
+            android:theme="@style/AppTheme.NoTitleActionBar">
+            <!--<intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>-->
         </activity>
         <meta-data
             android:name="olab.ringring.init.glide.RingRingGlideModule"

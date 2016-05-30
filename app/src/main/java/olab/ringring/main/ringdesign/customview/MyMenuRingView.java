@@ -15,6 +15,8 @@ import com.mikhaellopez.circularprogressbar.CircularProgressBar;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import olab.ringring.R;
+import olab.ringring.main.mymenu.ringattribute.MyMenuRingJewelry;
+import olab.ringring.main.mymenu.ringattribute.MyMenuRingShape;
 import olab.ringring.main.ringdesign.levelpolicy.RingLevel;
 import olab.ringring.main.ringdesign.ringattribute.jewelry.RingJewelry;
 import olab.ringring.main.ringdesign.ringattribute.material.RingMaterial;
@@ -47,8 +49,8 @@ public class MyMenuRingView extends LinearLayout {
         ButterKnife.bind(this, view);
     }
 
-    public void setJewelryDrawable(RingJewelry jewelry) {
-        jewelryImage.setImageDrawable(jewelry.getChoiceImage());
+    public void setJewelryDrawable(MyMenuRingJewelry jewelry) {
+        jewelryImage.setImageDrawable(jewelry.getRingJewelry());
     }
 
     public void setJewelryDrawable(Drawable jewelryDrawable) {
@@ -68,8 +70,8 @@ public class MyMenuRingView extends LinearLayout {
         return shapeImage.getDrawable();
     }
 
-    public void setShapeDrawable(RingShape shape) {
-        shapeImage.setImageDrawable(shape.getChoiceImage());
+    public void setShapeDrawable(MyMenuRingShape shape) {
+        shapeImage.setImageDrawable(shape.getRingShape());
     }
 
     public void setCollectingCountText(RingLevel level) {

@@ -3,7 +3,9 @@ package olab.ringring.main.mymenu;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.DrawableRes;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,6 +24,8 @@ import olab.ringring.R;
 import olab.ringring.main.mymenu.dday.DDaySettingActivity;
 import olab.ringring.main.mymenu.missionhistory.MissionHistoryActivity;
 import olab.ringring.main.mymenu.myaccount.MyAccountActivity;
+import olab.ringring.main.mymenu.ringattribute.MyMenuRingJewelry;
+import olab.ringring.main.mymenu.ringattribute.MyMenuRingShape;
 import olab.ringring.main.nav.NavMenuView;
 import olab.ringring.main.ringdesign.customview.MyMenuRingView;
 import olab.ringring.main.ringdesign.levelpolicy.RingLevel;
@@ -53,17 +57,19 @@ public class MyMenuFragment extends Fragment {
                              Bundle savedInstanceState) {
         View myMenuFragmentView = inflater.inflate(R.layout.fragment_my_menu, container, false);
         ButterKnife.bind(this, myMenuFragmentView);
-        setNavView(navMyAccountView, MyAccountActivity.class);
-        setNavView(navSettingDdayView, DDaySettingActivity.class);
-        setNavView(navMissionHistoryView, MissionHistoryActivity.class);
+        setNavView(navMyAccountView, MyAccountActivity.class, R.drawable.nav_my_account_image, "나의 계정");
+        setNavView(navSettingDdayView, DDaySettingActivity.class,R.drawable.nav_set_d_day_image ,"사귄날 설정" );
+        setNavView(navMissionHistoryView, MissionHistoryActivity.class,R.drawable.nav_history_image, "히스토리" );
         getResponseData();
         return myMenuFragmentView;
     }
 
-    private void setNavView(NavMenuView navMenuView, Class anotherActivity ){
+    private void setNavView(NavMenuView navMenuView, Class anotherActivity, @DrawableRes int navIconRes, String navMenuText){
         navMenuView.setOnClickListener(view ->{
             moveToAnotherActivity(anotherActivity);
         });
+        navMenuView.setNavMenuIcon(navIconRes);
+        navMenuView.setNavMenuText(navMenuText);
     }
 
     private void moveToAnotherActivity(Class anotherActivity) {
@@ -84,10 +90,10 @@ public class MyMenuFragment extends Fragment {
         if (data.getUserProfile() != null || !TextUtils.isEmpty(data.getUserProfile())) {
             Glide.with(this).load(data.getUserProfile()).into(userProfileImage);
         } else {
-            userProfileImage.setImageResource(R.mipmap.ic_launcher);
+            userProfileImage.setImageResource(R.drawable.my_menu_default_profile_image);
         }
         userNameText.setText(data.getUserNickname());
-        loverNameText.setText(data.getLoverNickname());
+        loverNameText.setText(data.getLoverNickname() + getResources().getString(R.string.my_menu_lover_text_view_add_text));
         setMyRingView(data);
         ringLevelText.setText(""+RingLevel.valueOf(data.getCoupleExp()).getLevelNumber());
     }
@@ -96,8 +102,8 @@ public class MyMenuFragment extends Fragment {
         myRingView.setCollectingCountProgressBar(RingLevel.valueOf(data.getCoupleExp()));
         myRingView.setCollectingCountText(RingLevel.valueOf(data.getCoupleExp()));
         MyMenuIntroCoupleRing coupleRing = data.getCoupleRings().get(0);
-        myRingView.setJewelryDrawable(RingJewelry.valueOf(coupleRing.getRingJewelry()));
-        myRingView.setShapeDrawable(RingShape.valueOf(coupleRing.getRingShape()));
+        myRingView.setJewelryDrawable(MyMenuRingJewelry.valueOf(coupleRing.getRingJewelry()));
+        myRingView.setShapeDrawable(MyMenuRingShape.valueOf(coupleRing.getRingShape()));
         myRingView.setMaterialColor(RingMaterial.valueOf(coupleRing.getRingMaterial()));
 
     }

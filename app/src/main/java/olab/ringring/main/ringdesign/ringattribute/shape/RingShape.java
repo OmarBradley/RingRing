@@ -19,7 +19,6 @@ import olab.ringring.util.colorchanger.ImageColorChanger;
 
 public enum RingShape {
 
-    // TODO: 2016-05-27 default image와 선택은 색깔로 구분하기
     CIRCLE(R.drawable.circle_big_image, R.drawable.circle_image, R.drawable.circle_set_image, "원", "CIRCLE"),
     TRIANGLE(R.drawable.triangle_big_image, R.drawable.triangle_image, R.drawable.triangle_set_image, "삼각형", "TRIANGLE"),
     RECTANGLE(R.drawable.rectangle_big_image, R.drawable.rectangle_image, R.drawable.rectangle_set_image, "사각형", "RECTANGLE"),
@@ -56,16 +55,6 @@ public enum RingShape {
 
     private static final int SELECTED_SHAPE_COLOR = ContextCompat.getColor(RESOURCE_CONTEXT, R.color.colorPrimary);
     private static final int NOT_SELECTED_SHAPE_COLOR = ContextCompat.getColor(RESOURCE_CONTEXT, R.color.colorDefault);
-
-    public static final Drawable getSelectedShapeImage(String shapeText){
-        Drawable imageNotColorChanged = RingShape.valueOf(shapeText).getChoiceImage();
-        return ImageColorChanger.changeDrawableImageColor(imageNotColorChanged, SELECTED_SHAPE_COLOR);
-    }
-
-    public static final Drawable getNotSelectedShapeImage(String shapeText){
-        Drawable imageNotColorChanged = RingShape.valueOf(shapeText).getChoiceImage();
-        return ImageColorChanger.changeDrawableImageColor(imageNotColorChanged, NOT_SELECTED_SHAPE_COLOR);
-    }
 
     public static final Drawable getShapeImageUsingChoiceDialog(RingShape shape, RingCollectCount count) {
         if (count == RingCollectCount.MAX_COUNTING_NUMBER) {

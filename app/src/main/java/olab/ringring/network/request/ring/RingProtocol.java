@@ -64,8 +64,8 @@ public class RingProtocol {
             bodyParameters.put("ringMaterial", selectedMaterial);
             return new RequestBuilder()
                     .setTag(tag)
-                    .setUrl(RingProtocolUrl.SELECT_SHAPE.getUrl())
-                    .addPageSegment(RingProtocolUrl.SELECT_SHAPE.getPageSegment())
+                    .setUrl(RingProtocolUrl.SELECT_MATERIAL.getUrl())
+                    .addPageSegment(RingProtocolUrl.SELECT_MATERIAL.getPageSegment())
                     .addBodyParameters(bodyParameters)
                     .build();
         }
@@ -76,8 +76,8 @@ public class RingProtocol {
             bodyParameters.put("ringJewelry", selectedJewelry);
             return new RequestBuilder()
                     .setTag(tag)
-                    .setUrl(RingProtocolUrl.SELECT_SHAPE.getUrl())
-                    .addPageSegment(RingProtocolUrl.SELECT_SHAPE.getPageSegment())
+                    .setUrl(RingProtocolUrl.SELECT_JEWELRY.getUrl())
+                    .addPageSegment(RingProtocolUrl.SELECT_JEWELRY.getPageSegment())
                     .addBodyParameters(bodyParameters)
                     .build();
         }

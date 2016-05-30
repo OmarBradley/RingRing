@@ -3,89 +3,144 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colorWhiteTextColor"
     android:orientation="vertical"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="olab.ringring.main.mymenu.MyMenuFragment"
     tools:showIn="@layout/app_bar_my_menu">
 
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/colorGrayBackground"
-        android:gravity="center"
-        android:orientation="vertical"
-        android:padding="10dp">
-
-        <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/image_my_menu_user_profile"
-            android:layout_width="70dp"
-            android:layout_height="70dp"
-            android:src="@drawable/test_user_profile_image" />
-
-        <TextView
-            android:id="@+id/text_my_menu_user_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Sara kim" />
-
-        <TextView
-            android:id="@+id/text_my_menu_lover_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="jack님의 애인" />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <olab.ringring.main.ringdesign.customview.MyMenuRingView
-            android:id="@+id/view_my_menu_ring"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+        android:layout_height="wrap_content">
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <TextView
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="My Level" />
+                android:background="@color/colorGrayBackground"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="10dp">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="나의 반지 레벨" />
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/image_my_menu_user_profile"
+                    android:layout_width="90dp"
+                    android:layout_height="90dp"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="18dp"
+                    android:src="@drawable/my_menu_default_profile_image" />
 
-            <TextView
-                android:id="@+id/text_my_menu_ring_level"
-                android:layout_width="wrap_content"
+                <TextView
+                    android:id="@+id/text_my_menu_user_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="4dp"
+                    android:text="Sara kim"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:textSize="13sp" />
+
+                <TextView
+                    android:id="@+id/text_my_menu_lover_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginBottom="12dp"
+                    android:layout_marginTop="-4dp"
+                    android:text="jack님의 애인"
+                    android:textColor="@color/colorTextColor"
+                    android:textSize="13sp" />
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_gravity="end"
+                android:background="@color/colorMyLevelText" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="2" />
+                android:layout_marginBottom="42dp"
+                android:layout_marginTop="27dp"
+                android:orientation="horizontal">
+
+                <olab.ringring.main.ringdesign.customview.MyMenuRingView
+                    android:id="@+id/view_my_menu_ring"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="18dp"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:text="My Level"
+                        android:textColor="@color/colorMyLevelText"
+                        android:textSize="25sp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="2dp"
+                        android:text="나의 반지 레벨"
+                        android:textColor="@color/colorTextColor"
+                        android:textSize="15sp" />
+
+                    <TextView
+                        android:id="@+id/text_my_menu_ring_level"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:text="2"
+                        android:textStyle="bold"
+                        android:textColor="@color/colorBlueText"
+                        android:textSize="45sp" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="292dp"
+                android:layout_height="1dp"
+                android:layout_gravity="end"
+                android:background="@color/colorMyLevelText" />
+
+            <olab.ringring.main.nav.NavMenuView
+                android:id="@+id/view_nav_my_account"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <olab.ringring.main.nav.NavMenuView
+                android:id="@+id/view_nav_setting_d_day"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <olab.ringring.main.nav.NavMenuView
+                android:id="@+id/view_nav_mission_history"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
 
         </LinearLayout>
 
-    </LinearLayout>
 
-    <olab.ringring.main.nav.NavMenuView
-        android:id="@+id/view_nav_my_account"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-
-    <olab.ringring.main.nav.NavMenuView
-        android:id="@+id/view_nav_setting_d_day"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-
-    <olab.ringring.main.nav.NavMenuView
-        android:id="@+id/view_nav_mission_history"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-
+    </ScrollView>
 
 </LinearLayout>
 

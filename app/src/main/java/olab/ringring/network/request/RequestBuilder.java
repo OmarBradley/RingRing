@@ -26,6 +26,7 @@ public class RequestBuilder {
     private MultipartBody.Builder requestMultipartBodyBuilder;
 
     private static final String IMAGE_MEDIA_TYPE = "image/jpeg";
+    public static final String BASE_URL = "http://52.36.101.232:3000";
 
     public RequestBuilder setTag(Context tag) {
         requestBuilder = new Request.Builder();

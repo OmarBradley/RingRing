@@ -52,7 +52,7 @@ public class MyMenuActivity extends AppCompatActivity
     private void attachMyMenuFragment(){
         MyMenuFragment myMenuFragment = new MyMenuFragment();
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        fragmentTransaction.add(R.id.container_my_menu_fragment, myMenuFragment);
+        fragmentTransaction.replace(R.id.container_my_menu_fragment, myMenuFragment);
         fragmentTransaction.commit();
     }
 

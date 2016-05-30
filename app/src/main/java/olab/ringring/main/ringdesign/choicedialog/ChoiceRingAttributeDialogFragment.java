@@ -7,6 +7,7 @@ import android.os.Looper;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.content.ContextCompat;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,7 +15,9 @@ import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.annimon.stream.Stream;
 import com.annimon.stream.function.Consumer;
 
 import butterknife.Bind;
@@ -22,9 +25,16 @@ import butterknife.ButterKnife;
 import de.hdodenhof.circleimageview.CircleImageView;
 import lombok.Getter;
 import lombok.Setter;
+import okhttp3.Request;
 import olab.ringring.R;
 import olab.ringring.main.ringdesign.choicedialog.attributeview.RingDetailAttributeViewAdapter;
 import olab.ringring.main.ringdesign.choicedialog.attributeview.RingDetailAttributeViewData;
+import olab.ringring.main.ringdesign.ringattribute.RingAttributeListConstant;
+import olab.ringring.network.NetworkManager;
+import olab.ringring.network.request.ring.RingProtocol;
+import olab.ringring.network.response.ring.select.jewelry.SelectJewelryResult;
+import olab.ringring.network.response.ring.select.material.SelectMaterialResult;
+import olab.ringring.network.response.ring.select.shape.SelectShapeResult;
 
 /**
  * Created by 재화 on 2016-05-24.
@@ -41,10 +51,8 @@ public class ChoiceRingAttributeDialogFragment extends DialogFragment {
     private RingDetailAttributeViewAdapter adapter;
     @Setter private ChoiceRingAttributeDialogBuilder dialogBuilder;
     @Setter @Getter private Consumer<RingDetailAttributeViewData> onDataReceiveListener;
-    private String checkedItemTag;
     private int checkedPosition;
 
-    private final static int DIALOG_ITEM_INDEX = 0;
     private final static int SHOW_BACKGROUND_IMAGE_TIME = 2000;
 
     @Override
@@ -77,12 +85,10 @@ public class ChoiceRingAttributeDialogFragment extends DialogFragment {
 
 
     private void initListAttributeView(){
-        checkedItemTag = dialogBuilder.getCheckedItemTag();
-        adapter = new RingDetailAttributeViewAdapter(checkedItemTag);
+        adapter = new RingDetailAttributeViewAdapter();
         listAttributeView.setAdapter(adapter);
         listAttributeView.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
     }
-
 
     private void setAttributeInDialog(){
         dialogTitleText.setText(dialogBuilder.getTitle());
@@ -95,8 +101,22 @@ public class ChoiceRingAttributeDialogFragment extends DialogFragment {
             executeCallbackAction(checkedPosition);
         });
         dialogTitleImage.setImageDrawable(ContextCompat.getDrawable(getContext(), dialogBuilder.getTitleImageRes()));
+        showCheckImageInAlreadyCheckedPosition();
         adapter.addAll(dialogBuilder.getAttributeItems());
 
+    }
+
+
+    private void showCheckImageInAlreadyCheckedPosition(){
+        int alreadyCheckedPosition = 0;
+        for(RingDetailAttributeViewData item : dialogBuilder.getAttributeItems()){
+            if(item.getTag().equals(dialogBuilder.getCheckedItemTag())){
+                listAttributeView.setItemChecked(alreadyCheckedPosition,true);
+            } else {
+                listAttributeView.setItemChecked(alreadyCheckedPosition, false);
+            }
+            alreadyCheckedPosition++;
+        }
     }
 
     private void getSelectedPosition() {
@@ -116,7 +136,27 @@ public class ChoiceRingAttributeDialogFragment extends DialogFragment {
     private void executeCallbackAction(int position){
         Handler handler = new Handler(Looper.getMainLooper());
         handler.postDelayed(()->{
+            sendSelectionData();
             dialogBuilder.getCheckButtonClickListener().accept(getDialog(), adapter.getItem(position));
         },SHOW_BACKGROUND_IMAGE_TIME);
+    }
+
+    private void sendSelectionData(){
+        if (dialogBuilder.getTitle().equals(RingAttributeListConstant.JEWELRY.getChoiceDialogTitle())) {
+            sendNetworkRequest(RingProtocol.Select.makeSelectJewelryRequest(getActivity(), adapter.getItem(checkedPosition).getTag()), SelectJewelryResult.class);
+        } else if(dialogBuilder.getTitle().equals(RingAttributeListConstant.MATERIAL.getChoiceDialogTitle())){
+            sendNetworkRequest(RingProtocol.Select.makeSelectMaterialRequest(getActivity(), adapter.getItem(checkedPosition).getTag()), SelectMaterialResult.class);
+        } else {
+            sendNetworkRequest(RingProtocol.Select.makeSelectShapeRequest(getActivity(), adapter.getItem(checkedPosition).getTag()), SelectShapeResult.class);
+        }
+    }
+
+    private void sendNetworkRequest(Request selectRequest, Class selectResultClass) {
+        NetworkManager.getInstance().getResult(selectRequest, selectResultClass,
+                (request, result) -> {
+                    Log.e("result", result.toString());
+                }, (request, integer, throwable) -> {
+                    Log.e("result error", integer + "");
+                });
     }
 }

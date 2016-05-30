@@ -1,5 +1,7 @@
 package olab.ringring.main.ringdesign.levelpolicy;
 
+import android.util.Log;
+
 import com.annimon.stream.Stream;
 
 import lombok.Getter;
@@ -19,15 +21,8 @@ public enum RingLevel {
     @Getter int levelNumber;
 
     public int getProgressLevelNumber() {
-        return levelNumber / RingLevel.EIGHTEEN.getLevelNumber() * 100;
-    }
-
-    public static RingLevel valueOf(int resultNumber){
-        RingLevel element = Stream.of(RingLevel.values())
-                .filter(value -> {return value.getLevelNumber() == resultNumber;})
-                .findFirst()
-                .get();
-        return element;
+        float progress = (float)levelNumber / (float)RingLevel.EIGHTEEN.getLevelNumber();
+        return (int)(progress * 100);
     }
 
     public static final RingLevel MAX_LEVEL = RingLevel.EIGHTEEN;

@@ -3,7 +3,6 @@ package olab.ringring.main.ringdesign;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -27,14 +26,12 @@ import olab.ringring.main.ringdesign.ringattribute.RingAttributeListConstant;
 import olab.ringring.main.ringdesign.ringattribute.jewelry.RingJewelry;
 import olab.ringring.main.ringdesign.ringattribute.material.RingMaterial;
 import olab.ringring.main.ringdesign.ringattribute.shape.RingShape;
-import olab.ringring.main.ringdesign.ringfactory.contretefactory.BigRingFactory;
+import olab.ringring.main.ringdesign.ringattribute.BigRingFactory;
 import olab.ringring.network.NetworkManager;
 import olab.ringring.network.request.ring.RingProtocol;
 import olab.ringring.network.response.ring.intro.RingIntroResult;
 import olab.ringring.util.actionbar.element.ActionBarElement;
 import olab.ringring.util.actionbar.visitor.ActionbarVisitor;
-import olab.ringring.util.actionbar.visitor.concretevisitor.SetActionBarIconVisitor;
-import olab.ringring.util.actionbar.visitor.concretevisitor.SetActionBarTitleVisitor;
 import olab.ringring.util.colorchanger.ImageColorChanger;
 
 public class RingDesignActivity extends AppCompatActivity
@@ -46,9 +43,8 @@ public class RingDesignActivity extends AppCompatActivity
     @Bind(R.id.view_ring_level) RingLevelView ringLevelView;
     @Bind(R.id.view_big_ring) BigRingView bigRingView;
 
-    private BigRingFactory ringFactory;
+    @Getter private BigRingFactory ringFactory;
     @Setter private RingMaterial selectedMaterial;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -112,7 +108,7 @@ public class RingDesignActivity extends AppCompatActivity
     @Override
     protected void onResume() {
         super.onResume();
-        /*initBigRingView();*/
+        initBigRingView();
     }
 
     @Override

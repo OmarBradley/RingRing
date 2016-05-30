@@ -102,7 +102,7 @@ public class Validator {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 String confirmPasswordText = s.toString();
-                if (confirmPasswordText.equals(PASSWORD_TEXT)) {
+                if (confirmPasswordText.equals(PASSWORD_TEXT) && confirmPasswordText.length() >= MIN_PASSWORD_TEXT_LENGTH) {
                     confirmPasswordEdit.showSubmitButton();
                     captionText.setVisibility(View.INVISIBLE);
                 }

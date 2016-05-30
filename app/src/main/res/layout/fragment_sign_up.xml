@@ -27,7 +27,7 @@
         android:id="@+id/text_sign_up_phone_number_validate"
         style="@style/JoinCaptionText"
         android:text="'-' 제외하고 입력해주세요"
-        android:textColor="@color/colorJoinCaptionText" />
+        android:textColor="@color/colorBlueText" />
 
     <EditText
         android:id="@+id/edit_sign_up_password"
@@ -40,7 +40,7 @@
         android:id="@+id/text_sign_up_password_validate"
         style="@style/JoinCaptionText"
         android:text="비밀번호는 4자 이상입니다"
-        android:textColor="@color/colorJoinCaptionText" />
+        android:textColor="@color/colorBlueText" />
 
     <olab.ringring.join.customview.EditTextWithSubmitButtonView
         android:id="@+id/edit_sign_up_password_confirm"
@@ -54,8 +54,10 @@
 
     <Button
         android:id="@+id/btn_sign_up_facebook"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/sign_up_facebook_text" />
+        android:paddingStart="-3dp"
+        android:layout_marginTop="15dp"
+        android:layout_width="167dp"
+        android:layout_height="24dp"
+        android:background="@drawable/sign_up_facebook_image" />
 
 </LinearLayout>

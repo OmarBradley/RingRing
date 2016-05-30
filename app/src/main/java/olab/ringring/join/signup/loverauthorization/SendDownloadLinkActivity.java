@@ -25,7 +25,7 @@ public class SendDownloadLinkActivity extends AppCompatActivity implements Actio
         setContentView(R.layout.activity_send_download_link);
         ButterKnife.bind(this);
         this.accept(new SetActionBarTitleVisitor("회원가입"));
-        this.accept(new SetActionBarIconVisitor(ContextCompat.getDrawable(this, R.mipmap.ic_launcher)));
+        this.accept(new SetActionBarIconVisitor(ContextCompat.getDrawable(this, R.drawable.actionbar_home_as_up_image)));
         sendDownloadLinkBtn.setOnClickListener(view -> {
             Intent pageMover = new Intent(this, HomeActivity.class);
             startActivity(pageMover);

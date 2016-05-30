@@ -3,6 +3,7 @@ package olab.ringring.main.nav;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.DrawableRes;
+import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -43,8 +44,8 @@ public class NavMenuView extends LinearLayout {
 
     }
 
-    public void setNavMenuIcon(@DrawableRes Drawable menuIcon) {
-        menuIconImage.setImageDrawable(menuIcon);
+    public void setNavMenuIcon(@DrawableRes int menuIconRes) {
+        menuIconImage.setImageDrawable(ContextCompat.getDrawable(getContext(),menuIconRes));
     }
 
     public void setNavMenuText(String menuText) {

@@ -1,4 +1,4 @@
-package olab.ringring.main.ringdesign.ringfactory.contretefactory;
+package olab.ringring.main.ringdesign.ringattribute;
 
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
@@ -7,39 +7,48 @@ import olab.ringring.main.ringdesign.customview.BigRingView;
 import olab.ringring.main.ringdesign.ringattribute.jewelry.RingJewelry;
 import olab.ringring.main.ringdesign.ringattribute.material.RingMaterial;
 import olab.ringring.main.ringdesign.ringattribute.shape.RingShape;
-import olab.ringring.main.ringdesign.ringfactory.RingFactory;
 import olab.ringring.util.colorchanger.ImageColorChanger;
 
 /**
  * Created by 재화 on 2016-05-24.
  */
 
-public class BigRingFactory implements RingFactory {
+public class BigRingFactory  {
 
     BigRingView ringView;
+    RingJewelry jewelry;
+    RingShape shape;
+    RingMaterial material;
 
     public BigRingFactory(BigRingView ringView, RingJewelry jewelry, RingMaterial material, RingShape shape) {
         this.ringView = ringView;
+        this.jewelry = jewelry;
+        this.material = material;
+        this.shape = shape;
         createRingJewelry(jewelry);
         createRingShape(shape);
         createRingMaterial(material);
     }
 
-    @Override
+
     public void createRingJewelry(RingJewelry jewelry) {
         ringView.setJewelryDrawable(jewelry);
     }
 
-    @Override
-    public void createRingShape(RingShape shape) {
-        ringView.setShapeDrawable(shape);
-    }
 
-    @Override
-    public void createRingMaterial(RingMaterial material) {
-        Drawable presentImage = ringView.getShapeDrawable();
+    public void createRingShape(RingShape shape) {
+        this.shape = shape;
+        Drawable presentImage = shape.getBigImage();
         Bitmap imageAfterColorChange = ImageColorChanger.changeImageColor(presentImage, material.getColor());
         ringView.setShapeImageBitmap(imageAfterColorChange);
+    }
+
+    public void createRingMaterial(RingMaterial material) {
+        this.material = material;
+        Drawable presentImage = shape.getBigImage();
+        Bitmap imageAfterColorChange = ImageColorChanger.changeImageColor(presentImage, material.getColor());
+        ringView.setShapeImageBitmap(imageAfterColorChange);
+
     }
 
 }

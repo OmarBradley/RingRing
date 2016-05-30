@@ -1,19 +1,20 @@
 package olab.ringring.network.request.ring;
 
 import lombok.Getter;
+import olab.ringring.network.request.RequestBuilder;
 
 /**
  * Created by 재화 on 2016-05-27.
  */
 public enum RingProtocolUrl {
 
-    INTRO("http://52.36.101.232:3000", "ring"),
-    SET_SHAPE_WINDOW("http://52.36.101.232:3000/ring", "shape"),
-    SELECT_SHAPE("http://52.36.101.232:3000/ring", "shape"),
-    SET_MATERIAL_WINDOW("http://52.36.101.232:3000/ring", "material"),
-    SELECT_MATERIAL("http://52.36.101.232:3000/ring", "material"),
-    SET_JEWELRY_WINDOW("http://52.36.101.232:3000/ring", "jewelry"),
-    SELECT_JEWELRY("http://52.36.101.232:3000/ring", "jewelry");
+    INTRO(RequestBuilder.BASE_URL, "ring"),
+    SET_SHAPE_WINDOW(RequestBuilder.BASE_URL + RingProtocolUrl.RING_PROTOCOL_PAGE_SEGMENT, "shape"),
+    SELECT_SHAPE(RequestBuilder.BASE_URL + RingProtocolUrl.RING_PROTOCOL_PAGE_SEGMENT, "shape"),
+    SET_MATERIAL_WINDOW(RequestBuilder.BASE_URL + RingProtocolUrl.RING_PROTOCOL_PAGE_SEGMENT, "material"),
+    SELECT_MATERIAL(RequestBuilder.BASE_URL + RingProtocolUrl.RING_PROTOCOL_PAGE_SEGMENT, "material"),
+    SET_JEWELRY_WINDOW(RequestBuilder.BASE_URL + RingProtocolUrl.RING_PROTOCOL_PAGE_SEGMENT, "jewelry"),
+    SELECT_JEWELRY(RequestBuilder.BASE_URL + RingProtocolUrl.RING_PROTOCOL_PAGE_SEGMENT, "jewelry");
 
     RingProtocolUrl(String url, String pageSegment) {
         this.url = url;
@@ -22,4 +23,6 @@ public enum RingProtocolUrl {
 
     @Getter private String url;
     @Getter private String pageSegment;
+
+    private static final String RING_PROTOCOL_PAGE_SEGMENT ="/ring";
 }

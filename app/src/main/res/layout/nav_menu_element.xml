@@ -3,17 +3,25 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@drawable/ripple_nav_menu_element"
-    android:orientation="horizontal">
+    android:orientation="horizontal"
+    android:paddingEnd="24dp"
+    android:paddingStart="27dp"
+    android:paddingTop="15dp"
+    android:paddingBottom="15dp"
+    >
 
     <ImageView
         android:id="@+id/image_nav_menu_icon"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="19dp"
+        android:layout_height="19dp"
+        android:layout_marginEnd="23dp"
         android:src="@mipmap/ic_launcher" />
 
     <TextView
         android:id="@+id/text_nav_menu_title"
         android:layout_width="0dp"
+        android:textSize="15sp"
+        android:textColor="@color/colorBlueText"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_weight="1"
@@ -21,8 +29,7 @@
 
     <ImageView
         android:id="@+id/image_nav_menu_arrow_icon"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:paddingEnd="20dp"
-        android:src="@mipmap/ic_launcher" />
+        android:layout_width="21dp"
+        android:layout_height="21dp"
+        android:src="@drawable/nav_arrow" />
 </LinearLayout>
