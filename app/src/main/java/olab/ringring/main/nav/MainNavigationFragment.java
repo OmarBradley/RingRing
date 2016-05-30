@@ -25,6 +25,7 @@ import lombok.Setter;
 import olab.ringring.R;
 import olab.ringring.main.home.HomeActivity;
 import olab.ringring.main.mymenu.MyMenuActivity;
+import olab.ringring.main.mymenu.NavMyMenuSubElement;
 import olab.ringring.main.ringdesign.RingDesignActivity;
 
 /**
@@ -32,12 +33,9 @@ import olab.ringring.main.ringdesign.RingDesignActivity;
  */
 public class MainNavigationFragment extends Fragment {
 
-    @Bind(R.id.nav_home)
-    NavMenuView homeNav;
-    @Bind(R.id.nav_my_menu)
-    NavMenuView myMenuNav;
-    @Bind(R.id.nav_ring_design)
-    NavMenuView ringDesignNav;
+    @Bind(R.id.nav_home) NavMainView homeNav;
+    @Bind(R.id.nav_my_menu) NavMainView myMenuNav;
+    @Bind(R.id.nav_ring_design) NavMainView ringDesignNav;
     @Bind(R.id.image_nav_user_profile) CircleImageView userProfileImage;
     @Bind(R.id.text_nav_user_name) TextView userNameText;
     @Getter @Setter private DrawerLayout drawer;
@@ -63,9 +61,9 @@ public class MainNavigationFragment extends Fragment {
     }
 
     private void setNavMainMenu() {
-        homeNav.setNavMenuAttributes(ContextCompat.getDrawable(getContext(),R.mipmap.ic_launcher), "Home", ContextCompat.getDrawable(getContext(),R.mipmap.ic_launcher));
-        myMenuNav.setNavMenuAttributes(ContextCompat.getDrawable(getContext(),R.mipmap.ic_launcher), "마이메뉴", ContextCompat.getDrawable(getContext(),R.mipmap.ic_launcher));
-        ringDesignNav.setNavMenuAttributes(ContextCompat.getDrawable(getContext(),R.mipmap.ic_launcher), "반지만들기", ContextCompat.getDrawable(getContext(),R.mipmap.ic_launcher));
+        homeNav.setNavMenuAttributes(ContextCompat.getDrawable(getContext(),R.drawable.nav_main_home_image), "Home");
+        myMenuNav.setNavMenuAttributes(ContextCompat.getDrawable(getContext(),R.drawable.nav_main_my_menu_image), "마이메뉴");
+        ringDesignNav.setNavMenuAttributes(ContextCompat.getDrawable(getContext(),R.drawable.nav_main_ring_design_image), "반지만들기");
     }
 
     // TODO: 2016-05-23 네트워크 적용 시 Profile 사진과 이름을 받아올 수 있는 빌더 제작
@@ -83,7 +81,7 @@ public class MainNavigationFragment extends Fragment {
         moveToAnotherActivityWhenMenuClicked(ringDesignNav, RingDesignActivity.class);
     }
 
-    private void moveToAnotherActivityWhenMenuClicked(NavMenuView navMainMenu, Class anotherActivity) {
+    private void moveToAnotherActivityWhenMenuClicked(NavMainView navMainMenu, Class anotherActivity) {
         navMainMenu.setOnClickListener(view -> {
             if (menuAndMatchingActivities.get(navMainMenu.hashCode()) == getActivity().getClass()) {
                 drawer.closeDrawer(GravityCompat.START);
@@ -98,6 +96,5 @@ public class MainNavigationFragment extends Fragment {
         presentActivity.startActivity(intent);
         presentActivity.finish();
     }
-
 
 }

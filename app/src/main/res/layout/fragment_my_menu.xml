@@ -32,7 +32,7 @@
                     android:layout_height="90dp"
                     android:layout_gravity="center"
                     android:layout_marginTop="18dp"
-                    android:src="@drawable/my_menu_default_profile_image" />
+                    android:src="@drawable/default_profile_image" />
 
                 <TextView
                     android:id="@+id/text_my_menu_user_name"
@@ -122,17 +122,17 @@
                 android:layout_gravity="end"
                 android:background="@color/colorMyLevelText" />
 
-            <olab.ringring.main.nav.NavMenuView
+            <olab.ringring.main.mymenu.NavMyMenuSubElement
                 android:id="@+id/view_nav_my_account"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
-            <olab.ringring.main.nav.NavMenuView
+            <olab.ringring.main.mymenu.NavMyMenuSubElement
                 android:id="@+id/view_nav_setting_d_day"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
-            <olab.ringring.main.nav.NavMenuView
+            <olab.ringring.main.mymenu.NavMyMenuSubElement
                 android:id="@+id/view_nav_mission_history"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />

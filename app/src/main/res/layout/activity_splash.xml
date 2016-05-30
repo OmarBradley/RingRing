@@ -3,21 +3,25 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/color_splash_activity_background"
+    android:background="@color/colorSplashActivityBackground"
+    android:orientation="vertical"
     tools:context="olab.ringring.splash.SplashActivity">
 
     <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:id="@+id/image_splash"
+        android:layout_width="178dp"
+        android:layout_height="243dp"
+        android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        android:src="@mipmap/ic_launcher" />
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="98dp"
+        android:src="@drawable/splash_image" />
 
     <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
+        android:layout_width="245dp"
+        android:layout_height="33dp"
+        android:layout_below="@+id/image_splash"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="@dimen/splash_text_margin_bottom"
-        android:src="@mipmap/ic_launcher" />
+        android:layout_marginTop="98dp"
+        android:src="@drawable/splash_text_image" />
 </RelativeLayout>

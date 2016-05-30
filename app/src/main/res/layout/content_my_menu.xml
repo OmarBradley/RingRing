@@ -73,17 +73,17 @@
 
     </LinearLayout>
 
-    <olab.ringring.main.nav.NavMenuView
+    <olab.ringring.main.mymenu.NavMyMenuSubElement
         android:id="@+id/view_nav_my_account"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
-    <olab.ringring.main.nav.NavMenuView
+    <olab.ringring.main.mymenu.NavMyMenuSubElement
         android:id="@+id/view_nav_setting_d_day"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
-    <olab.ringring.main.nav.NavMenuView
+    <olab.ringring.main.mymenu.NavMyMenuSubElement
         android:id="@+id/view_nav_mission_history"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />

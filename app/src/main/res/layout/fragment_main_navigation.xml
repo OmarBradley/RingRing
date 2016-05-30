@@ -1,6 +1,6 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
+    android:layout_width="274dp"
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context="olab.ringring.main.nav.MainNavigationFragment">
@@ -13,6 +13,6 @@
     <include
         layout="@layout/nav_content_main"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent" />
 
 </LinearLayout>

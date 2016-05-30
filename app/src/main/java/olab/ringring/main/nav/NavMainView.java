@@ -11,35 +11,31 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.annimon.stream.function.Consumer;
-
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import lombok.Getter;
-import lombok.Setter;
 import olab.ringring.R;
 
 /**
- * Created by 재화 on 2016-05-23.
+ * Created by 재화 on 2016-05-30.
  */
-public class NavMenuView extends LinearLayout {
+public class NavMainView extends LinearLayout {
 
     @Bind(R.id.image_nav_menu_icon) ImageView menuIconImage;
     @Bind(R.id.text_nav_menu_title) TextView menuTitleText;
     @Bind(R.id.image_nav_menu_arrow_icon) ImageView menuArrowIconImage;
 
-    public NavMenuView(Context context) {
+    public NavMainView(Context context) {
         super(context);
         initView();
     }
 
-    public NavMenuView(Context context, AttributeSet attrs) {
+    public NavMainView(Context context, AttributeSet attrs) {
         super(context, attrs);
         initView();
     }
 
     private void initView() {
-        View view = LayoutInflater.from(getContext()).inflate(R.layout.nav_menu_element, this);
+        View view = LayoutInflater.from(getContext()).inflate(R.layout.nav_main_element, this);
         ButterKnife.bind(this, view);
 
     }
@@ -56,12 +52,9 @@ public class NavMenuView extends LinearLayout {
         menuArrowIconImage.setImageDrawable(menuArrowIcon);
     }
 
-    public void setNavMenuAttributes(@DrawableRes Drawable menuIcon, String menuText, @DrawableRes Drawable menuArrowIcon) {
+    public void setNavMenuAttributes(@DrawableRes Drawable menuIcon, String menuText) {
         menuIconImage.setImageDrawable(menuIcon);
         this.menuTitleText.setText(menuText);
-        menuArrowIconImage.setImageDrawable(menuArrowIcon);
     }
-
-
 
 }
