@@ -9,6 +9,7 @@
 
     <dimen name="dialog_width">289dp</dimen>
     <dimen name="dialog_height">212dp</dimen>
+    <dimen name="select_dialog_width">226dp</dimen>
 
     <dimen name="app_bar_height">55dp</dimen>
 

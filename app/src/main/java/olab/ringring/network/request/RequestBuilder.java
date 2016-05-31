@@ -4,7 +4,6 @@ import android.content.Context;
 
 import com.annimon.stream.Stream;
 
-import java.io.File;
 import java.util.Map;
 
 import okhttp3.FormBody;
@@ -71,7 +70,15 @@ public class RequestBuilder {
         Stream.of(bodyParameters).forEach(bodyParameter -> {
             requestMultipartBodyBuilder.addFormDataPart(bodyParameter.getKey(), bodyParameter.getValue());
         });
-        requestMultipartBodyBuilder.addFormDataPart(imageFileFormData.getBodyName(), imageFileFormData.getBodyValue(), RequestBody.create(MediaType.parse(IMAGE_MEDIA_TYPE), imageFileFormData.getImageFile()));
+        requestMultipartBodyBuilder.addFormDataPart(imageFileFormData.getBodyName(), imageFileFormData.getFileName(), RequestBody.create(MediaType.parse(IMAGE_MEDIA_TYPE), imageFileFormData.getImageFile()));
+        requestBuilder.post(requestMultipartBodyBuilder.build());
+        return this;
+    }
+
+    public RequestBuilder addImageFileParameter(ImageFileFormData imageFileFormData) {
+        requestMultipartBodyBuilder = new MultipartBody.Builder();
+        requestMultipartBodyBuilder.setType(MultipartBody.FORM);
+        requestMultipartBodyBuilder.addFormDataPart(imageFileFormData.getBodyName(), imageFileFormData.getFileName(), RequestBody.create(MediaType.parse(IMAGE_MEDIA_TYPE), imageFileFormData.getImageFile()));
         requestBuilder.post(requestMultipartBodyBuilder.build());
         return this;
     }

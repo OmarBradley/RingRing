@@ -10,6 +10,6 @@ import lombok.Data;
 @Data
 public class ImageFileFormData {
     private String bodyName;
-    private String bodyValue;
+    private String fileName;
     private File imageFile;
 }

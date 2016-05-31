@@ -1,10 +1,17 @@
 package olab.ringring.main.mymenu.myaccount;
 
+import android.app.Activity;
 import android.content.Intent;
+import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
+import android.provider.MediaStore;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.inputmethod.EditorInfo;
@@ -15,18 +22,30 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 
+import java.io.File;
+import java.util.ArrayList;
+import java.util.Arrays;
+
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import olab.ringring.R;
 import olab.ringring.main.mymenu.MyMenuActivity;
+import olab.ringring.main.mymenu.myaccount.picutreupload.CameraPictureUploadStrategy;
+import olab.ringring.main.mymenu.myaccount.picutreupload.GalleryPictureUploadStrategy;
+import olab.ringring.main.mymenu.myaccount.picutreupload.PictureUploadStrategy;
 import olab.ringring.network.NetworkManager;
+import olab.ringring.network.request.ImageFileFormData;
 import olab.ringring.network.request.mymenu.MyMenuProtocol;
 import olab.ringring.network.response.mymenu.accountinfo.AccountInfoResult;
 import olab.ringring.network.response.mymenu.changename.ChangeNameResult;
+import olab.ringring.network.response.mymenu.changeprofile.ChangeProfileImageResult;
 import olab.ringring.network.response.mymenu.changeusersex.ChangeUserSexResult;
 import olab.ringring.util.actionbar.element.ActionBarElement;
 import olab.ringring.util.actionbar.visitor.ActionbarVisitor;
 import olab.ringring.util.actionbar.visitor.concretevisitor.SetActionBarIconVisitor;
+import olab.ringring.util.dialog.select.SelectDialogBuilder;
+import olab.ringring.util.dialog.select.SelectDialogFragment;
+import olab.ringring.util.dialog.select.SelectDialogItemData;
 
 public class MyAccountActivity extends AppCompatActivity implements ActionBarElement {
 
@@ -41,6 +60,8 @@ public class MyAccountActivity extends AppCompatActivity implements ActionBarEle
     @Bind(R.id.edit_my_account_user_password_confirm) EditText userPasswordConfirm;
     @Bind(R.id.btn_my_account_logout) Button logoutBtn;
     @Bind(R.id.btn_my_account_secession) Button secessionBtn;
+
+    PictureUploadStrategy uploadStrategy;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,6 +106,7 @@ public class MyAccountActivity extends AppCompatActivity implements ActionBarEle
         getResponseData();
         changeUserName();
         changeUserGender();
+        setOnProfileImageClickListener();
         super.onResume();
     }
 
@@ -101,7 +123,7 @@ public class MyAccountActivity extends AppCompatActivity implements ActionBarEle
         if (data.getUserProfile() != null || !TextUtils.isEmpty(data.getUserProfile())) {
             Glide.with(this).load(data.getUserProfile()).into(userProfileImage);
         } else {
-            userProfileImage.setImageResource(R.drawable.crystal_choice_image);
+            userProfileImage.setImageResource(R.drawable.my_account_default_image);
         }
         userName.setText(data.getUserName());
         loverName.setText(data.getLoverNickname());
@@ -147,5 +169,45 @@ public class MyAccountActivity extends AppCompatActivity implements ActionBarEle
             }
             return true;
         });
+    }
+
+    private void setOnProfileImageClickListener() {
+        userProfileImage.setOnClickListener(view -> {
+            SelectDialogFragment selectDialog = new SelectDialogBuilder()
+                    .setDialogTitle("프로필 설정")
+                    .setItems(Arrays.asList(new SelectDialogItemData((dialog, dialogItemIndex) -> {
+                        dialog.dismiss();
+                        uploadStrategy = new GalleryPictureUploadStrategy(MyAccountActivity.this);
+                        uploadStrategy.getImage();
+                    }, "사진 엘범에서 선택"), new SelectDialogItemData((dialog, dialogItemIndex) -> {
+                        dialog.dismiss();
+                        uploadStrategy = new CameraPictureUploadStrategy(MyAccountActivity.this);
+                        uploadStrategy.getImage();
+                    }, "사진 촬영")))
+                    .build();
+            selectDialog.show(getSupportFragmentManager(), "selectDialog");
+        });
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        File uploadFile = uploadStrategy.getImageFile(userProfileImage, requestCode, resultCode, data);
+        Log.e("file", uploadFile.getName());
+        ImageFileFormData imageData = new ImageFileFormData();
+        imageData.setBodyName("profile");
+        imageData.setFileName(uploadFile.getName());
+        imageData.setImageFile(uploadFile);
+        NetworkManager.getInstance().getResult(MyMenuProtocol.makeSetProfileImageRequest(this, imageData), ChangeProfileImageResult.class, (request, result)->{
+            if (result.getOriginalPicturePath() != null || !TextUtils.isEmpty(result.getOriginalPicturePath())) {
+                Glide.with(this).load(result.getOriginalPicturePath()).into(userProfileImage);
+            } else {
+                userProfileImage.setImageResource(R.drawable.my_account_default_image);
+            }
+        }, (request, integer, throwable) -> {
+            Log.e("eeee",request.toString() + integer);
+        });
+
+
     }
 }

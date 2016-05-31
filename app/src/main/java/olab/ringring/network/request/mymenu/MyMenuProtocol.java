@@ -7,6 +7,7 @@ import java.util.Map;
 
 import okhttp3.Request;
 import olab.ringring.main.mymenu.myaccount.UserSexConstant;
+import olab.ringring.network.request.ImageFileFormData;
 import olab.ringring.network.request.RequestBuilder;
 
 /**
@@ -51,4 +52,15 @@ public class MyMenuProtocol {
                 .addBodyParameters(bodyParameters)
                 .build();
     }
+
+    public static final Request makeSetProfileImageRequest(Context tag, ImageFileFormData imageData){
+        return new RequestBuilder()
+                .setTag(tag)
+                .setUrl(MyMenuProtocolUrl.CHANGE_USER_PROFILE.getUrl())
+                .addPageSegment(MyMenuProtocolUrl.CHANGE_USER_PROFILE.getPageSegment())
+                .addImageFileParameter(imageData)
+                .build();
+    }
+
+
 }

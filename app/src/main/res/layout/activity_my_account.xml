@@ -10,6 +10,7 @@
         android:id="@+id/image_my_account_user_profile"
         android:layout_width="100dp"
         android:layout_height="100dp"
+        android:scaleType="centerCrop"
         android:src="@drawable/test_user_profile_image" />
 
     <ScrollView
@@ -28,8 +29,7 @@
 
             <EditText
                 android:id="@+id/edit_my_account_user_name"
-                style="@style/MyAccountEditText"
-                />
+                style="@style/MyAccountEditText" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -38,7 +38,7 @@
 
             <EditText
                 android:id="@+id/edit_my_account_lover_name"
-                style="@style/MyAccountEditText"/>
+                style="@style/MyAccountEditText" />
 
             <TextView
                 android:layout_width="wrap_content"
