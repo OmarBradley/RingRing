@@ -21,13 +21,9 @@ import olab.ringring.util.dialog.confirm.ConfirmDialogFragment;
 @Data
 public class YesOrNoDialogBuilder implements DialogBuilder{
 
-    private Drawable dialogTitleIcon;
-    private String dialogTitleText;
-    private String dialogMessage;
+    private YesOrNoDialogInfoPool dialogInfo;
     private DialogInterface.OnClickListener onPositiveButtonClickListener;
-    private int positiveButtonTextColor;
     private DialogInterface.OnClickListener onNegativeButtonClickListener;
-    private int negativeButtonTextColor;
 
     @Override
     public YesOrNoDialogFragment build() {

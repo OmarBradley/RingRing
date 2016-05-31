@@ -6,11 +6,13 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -18,9 +20,10 @@ import olab.ringring.R;
 import olab.ringring.join.customview.EditTextWithSubmitButtonView;
 import olab.ringring.join.util.Validator;
 import olab.ringring.main.home.HomeActivity;
-import olab.ringring.util.dialog.confirm.ConfirmDialogBuilder;
 import olab.ringring.util.dialog.confirm.ConfirmDialogFragment;
-import olab.ringring.util.dialog.infomation.DialogInfoPool;
+import olab.ringring.util.dialog.confirm.ConfirmDialogInfoPool;
+import olab.ringring.util.dialog.yesorno.YesOrNoDialogFragment;
+import olab.ringring.util.dialog.yesorno.YesOrNoDialogInfoPool;
 
 public class LoginFragment extends Fragment {
 
@@ -94,28 +97,15 @@ public class LoginFragment extends Fragment {
 
 
     private void buildInfoErrorDialog() {
-        ConfirmDialogFragment errorDialog = new ConfirmDialogBuilder()
-                .setDialogInfo(DialogInfoPool.LOGIN_INFO_ERROR)
-                .setConfirmButtonTextColor(getResources().getColor(R.color.colorPrimary))
-                .setOnConfirmButtonClickListener((dialog, dialogItemIndex) -> {
-                    dialog.dismiss();
-                }).build();
-        errorDialog.show(getActivity().getSupportFragmentManager(), "error dialog");
-
-        /*YesOrNoDialogFragment errorDialog = new YesOrNoDialogBuilder()
-                .setDialogTitleIcon(getResources().getDrawable(R.mipmap.ic_launcher))
-                .setDialogTitleText("로그인 오류")
-                .setDialogMessage("해당 비밀번호와 id가\n 일치하지 않습니다.")
-                .setOnNegativeButtonClickListener((dialog, dialogItemIndex) -> {
-                    dialog.dismiss();
-                    Toast.makeText(getContext(), "부정", Toast.LENGTH_SHORT).show();
-                }).setOnPositiveButtonClickListener((dialog, dialogItemIndex) -> {
-                    dialog.dismiss();
-                    Toast.makeText(getContext(), "긍정", Toast.LENGTH_SHORT).show();
-                }).setPositiveButtonTextColor(ContextCompat.getColor(getContext(),R.color.colorPrimary))
-                .setNegativeButtonTextColor(ContextCompat.getColor(getContext(),R.color.colorPrimary))
-                .build();
+        /*ConfirmDialogFragment errorDialog = ConfirmDialogInfoPool.LOGIN_INFO_ERROR.makeConfirmDialog();
         errorDialog.show(getActivity().getSupportFragmentManager(), "error dialog");*/
+
+        YesOrNoDialogFragment errorDialog = YesOrNoDialogInfoPool.SEND_RING.makeYesOrNoDialog(((dialog, which) -> {
+            Log.e("posi", "posi");
+        }),((dialog, which) -> {
+            Log.e("nage", "nage");
+        }));
+        errorDialog.show(getActivity().getSupportFragmentManager(), "error dialog");
     }
 
 

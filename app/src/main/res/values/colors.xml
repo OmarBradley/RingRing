@@ -19,8 +19,10 @@
     <color name="colorJoinActivityStatusBar">#58a2d3</color>
     <color name="colorJoinActivityAppbarBackGround">#388cc9</color>
 
-    <color name="colorDialogDivider">#a1a1a1</color>
+    <color name="colorDialogGray">#a1a1a1</color>
     <color name="colorTextDialogMessage">#000000</color>
+    <color name="colorDialogCaption">#e94159</color>
+    <color name="colorDialogCheck">#3e9bef</color>
 
     <color name="colorProgress">#328acc</color>
     <color name="colorProgressBackground">#c6c8ca</color>

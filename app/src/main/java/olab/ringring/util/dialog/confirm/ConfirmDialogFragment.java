@@ -12,7 +12,6 @@ import android.widget.TextView;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import lombok.Getter;
 import lombok.Setter;
 import olab.ringring.R;
 
@@ -48,18 +47,18 @@ public class ConfirmDialogFragment extends DialogFragment {
         super.onActivityCreated(savedInstanceState);
         int width = getResources().getDimensionPixelSize(R.dimen.dialog_width);
         int height = getResources().getDimensionPixelSize(R.dimen.dialog_height);
-        getDialog().getWindow().setLayout(width, height);
+        getDialog().getWindow().setLayout(width, ViewGroup.LayoutParams.WRAP_CONTENT);
     }
 
     private void setAttributeInDialog() {
         iconDialogTitle.setImageDrawable(dialogBuilder.getDialogInfo().getDialogTitleIcon());
         textDialogTitle.setText(dialogBuilder.getDialogInfo().getDialogTitle());
-        textDialogTitle.setTextColor(dialogBuilder.getDialogInfo().getDialogTitleTextColor());
+        textDialogTitle.setTextColor(dialogBuilder.getDialogInfo().getDialogTextColor());
         textDialogMessage.setText(dialogBuilder.getDialogInfo().getDialogMessage());
         btnDialogConfirm.setOnClickListener(view -> {
             dialogBuilder.getOnConfirmButtonClickListener().onClick(getDialog(), DIALOG_ITEM_INDEX);
         });
-        btnDialogConfirm.setTextColor(dialogBuilder.getConfirmButtonTextColor());
+        btnDialogConfirm.setTextColor(dialogBuilder.getDialogInfo().getDialogTextColor());
     }
 
 }

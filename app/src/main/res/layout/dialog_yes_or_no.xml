@@ -2,23 +2,26 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:orientation="vertical"
+    android:paddingTop="18dp"
     tools:context=".util.dialog.yesorno.YesOrNoDialogFragment">
 
     <ImageView
         android:id="@+id/image_dialog_title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal" />
+        android:layout_width="40dp"
+        android:layout_height="37dp"
+        android:layout_gravity="center_horizontal"
+        android:src="@mipmap/ic_launcher" />
 
     <TextView
         android:id="@+id/text_dialog_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:text="반지 보내기"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
+        android:layout_marginTop="12dp"
+        android:text="가입 오류"
+        android:textSize="20sp" />
 
     <TextView
         android:id="@+id/text_dialog_message"
@@ -26,9 +29,10 @@
         android:text="사랑하는 연인에게\n반지 알림을 보내시겠습니까?" />
 
     <View
-        android:layout_width="match_parent"
+        android:layout_width="273dp"
         android:layout_height="1dp"
-        android:background="@color/colorDialogDivider" />
+        android:layout_gravity="center_horizontal"
+        android:background="@color/colorDialogGray" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -40,25 +44,36 @@
         <Button
             android:id="@+id/btn_dialog_positive"
             style="?android:attr/borderlessButtonStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@android:color/transparent"
-            android:text="Yes" />
+            android:layout_width="0dp"
+            android:layout_height="52dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_weight="1"
+            android:textColor="@color/colorDialogGray"
+            android:background="@drawable/ripple_button_dialog_confirm"
+            android:paddingBottom="8dp"
+            android:paddingTop="6dp"
+            android:text="확인"
+            android:textSize="20sp" />
 
         <View
             android:layout_width="1dp"
             android:layout_height="match_parent"
             android:layout_gravity="center_horizontal"
-            android:background="@color/colorDialogDivider" />
+            android:background="@color/colorDialogGray" />
 
         <Button
             android:id="@+id/btn_dialog_negative"
             style="?android:attr/borderlessButtonStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@android:color/transparent"
-            android:text="No" />
-
+            android:layout_width="0dp"
+            android:layout_height="52dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_weight="1"
+            android:textColor="@color/colorDialogGray"
+            android:background="@drawable/ripple_button_dialog_confirm"
+            android:paddingBottom="8dp"
+            android:paddingTop="6dp"
+            android:text="확인"
+            android:textSize="20sp" />
     </LinearLayout>
 
 </LinearLayout>

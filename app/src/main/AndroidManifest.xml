@@ -25,11 +25,11 @@
             android:name=".join.JoinActivity"
             android:theme="@style/JoinActivityTheme"
             android:windowSoftInputMode="adjustPan">
-            <intent-filter>
+            <!--<intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+            </intent-filter>-->
         </activity>
         <activity
             android:name=".join.signup.loverauthorization.LoverConnectingActivity"
@@ -57,11 +57,11 @@
             android:label="@string/title_activity_my_account"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustResize" >
-            <!--<intent-filter>
+            <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>-->
+            </intent-filter>
         </activity>
         <activity
             android:name=".main.mymenu.missionhistory.MissionHistoryActivity"

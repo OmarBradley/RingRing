@@ -49,21 +49,21 @@ public class YesOrNoDialogFragment extends DialogFragment {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         int width = getResources().getDimensionPixelSize(R.dimen.dialog_width);
-        int height = getResources().getDimensionPixelSize(R.dimen.dialog_height);
-        getDialog().getWindow().setLayout(width, height);
+        getDialog().getWindow().setLayout(width, ViewGroup.LayoutParams.WRAP_CONTENT);
     }
 
     private void setAttributeInDialog(){
-        iconDialogTitle.setImageDrawable(dialogBuilder.getDialogTitleIcon());
-        textDialogTitle.setText(dialogBuilder.getDialogTitleText());
-        textDialogMessage.setText(dialogBuilder.getDialogMessage());
+        iconDialogTitle.setImageDrawable(dialogBuilder.getDialogInfo().getDialogTitleIcon());
+        textDialogTitle.setText(dialogBuilder.getDialogInfo().getDialogTitle());
+        textDialogTitle.setTextColor(dialogBuilder.getDialogInfo().getDialogTextColor());
+        textDialogMessage.setText(dialogBuilder.getDialogInfo().getDialogMessage());
         btnDialogPositive.setOnClickListener(view -> {
             dialogBuilder.getOnPositiveButtonClickListener().onClick(getDialog(), DIALOG_ITEM_INDEX);
         });
-        btnDialogPositive.setTextColor(dialogBuilder.getPositiveButtonTextColor());
+        btnDialogPositive.setText(dialogBuilder.getDialogInfo().getDialogPositiveButtonMessage());
         btnDialogNegative.setOnClickListener(view -> {
             dialogBuilder.getOnNegativeButtonClickListener().onClick(getDialog(), DIALOG_ITEM_INDEX);
         });
-        btnDialogNegative.setTextColor(dialogBuilder.getNegativeButtonTextColor());
+        btnDialogNegative.setText(dialogBuilder.getDialogInfo().getDialogNegativeButtonMessage());
     }
 }
