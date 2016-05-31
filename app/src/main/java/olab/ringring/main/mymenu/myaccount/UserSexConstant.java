@@ -6,7 +6,7 @@ import lombok.Getter;
  * Created by 재화 on 2016-05-27.
  */
 public enum UserSexConstant {
-    MAN("man"), WOMAN("woman");
+    MAN("남"), WOMAN("여");
 
     UserSexConstant(String sexText){
         this.sexText = sexText;

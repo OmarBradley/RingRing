@@ -8,9 +8,11 @@ import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.yqritc.recyclerviewflexibledivider.HorizontalDividerItemDecoration;
@@ -26,7 +28,7 @@ import olab.ringring.R;
 public class SelectDialogFragment extends DialogFragment {
 
     @Bind(R.id.text_select_dialog_title) TextView dialogTitle;
-    @Bind(R.id.list_select_dialog_items) RecyclerView dialogItems;
+    @Bind(R.id.list_select_dialog_items) RecyclerView dialogItemView;
     @Bind(R.id.text_select_dialog_cancel) TextView dialogCancel;
 
     @Setter SelectDialogBuilder dialogBuilder;
@@ -68,13 +70,22 @@ public class SelectDialogFragment extends DialogFragment {
 
     private void setDialogItemsListView() {
         adapter = new SelectDialogItemAdapter(this);
-        dialogItems.setAdapter(adapter);
-        dialogItems.setLayoutManager(new LinearLayoutManager(getContext()));
-        dialogItems.addItemDecoration(new HorizontalDividerItemDecoration.Builder(getActivity())
+        dialogItemView.setAdapter(adapter);
+        dialogItemView.setLayoutManager(new LinearLayoutManager(getContext()));
+        dialogItemView.addItemDecoration(new HorizontalDividerItemDecoration.Builder(getActivity())
                 .color(ContextCompat.getColor(getActivity(), R.color.colorDialogGray))
                 .size(DIVIDER_WIDTH)
                 .build());
+        setItemViewGravityCenter();
     }
+
+    public void setItemViewGravityCenter(){
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        params.gravity = Gravity.CENTER;
+        dialogItemView.setLayoutParams(params);
+    }
+
+
 
     private void setDialogAttribute(){
         dialogTitle.setText(dialogBuilder.getDialogTitle());

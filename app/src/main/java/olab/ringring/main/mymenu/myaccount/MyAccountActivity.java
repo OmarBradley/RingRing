@@ -1,12 +1,6 @@
 package olab.ringring.main.mymenu.myaccount;
 
-import android.app.Activity;
 import android.content.Intent;
-import android.database.Cursor;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.net.Uri;
-import android.provider.MediaStore;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -18,12 +12,13 @@ import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 
 import java.io.File;
-import java.util.ArrayList;
 import java.util.Arrays;
 
 import butterknife.Bind;
@@ -53,13 +48,14 @@ public class MyAccountActivity extends AppCompatActivity implements ActionBarEle
     @Bind(R.id.edit_my_account_user_name) EditText userName;
     @Bind(R.id.edit_my_account_lover_name) EditText loverName;
     @Bind(R.id.edit_my_account_ring_size) EditText ringSize;
-    @Bind(R.id.edit_my_account_user_gender) EditText userGender;
+    @Bind(R.id.text_my_account_user_sex) TextView userSex;
     @Bind(R.id.edit_my_account_user_phone_number) EditText userPhoneNumber;
     @Bind(R.id.edit_my_account_user_info) EditText userInfo;
     @Bind(R.id.edit_my_account_user_password_change) EditText userPasswordChange;
     @Bind(R.id.edit_my_account_user_password_confirm) EditText userPasswordConfirm;
     @Bind(R.id.btn_my_account_logout) Button logoutBtn;
     @Bind(R.id.btn_my_account_secession) Button secessionBtn;
+    @Bind(R.id.layout_my_account_user_sex) RelativeLayout userSexLayout;
 
     PictureUploadStrategy uploadStrategy;
 
@@ -68,7 +64,7 @@ public class MyAccountActivity extends AppCompatActivity implements ActionBarEle
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_account);
         ButterKnife.bind(this);
-        this.accept(new SetActionBarIconVisitor(ContextCompat.getDrawable(this, R.mipmap.ic_launcher)));
+        this.accept(new SetActionBarIconVisitor(ContextCompat.getDrawable(this, R.drawable.actionbar_home_as_up_image)));
 
     }
 
@@ -97,6 +93,9 @@ public class MyAccountActivity extends AppCompatActivity implements ActionBarEle
             case R.id.action_my_menu_check:
                 Toast.makeText(this,"sss",Toast.LENGTH_SHORT).show();
                 return true;
+            case android.R.id.home:
+                onBackPressed();
+                return true;
         }
         return super.onOptionsItemSelected(item);
     }
@@ -107,6 +106,7 @@ public class MyAccountActivity extends AppCompatActivity implements ActionBarEle
         changeUserName();
         changeUserGender();
         setOnProfileImageClickListener();
+        buildSexChoiceDialog();
         super.onResume();
     }
 
@@ -130,8 +130,8 @@ public class MyAccountActivity extends AppCompatActivity implements ActionBarEle
         
         // TODO: 2016-05-27 반지 호수 text 정책 정하기
         ringSize.setText("");
-        
-        userGender.setText(data.getUserSex());
+        userSex.setText(UserSexConstant.valueOf(data.getUserSex()).getSexText());
+
         userPhoneNumber.setText(data.getUserPhoneNumber());
         
         // TODO: 2016-05-27 유저 정보 text 정책 정하기
@@ -157,11 +157,11 @@ public class MyAccountActivity extends AppCompatActivity implements ActionBarEle
 
     // TODO: 2016-05-27 성별 제한 두기!!.. WOMAN 과 MAN 밖에 칠 수 없도록...
     private void changeUserGender(){
-        userGender.setOnEditorActionListener((textView, actionId, event) -> {
+        userSex.setOnEditorActionListener((textView, actionId, event) -> {
             if (actionId == EditorInfo.IME_ACTION_SEND) {
-                String changedUserSex = userGender.getText().toString();
+                String changedUserSex = userSex.getText().toString();
                 NetworkManager.getInstance().getResult(MyMenuProtocol.makeChangeUserSexRequest(this, UserSexConstant.valueOf(changedUserSex)), ChangeUserSexResult.class, (request, result) -> {
-                    userGender.setText(result.getUserSex());
+                    userSex.setText(result.getUserSex());
                     Toast.makeText(this, "성별이 변경되었습니다.", Toast.LENGTH_SHORT).show();
                 }, (request, integer, throwable) -> {
                     Toast.makeText(this, "성별이 같습니다.", Toast.LENGTH_SHORT).show();
@@ -186,6 +186,23 @@ public class MyAccountActivity extends AppCompatActivity implements ActionBarEle
                     }, "사진 촬영")))
                     .build();
             selectDialog.show(getSupportFragmentManager(), "selectDialog");
+        });
+    }
+
+    private void buildSexChoiceDialog() {
+        userSexLayout.setOnClickListener(view -> {
+            SelectDialogFragment selectDialog = new SelectDialogBuilder()
+                    .setDialogTitle("성별")
+                    .setItems(Arrays.asList(new SelectDialogItemData((dialog, dialogItemIndex) -> {
+                        dialog.dismiss();
+                        userSex.setText(UserSexConstant.MAN.getSexText());
+                    }, "남"), new SelectDialogItemData((dialog, dialogItemIndex) -> {
+                        dialog.dismiss();
+                        userSex.setText(UserSexConstant.WOMAN.getSexText());
+                    }, "여")))
+                    .build();
+            selectDialog.show(getSupportFragmentManager(), "selectDialog");
+           /* selectDialog.setItemViewGravityCenter();*/
         });
     }
 

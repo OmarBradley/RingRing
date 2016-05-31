@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -46,7 +47,7 @@ public class ChoiceRingAttributeDialogFragment extends DialogFragment {
     @Bind(R.id.image_choice_dialog_title) CircleImageView dialogTitleImage;
     @Bind(R.id.list_attribute_view) GridView listAttributeView;
     @Bind(R.id.image_choice_dialog_background) ImageView dialogBackgroundImage;
-    @Bind(R.id.btn_choice_dialog_check) ImageView dialogCheckBtn;
+    @Bind(R.id.btn_choice_dialog_check) Button dialogCheckBtn;
 
     private RingDetailAttributeViewAdapter adapter;
     @Setter private ChoiceRingAttributeDialogBuilder dialogBuilder;

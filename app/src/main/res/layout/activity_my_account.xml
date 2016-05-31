@@ -3,15 +3,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colorWhiteBackground"
     android:orientation="vertical"
     tools:context="olab.ringring.main.mymenu.myaccount.MyAccountActivity">
 
-    <ImageView
-        android:id="@+id/image_my_account_user_profile"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:scaleType="centerCrop"
-        android:src="@drawable/test_user_profile_image" />
 
     <ScrollView
         android:layout_width="match_parent"
@@ -22,16 +17,41 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
+            <RelativeLayout
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_marginStart="22dp"
+                android:layout_marginTop="37dp">
+
+                <ImageView
+                    android:id="@+id/image_my_account_user_profile"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/test_user_profile_image" />
+
+                <TextView
+                    style="@style/MyAccountTitleText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_centerHorizontal="true"
+                    android:text="바꾸기" />
+            </RelativeLayout>
+
             <TextView
+                style="@style/MyAccountTitleText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="이름" />
+                android:layout_marginBottom="13dp"
+                android:text="닉네임" />
 
             <EditText
                 android:id="@+id/edit_my_account_user_name"
                 style="@style/MyAccountEditText" />
 
             <TextView
+                style="@style/MyAccountTitleText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="애인이름" />
@@ -41,6 +61,7 @@
                 style="@style/MyAccountEditText" />
 
             <TextView
+                style="@style/MyAccountTitleText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="반지 호수" />
@@ -49,16 +70,37 @@
                 android:id="@+id/edit_my_account_ring_size"
                 style="@style/MyAccountEditText" />
 
-            <TextView
-                android:layout_width="wrap_content"
+            <RelativeLayout
+                android:id="@+id/layout_my_account_user_sex"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="성별" />
+                android:layout_marginTop="40dp"
+                android:background="@color/colorMyAccountEditTextBackground">
 
-            <EditText
-                android:id="@+id/edit_my_account_user_gender"
-                style="@style/MyAccountEditText" />
+                <TextView
+                    style="@style/MyAccountTitleText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginTop="13dp"
+                    android:text="성별" />
+
+                <TextView
+                    android:id="@+id/text_my_account_user_sex"
+                    style="@style/MyAccountTitleText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginEnd="14dp"
+                    android:text="남" />
+
+            </RelativeLayout>
+
 
             <TextView
+                style="@style/MyAccountTitleText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="내 전화번호" />
@@ -68,6 +110,7 @@
                 style="@style/MyAccountEditText" />
 
             <TextView
+                style="@style/MyAccountTitleText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="내 계정정보" />
@@ -76,40 +119,38 @@
                 android:id="@+id/edit_my_account_user_info"
                 style="@style/MyAccountEditText" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="비밀번호 변경" />
 
             <EditText
                 android:id="@+id/edit_my_account_user_password_change"
-                style="@style/MyAccountEditText" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="비밀번호 확인" />
+                style="@style/MyAccountEditText.InText"
+                android:layout_marginTop="40dp"
+                android:hint="비밀번호 변경" />
 
             <EditText
                 android:id="@+id/edit_my_account_user_password_confirm"
-                style="@style/MyAccountEditText" />
+                style="@style/MyAccountEditText.InText"
+                android:layout_marginTop="40dp"
+                android:hint="비밀번호 확인" />
 
             <LinearLayout
+
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="40dp"
+                android:gravity="center"
                 android:orientation="horizontal">
 
                 <Button
                     android:id="@+id/btn_my_account_logout"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="로그아웃" />
+                    style="@style/MyAccountButton"
+                    android:layout_marginEnd="17.5dp"
+                    android:background="@drawable/ripple_my_account_logout_button" />
 
                 <Button
                     android:id="@+id/btn_my_account_secession"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="계정 탈퇴" />
+                    style="@style/MyAccountButton"
+                    android:layout_marginStart="17.5dp"
+                    android:background="@drawable/ripple_my_account_secession_button" />
             </LinearLayout>
         </LinearLayout>
 

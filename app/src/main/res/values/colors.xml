@@ -29,6 +29,8 @@
     <color name="colorMyLevelText">#c6c8ca</color>
 
     <color name="colorSplashActivityBackground">#118acc</color>
+    <color name="colorMyAccountTitleText">#3e9bef</color>
+    <color name="colorMyAccountEditTextBackground">#f6f6f6</color>
 
     <color name="colorGold">#f5af3e</color>
     <color name="colorWhiteGold">#ffffff</color>
