@@ -28,7 +28,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:scaleType="centerCrop"
-                    android:src="@drawable/test_user_profile_image" />
+                    android:src="@drawable/my_account_default_image" />
 
                 <TextView
                     style="@style/MyAccountTitleText"

@@ -76,19 +76,12 @@ public class SelectDialogFragment extends DialogFragment {
                 .color(ContextCompat.getColor(getActivity(), R.color.colorDialogGray))
                 .size(DIVIDER_WIDTH)
                 .build());
-        setItemViewGravityCenter();
     }
-
-    public void setItemViewGravityCenter(){
-        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        params.gravity = Gravity.CENTER;
-        dialogItemView.setLayoutParams(params);
-    }
-
 
 
     private void setDialogAttribute(){
         dialogTitle.setText(dialogBuilder.getDialogTitle());
         adapter.addAll(dialogBuilder.getItems());
+        adapter.setItemVIewCenterAlign(dialogBuilder.isItemViewCenterAlign());
     }
 }

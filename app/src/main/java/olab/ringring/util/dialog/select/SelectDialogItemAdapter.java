@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import java.util.ArrayList;
 import java.util.List;
 
+import lombok.Setter;
 import olab.ringring.R;
 
 /**
@@ -17,6 +18,7 @@ public class SelectDialogItemAdapter extends RecyclerView.Adapter<RecyclerView.V
 
     List<SelectDialogItemData> items = new ArrayList<>();
     DialogFragment dialog;
+    @Setter boolean isItemVIewCenterAlign = false;
 
     public SelectDialogItemAdapter(DialogFragment dialog){
         this.dialog = dialog;
@@ -32,6 +34,8 @@ public class SelectDialogItemAdapter extends RecyclerView.Adapter<RecyclerView.V
         notifyDataSetChanged();
     }
 
+
+
     @Override
     public int getItemCount() {
         return items.size();
@@ -46,5 +50,8 @@ public class SelectDialogItemAdapter extends RecyclerView.Adapter<RecyclerView.V
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         ((SelectDialogItemViewHolder) holder).setDialogItemViewAttribute(items.get(position));
+        if(isItemVIewCenterAlign){
+            ((SelectDialogItemViewHolder) holder).setItemViewCenterAlign();
+        }
     }
 }

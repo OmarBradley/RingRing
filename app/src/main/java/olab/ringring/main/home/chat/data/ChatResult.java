@@ -5,6 +5,7 @@ import com.google.gson.annotations.SerializedName;
 import java.util.List;
 
 import lombok.Data;
+import olab.ringring.network.response.chat.ChatContent;
 
 /**
  * Created by 재화 on 2016-05-18.

@@ -14,6 +14,7 @@ public class SelectDialogBuilder {
 
     private String dialogTitle;
     private List<SelectDialogItemData> items;
+    private boolean isItemViewCenterAlign;
 
     public SelectDialogFragment build() {
         SelectDialogFragment dialog = new SelectDialogFragment();

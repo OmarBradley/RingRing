@@ -1,7 +1,9 @@
 package olab.ringring.main.home.chat;
 
 
+import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -15,12 +17,16 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 
+import java.util.List;
+
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import olab.ringring.R;
-import olab.ringring.main.home.chat.data.ChatContent;
+import olab.ringring.main.home.chat.data.ChatResult;
+import olab.ringring.main.home.chat.moudle.localdb.CoupleChatDAO;
+import olab.ringring.network.response.chat.ChatContent;
 import olab.ringring.main.home.chat.view.adapter.ChatViewAdapter;
 import olab.ringring.util.date.NowDateGetter;
 @NoArgsConstructor(access = AccessLevel.PUBLIC)
@@ -31,11 +37,11 @@ public class ChatFragment extends Fragment {
     public static final int CHAT_DAY_ID = 3;
 
     @Bind(R.id.list_view_chat_message) RecyclerView chatMessageListView;
-    @Bind(R.id.btn_user) Button userBtn;
-    @Bind(R.id.btn_lover) Button loverBtn;
-    @Bind(R.id.btn_chat_date) Button chatDateBtn;
+    @Bind(R.id.btn_sender) Button messageSendBtn;
     @Bind(R.id.edit_chat_message) EditText chatMessageEdit;
-    ChatViewAdapter adapter;
+    private ChatViewAdapter adapter;
+    private ChatContent user;
+    private long userId = CoupleChatDAO.INVALID_ID;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -54,33 +60,13 @@ public class ChatFragment extends Fragment {
         chatMessageListView.setLayoutManager(new LinearLayoutManager(getContext()));
     }
 
-    // TODO: 2016-05-20 실제 서버 데이터 삽입 시 변하게 될 부분임
     private void setOnClickListenerOnButtons() {
-        userBtn.setOnClickListener(view -> {
+        messageSendBtn.setOnClickListener(view -> {
             hideSoftInput(view);
             ChatContent chatContent = new ChatContent();
             chatContent.setMessage(chatMessageEdit.getText().toString());
             chatContent.setSenderId("" + USER_ID);
-            chatContent.setRegDate(new NowDateGetter().getChatTimeString());
-            adapter.addMessage(chatContent);
-            scrollToLastItem();
-            deleteStringInChatMessageEditView();
-        });
-        loverBtn.setOnClickListener(view -> {
-            hideSoftInput(view);
-            ChatContent chatContent = new ChatContent();
-            chatContent.setMessage(chatMessageEdit.getText().toString());
-            chatContent.setSenderId("" + LOVER_ID);
-            chatContent.setRegDate(new NowDateGetter().getChatTimeString());
-            adapter.addMessage(chatContent);
-            scrollToLastItem();
-            deleteStringInChatMessageEditView();
-        });
-        chatDateBtn.setOnClickListener(view -> {
-            hideSoftInput(view);
-            ChatContent chatContent = new ChatContent();
-            chatContent.setSenderId("" + CHAT_DAY_ID);
-            chatContent.setRegDate(new NowDateGetter().getNowDayString());
+            chatContent.setSendDate(new NowDateGetter().getChatTimeString());
             adapter.addMessage(chatContent);
             scrollToLastItem();
             deleteStringInChatMessageEditView();
@@ -124,9 +110,32 @@ public class ChatFragment extends Fragment {
     }
 
     private void setButtonClickable(boolean isClickable){
-        userBtn.setEnabled(isClickable);
-        loverBtn.setEnabled(isClickable);
-        chatDateBtn.setEnabled(isClickable);
+        messageSendBtn.setEnabled(isClickable);
     }
+
+    BroadcastReceiver chatReceiver = new BroadcastReceiver() {
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+
+
+
+
+        }
+    };
+
+    private void bindChatDataToView(){
+        if(userId == CoupleChatDAO.INVALID_ID){
+            userId = CoupleChatDAO.getInstance().getChatContentId(user.getMessageIndex());
+            if(userId == CoupleChatDAO.INVALID_ID){
+                return;
+            }
+        }
+        List<ChatContent> chatResults = CoupleChatDAO.getInstance().searchDataColumns();
+        adapter.addAllMessage(chatResults);
+    }
+
+
+
 
 }

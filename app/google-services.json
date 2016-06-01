@@ -1,0 +1,35 @@
+{
+  "project_info": {
+    "project_number": "167959073758",
+    "project_id": "ringring-df00f"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:167959073758:android:61209e98481b4689",
+        "android_client_info": {
+          "package_name": "olab.ringring"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAaSbaYLhgcqvjVyHabCLfGk0Cgyfs2qj4"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 1
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

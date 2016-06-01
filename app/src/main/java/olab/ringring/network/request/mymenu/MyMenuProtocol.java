@@ -44,7 +44,7 @@ public class MyMenuProtocol {
 
     public static final Request makeChangeUserSexRequest(Context tag, UserSexConstant sex) {
         Map<String, String> bodyParameters = new HashMap<>();
-        bodyParameters.put("userSex", sex.getSexText());
+        bodyParameters.put("userSex", sex.getSexTextUsingRequest());
         return new RequestBuilder()
                 .setTag(tag)
                 .setUrl(MyMenuProtocolUrl.CHANGE_USER_SEX.getUrl())

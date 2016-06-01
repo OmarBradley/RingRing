@@ -26,25 +26,12 @@
             android:paddingTop="8dp" />
 
         <Button
-            android:id="@+id/btn_user"
+            android:id="@+id/btn_sender"
             android:layout_width="50dp"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
             android:text="U" />
 
-        <Button
-            android:id="@+id/btn_lover"
-            android:layout_width="50dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom"
-            android:text="L" />
-
-        <Button
-            android:id="@+id/btn_chat_date"
-            android:layout_width="50dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom"
-            android:text="D" />
     </LinearLayout>
 
 </LinearLayout>

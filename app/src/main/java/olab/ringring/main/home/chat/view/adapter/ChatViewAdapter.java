@@ -9,7 +9,7 @@ import java.util.List;
 
 import olab.ringring.R;
 import olab.ringring.main.home.HomeActivity;
-import olab.ringring.main.home.chat.data.ChatContent;
+import olab.ringring.network.response.chat.ChatContent;
 import olab.ringring.main.home.chat.view.viewholder.ChatDayViewHolder;
 import olab.ringring.main.home.chat.view.viewholder.LoverChatViewHolder;
 import olab.ringring.main.home.chat.view.viewholder.UserChatViewHolder;

@@ -31,6 +31,7 @@ import olab.ringring.main.mymenu.myaccount.picutreupload.PictureUploadStrategy;
 import olab.ringring.network.NetworkManager;
 import olab.ringring.network.request.ImageFileFormData;
 import olab.ringring.network.request.mymenu.MyMenuProtocol;
+import olab.ringring.network.request.mymenu.MyMenuProtocolUrl;
 import olab.ringring.network.response.mymenu.accountinfo.AccountInfoResult;
 import olab.ringring.network.response.mymenu.changename.ChangeNameResult;
 import olab.ringring.network.response.mymenu.changeprofile.ChangeProfileImageResult;
@@ -184,6 +185,7 @@ public class MyAccountActivity extends AppCompatActivity implements ActionBarEle
                         uploadStrategy = new CameraPictureUploadStrategy(MyAccountActivity.this);
                         uploadStrategy.getImage();
                     }, "사진 촬영")))
+                    .setItemViewCenterAlign(false)
                     .build();
             selectDialog.show(getSupportFragmentManager(), "selectDialog");
         });
@@ -195,15 +197,25 @@ public class MyAccountActivity extends AppCompatActivity implements ActionBarEle
                     .setDialogTitle("성별")
                     .setItems(Arrays.asList(new SelectDialogItemData((dialog, dialogItemIndex) -> {
                         dialog.dismiss();
-                        userSex.setText(UserSexConstant.MAN.getSexText());
+                        changeUserSex(UserSexConstant.MAN);
                     }, "남"), new SelectDialogItemData((dialog, dialogItemIndex) -> {
                         dialog.dismiss();
-                        userSex.setText(UserSexConstant.WOMAN.getSexText());
+                        changeUserSex(UserSexConstant.WOMAN);
                     }, "여")))
+                    .setItemViewCenterAlign(true)
                     .build();
             selectDialog.show(getSupportFragmentManager(), "selectDialog");
-           /* selectDialog.setItemViewGravityCenter();*/
         });
+    }
+
+    private void changeUserSex(UserSexConstant userSexConstant){
+        NetworkManager.getInstance().getResult(MyMenuProtocol.makeChangeUserSexRequest(this, userSexConstant), ChangeUserSexResult.class, (request, result) -> {
+            userSex.setText(UserSexConstant.valueOf(result.getUserSex()).getSexText());
+            Toast.makeText(this, "성별이 변경 되었습니다", Toast.LENGTH_SHORT);
+        }, (request, integer, throwable) -> {
+            Toast.makeText(this, "오류", Toast.LENGTH_SHORT);
+        });
+
     }
 
     @Override

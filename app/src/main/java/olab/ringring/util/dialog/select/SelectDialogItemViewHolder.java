@@ -2,7 +2,10 @@ package olab.ringring.util.dialog.select;
 
 import android.support.v4.app.DialogFragment;
 import android.support.v7.widget.RecyclerView;
+import android.view.Gravity;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import butterknife.Bind;
@@ -32,5 +35,11 @@ public class SelectDialogItemViewHolder extends RecyclerView.ViewHolder {
         itemView.setOnClickListener(view -> {
             data.getItemClickListener().onClick(dialog.getDialog() ,2);
         });
+    }
+
+    public void setItemViewCenterAlign(){
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        params.gravity = Gravity.CENTER_HORIZONTAL;
+        itemText.setGravity(Gravity.CENTER_HORIZONTAL);
     }
 }

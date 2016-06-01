@@ -4,7 +4,15 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.VIBRATE" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+
+    <permission
+        android:name="olab.ringring.permission.C2D_MESSAGE"
+        android:protectionLevel="signature" />
+
+    <uses-permission android:name="olab.ringring.permission.C2D_MESSAGE" />
 
     <application
         android:name=".init.application.RingRingApplication"
@@ -16,34 +24,45 @@
         <activity
             android:name=".splash.SplashActivity"
             android:theme="@style/NoActionBarTheme">
-            <!--<intent-filter>
+
+            <!--
+            <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>-->
+            </intent-filter>
+            -->
         </activity>
         <activity
             android:name=".join.JoinActivity"
             android:theme="@style/JoinActivityTheme"
             android:windowSoftInputMode="adjustPan">
-            <!--<intent-filter>
+
+            <!--
+            <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>-->
+            </intent-filter>
+            -->
         </activity>
         <activity
             android:name=".join.signup.loverauthorization.LoverConnectingActivity"
             android:label="@string/title_activity_lover_connecting"
             android:theme="@style/AppTheme">
-            <!--<intent-filter>
+
+            <!--
+            <intent-filter>
                 <action android:name="olab.ringring.partnerauthorization.PartnerConnectingActivity" />
-            </intent-filter>-->
-            <!--<intent-filter>
+            </intent-filter>
+            -->
+            <!--
+            <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>-->
+            </intent-filter>
+            -->
         </activity>
         <activity
             android:name=".join.signup.loverauthorization.SendDownloadLinkActivity"
@@ -57,12 +76,12 @@
             android:name=".main.mymenu.myaccount.MyAccountActivity"
             android:label="@string/title_activity_my_account"
             android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustResize" >
-            <intent-filter>
+            android:windowSoftInputMode="adjustResize">
+            <!--<intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+            </intent-filter>-->
         </activity>
         <activity
             android:name=".main.mymenu.missionhistory.MissionHistoryActivity"
@@ -70,30 +89,73 @@
             android:theme="@style/AppTheme" />
         <activity
             android:name=".main.home.HomeActivity"
-            android:theme="@style/AppTheme.NoTitleActionBar"></activity>
+            android:theme="@style/AppTheme.NoTitleActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <activity
             android:name=".main.mymenu.MyMenuActivity"
             android:label="@string/title_activity_my_menu"
             android:theme="@style/AppTheme.NoTitleActionBar">
-            <!--<intent-filter>
+
+            <!--
+            <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>-->
+            </intent-filter>
+            -->
         </activity>
         <activity
             android:name=".main.ringdesign.RingDesignActivity"
             android:label="@string/title_activity_ring_design"
             android:theme="@style/AppTheme.NoTitleActionBar">
-            <!--<intent-filter>
+
+            <!--
+            <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>-->
+            </intent-filter>
+            -->
         </activity>
+
         <meta-data
             android:name="olab.ringring.init.glide.RingRingGlideModule"
             android:value="GlideModule" />
+
+        <receiver
+            android:name="com.google.android.gms.gcm.GcmReceiver"
+            android:exported="true"
+            android:permission="com.google.android.c2dm.permission.SEND">
+            <intent-filter>
+                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+                <category android:name="olab.ringring" />
+            </intent-filter>
+        </receiver>
+
+        <service
+            android:name=".main.home.chat.moudle.gcm.RingRingGcmListenerService"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+            </intent-filter>
+        </service>
+        <service
+            android:name=".main.home.chat.moudle.gcm.RingRingInstanceIDListenerService"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.google.android.gms.iid.InstanceID" />
+            </intent-filter>
+        </service>
+        <service
+            android:name=".main.home.chat.moudle.gcm.RegistrationIntentService"
+            android:exported="false"></service>
+
+
     </application>
 
 </manifest>
