@@ -25,26 +25,21 @@
             android:name=".splash.SplashActivity"
             android:theme="@style/NoActionBarTheme">
 
-            <!--
-            <intent-filter>
+            <!--<intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-            -->
+            </intent-filter>-->
         </activity>
         <activity
             android:name=".join.JoinActivity"
             android:theme="@style/JoinActivityTheme"
             android:windowSoftInputMode="adjustPan">
 
-            <!--
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-            -->
         </activity>
         <activity
             android:name=".join.signup.loverauthorization.LoverConnectingActivity"
@@ -71,7 +66,13 @@
         <activity
             android:name=".main.mymenu.dday.DDaySettingActivity"
             android:label="@string/title_activity_set_d_day"
-            android:theme="@style/AppTheme" />
+            android:theme="@style/AppTheme">
+           <!-- <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>-->
+        </activity>
         <activity
             android:name=".main.mymenu.myaccount.MyAccountActivity"
             android:label="@string/title_activity_my_account"
@@ -86,15 +87,23 @@
         <activity
             android:name=".main.mymenu.missionhistory.MissionHistoryActivity"
             android:label="@string/title_activity_mission_history"
-            android:theme="@style/AppTheme" />
-        <activity
-            android:name=".main.home.HomeActivity"
-            android:theme="@style/AppTheme.NoTitleActionBar">
-            <intent-filter>
+            android:theme="@style/AppTheme" >
+
+            <!--<intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+            </intent-filter>-->
+
+        </activity>
+        <activity
+            android:name=".main.home.HomeActivity"
+            android:theme="@style/AppTheme.NoTitleActionBar">
+            <!--<intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>-->
         </activity>
         <activity
             android:name=".main.mymenu.MyMenuActivity"

@@ -31,21 +31,21 @@ public class ChatViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     }
 
     public void addAllMessage(List<ChatContent> chatContents) {
-        chatContents.addAll(chatContents);
+        this.chatContents.addAll(chatContents);
         notifyDataSetChanged();
     }
 
     @Override
     public int getItemViewType(int position) {
         ChatContent chatContent = chatContents.get(position);
-        if (chatContent.getSenderId() == Integer.toString(HomeActivity.USER_ID)) {
+        if (chatContent.getSenderId().equals(Integer.toString(HomeActivity.USER_ID))) {
             return VIEW_USER_CHAT;
-        } else if (chatContent.getSenderId() == Integer.toString(HomeActivity.LOVER_ID)) {
+        } else if (chatContent.getSenderId().equals(Integer.toString(HomeActivity.LOVER_ID))) {
             return VIEW_LOVER_CHAT;
-        } else if (chatContent.getSenderId() == Integer.toString(HomeActivity.CHAT_DAY_ID)) {
+        } else if (chatContent.getSenderId().equals(Integer.toString(HomeActivity.CHAT_DAY_ID))) {
             return VIEW_CHAT_DAY;
         }
-        return super.getItemViewType(position);
+        return VIEW_USER_CHAT;
     }
 
     @Override

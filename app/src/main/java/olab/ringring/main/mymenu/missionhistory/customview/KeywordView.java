@@ -45,4 +45,12 @@ public class KeywordView extends LinearLayout {
         keywordSuccessCountText.setText(countText);
     }
 
+    public void hideKeywordSuccessCountText() {
+        keywordSuccessCountText.setVisibility(INVISIBLE);
+    }
+
+    public void showKeywordSuccessCountText() {
+        keywordSuccessCountText.setVisibility(VISIBLE);
+    }
+
 }

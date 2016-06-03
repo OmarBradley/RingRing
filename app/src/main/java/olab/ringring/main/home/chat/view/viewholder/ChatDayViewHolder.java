@@ -23,6 +23,6 @@ public class ChatDayViewHolder extends RecyclerView.ViewHolder implements ChatDa
 
     @Override
     public void setChatDataInChatViewHolder(ChatContent data) {
-        chatDayText.setText(data.getSendDate());
+        chatDayText.setText(data.getSendDate()+"");
     }
 }

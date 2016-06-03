@@ -26,11 +26,14 @@ import olab.ringring.main.mymenu.ringattribute.MyMenuRingJewelry;
 import olab.ringring.main.mymenu.ringattribute.MyMenuRingShape;
 import olab.ringring.main.ringdesign.customview.MyMenuRingView;
 import olab.ringring.main.ringdesign.levelpolicy.RingLevel;
+import olab.ringring.main.ringdesign.ringattribute.jewelry.RingJewelry;
 import olab.ringring.main.ringdesign.ringattribute.material.RingMaterial;
+import olab.ringring.main.ringdesign.ringattribute.shape.RingShape;
 import olab.ringring.network.NetworkManager;
 import olab.ringring.network.request.mymenu.MyMenuProtocol;
 import olab.ringring.network.response.mymenu.intro.MyMenuIntroCoupleRing;
 import olab.ringring.network.response.mymenu.intro.MyMenuIntroResult;
+import olab.ringring.util.preperance.PropertyManager;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -43,12 +46,9 @@ public class MyMenuFragment extends Fragment {
     @Bind(R.id.text_my_menu_lover_name) TextView loverNameText;
     @Bind(R.id.view_my_menu_ring) MyMenuRingView myRingView;
     @Bind(R.id.text_my_menu_ring_level) TextView ringLevelText;
-    @Bind(R.id.view_nav_my_account)
-    NavMyMenuSubElement navMyAccountView;
-    @Bind(R.id.view_nav_setting_d_day)
-    NavMyMenuSubElement navSettingDdayView;
-    @Bind(R.id.view_nav_mission_history)
-    NavMyMenuSubElement navMissionHistoryView;
+    @Bind(R.id.view_nav_my_account) NavMyMenuSubElement navMyAccountView;
+    @Bind(R.id.view_nav_setting_d_day) NavMyMenuSubElement navSettingDdayView;
+    @Bind(R.id.view_nav_mission_history) NavMyMenuSubElement navMissionHistoryView;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -58,7 +58,7 @@ public class MyMenuFragment extends Fragment {
         setNavView(navMyAccountView, MyAccountActivity.class, R.drawable.nav_my_account_image, "나의 계정");
         setNavView(navSettingDdayView, DDaySettingActivity.class,R.drawable.nav_set_d_day_image ,"사귄날 설정" );
         setNavView(navMissionHistoryView, MissionHistoryActivity.class,R.drawable.nav_history_image, "히스토리" );
-        getResponseData();
+        initMyMenuRingView();
         return myMenuFragmentView;
     }
 
@@ -75,10 +75,22 @@ public class MyMenuFragment extends Fragment {
         startActivity(destinationActivityIntent);
     }
 
+    private void initMyMenuRingView(){
+        if(PropertyManager.getInstance().isDefaultRingProperty()){
+            getResponseData();
+        } else {
+            myRingView.setJewelryDrawable(MyMenuRingJewelry.valueOf(PropertyManager.getInstance().getUserJewelry().name()));
+            myRingView.setShapeDrawable(MyMenuRingShape.valueOf(PropertyManager.getInstance().getUserShape().name()));
+            myRingView.setMaterialColor(RingMaterial.valueOf(PropertyManager.getInstance().getUserMaterial().name()));
+            getResponseData();
+        }
+    }
+
     private void getResponseData() {
-        NetworkManager.getInstance().getResult(MyMenuProtocol.makeIntroRequest(getActivity()), MyMenuIntroResult.class, (request, result) -> {
+        NetworkManager.getInstance().sendRequest(MyMenuProtocol.makeIntroRequest(getActivity()), MyMenuIntroResult.class, (request, result) -> {
             MyMenuIntroResult data = result;
             attachResultDataInView(data);
+            setJewelryProperty(data);
         }, ((request, integer, throwable) -> {
             Toast.makeText(getContext(), "알수 없는 에러" + integer, Toast.LENGTH_SHORT).show();
         }));
@@ -103,6 +115,12 @@ public class MyMenuFragment extends Fragment {
         myRingView.setJewelryDrawable(MyMenuRingJewelry.valueOf(coupleRing.getRingJewelry()));
         myRingView.setShapeDrawable(MyMenuRingShape.valueOf(coupleRing.getRingShape()));
         myRingView.setMaterialColor(RingMaterial.valueOf(coupleRing.getRingMaterial()));
+    }
 
+    private void setJewelryProperty(MyMenuIntroResult data){
+        MyMenuIntroCoupleRing coupleRing = data.getCoupleRings().get(0);
+        PropertyManager.getInstance().setUserJewelry(RingJewelry.valueOf(coupleRing.getRingJewelry()));
+        PropertyManager.getInstance().setUserMaterial(RingMaterial.valueOf(coupleRing.getRingMaterial()));
+        PropertyManager.getInstance().setUserShape(RingShape.valueOf(coupleRing.getRingShape()));
     }
 }

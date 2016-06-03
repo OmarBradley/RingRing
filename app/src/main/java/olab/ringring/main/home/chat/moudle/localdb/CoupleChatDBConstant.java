@@ -15,7 +15,6 @@ public class CoupleChatDBConstant {
     public interface CoupleChatTableColumn extends BaseColumns {
         public static final String _CHAT_DATE = "_chat_data";
         public static final String _CHAT_MESSAGE = "_chat_message";
-        public static final String _COUPLE_ID = "_couple_id";
         public static final String _RECEIVER_ID = "_receiver_id";
         public static final String _SENDER_ID = "_sender_id";
         public static final String _IS_READ = "_is_read";

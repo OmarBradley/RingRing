@@ -25,6 +25,6 @@ public class UserChatViewHolder extends RecyclerView.ViewHolder implements ChatD
     @Override
     public void setChatDataInChatViewHolder(ChatContent data) {
         userChatMessageText.setText(data.getMessage());
-        userChatTimeText.setText(data.getSendDate());
+        userChatTimeText.setText(data.getSendDate() +"");
     }
 }

@@ -6,12 +6,14 @@ import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import olab.ringring.R;
 import olab.ringring.join.login.LoginFragment;
 import olab.ringring.join.signup.SignUpFragment;
+import olab.ringring.util.preperance.PropertyManager;
 
 public class JoinActivity extends AppCompatActivity {
 
@@ -34,6 +36,9 @@ public class JoinActivity extends AppCompatActivity {
         setAdapterInPager();
         setTabLayout();
         changeTabView();
+        Log.e("j", PropertyManager.getInstance().getUserJewelry().getTag()+"");
+        Log.e("m", PropertyManager.getInstance().getUserMaterial().getTag()+"");
+        Log.e("s", PropertyManager.getInstance().getUserShape().getTag()+"");
     }
 
     private void addFragmentPageInAdapter() {

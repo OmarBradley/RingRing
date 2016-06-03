@@ -1,6 +1,5 @@
 package olab.ringring.main.ringdesign.choicedialog;
 
-import android.media.Image;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -16,9 +15,7 @@ import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.annimon.stream.Stream;
 import com.annimon.stream.function.Consumer;
 
 import butterknife.Bind;
@@ -153,7 +150,7 @@ public class ChoiceRingAttributeDialogFragment extends DialogFragment {
     }
 
     private void sendNetworkRequest(Request selectRequest, Class selectResultClass) {
-        NetworkManager.getInstance().getResult(selectRequest, selectResultClass,
+        NetworkManager.getInstance().sendRequest(selectRequest, selectResultClass,
                 (request, result) -> {
                     Log.e("result", result.toString());
                 }, (request, integer, throwable) -> {

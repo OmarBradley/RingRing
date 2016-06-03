@@ -31,7 +31,6 @@ import olab.ringring.main.mymenu.myaccount.picutreupload.PictureUploadStrategy;
 import olab.ringring.network.NetworkManager;
 import olab.ringring.network.request.ImageFileFormData;
 import olab.ringring.network.request.mymenu.MyMenuProtocol;
-import olab.ringring.network.request.mymenu.MyMenuProtocolUrl;
 import olab.ringring.network.response.mymenu.accountinfo.AccountInfoResult;
 import olab.ringring.network.response.mymenu.changename.ChangeNameResult;
 import olab.ringring.network.response.mymenu.changeprofile.ChangeProfileImageResult;
@@ -112,7 +111,7 @@ public class MyAccountActivity extends AppCompatActivity implements ActionBarEle
     }
 
     private void getResponseData(){
-        NetworkManager.getInstance().getResult(MyMenuProtocol.makeMyAccountRequest(this), AccountInfoResult.class, (request, result) -> {
+        NetworkManager.getInstance().sendRequest(MyMenuProtocol.makeMyAccountRequest(this), AccountInfoResult.class, (request, result) -> {
             AccountInfoResult data = result;
             attachResultDataInView(data);
         }, ((request, integer, throwable) -> {
@@ -145,7 +144,7 @@ public class MyAccountActivity extends AppCompatActivity implements ActionBarEle
         userName.setOnEditorActionListener((textView, actionId, event) -> {
             if (actionId == EditorInfo.IME_ACTION_SEND) {
                 String changedUserName = userName.getText().toString();
-                NetworkManager.getInstance().getResult(MyMenuProtocol.makeChangeNameRequest(this, changedUserName), ChangeNameResult.class, (request, result) -> {
+                NetworkManager.getInstance().sendRequest(MyMenuProtocol.makeChangeNameRequest(this, changedUserName), ChangeNameResult.class, (request, result) -> {
                     userName.setText(result.getUserNickName());
                     Toast.makeText(this, "이름이 변경되었습니다.", Toast.LENGTH_SHORT).show();
                 }, (request, integer, throwable) -> {
@@ -161,7 +160,7 @@ public class MyAccountActivity extends AppCompatActivity implements ActionBarEle
         userSex.setOnEditorActionListener((textView, actionId, event) -> {
             if (actionId == EditorInfo.IME_ACTION_SEND) {
                 String changedUserSex = userSex.getText().toString();
-                NetworkManager.getInstance().getResult(MyMenuProtocol.makeChangeUserSexRequest(this, UserSexConstant.valueOf(changedUserSex)), ChangeUserSexResult.class, (request, result) -> {
+                NetworkManager.getInstance().sendRequest(MyMenuProtocol.makeChangeUserSexRequest(this, UserSexConstant.valueOf(changedUserSex)), ChangeUserSexResult.class, (request, result) -> {
                     userSex.setText(result.getUserSex());
                     Toast.makeText(this, "성별이 변경되었습니다.", Toast.LENGTH_SHORT).show();
                 }, (request, integer, throwable) -> {
@@ -209,7 +208,7 @@ public class MyAccountActivity extends AppCompatActivity implements ActionBarEle
     }
 
     private void changeUserSex(UserSexConstant userSexConstant){
-        NetworkManager.getInstance().getResult(MyMenuProtocol.makeChangeUserSexRequest(this, userSexConstant), ChangeUserSexResult.class, (request, result) -> {
+        NetworkManager.getInstance().sendRequest(MyMenuProtocol.makeChangeUserSexRequest(this, userSexConstant), ChangeUserSexResult.class, (request, result) -> {
             userSex.setText(UserSexConstant.valueOf(result.getUserSex()).getSexText());
             Toast.makeText(this, "성별이 변경 되었습니다", Toast.LENGTH_SHORT);
         }, (request, integer, throwable) -> {
@@ -227,7 +226,7 @@ public class MyAccountActivity extends AppCompatActivity implements ActionBarEle
         imageData.setBodyName("profile");
         imageData.setFileName(uploadFile.getName());
         imageData.setImageFile(uploadFile);
-        NetworkManager.getInstance().getResult(MyMenuProtocol.makeSetProfileImageRequest(this, imageData), ChangeProfileImageResult.class, (request, result)->{
+        NetworkManager.getInstance().sendRequest(MyMenuProtocol.makeSetProfileImageRequest(this, imageData), ChangeProfileImageResult.class, (request, result)->{
             if (result.getOriginalPicturePath() != null || !TextUtils.isEmpty(result.getOriginalPicturePath())) {
                 Glide.with(this).load(result.getOriginalPicturePath()).into(userProfileImage);
             } else {

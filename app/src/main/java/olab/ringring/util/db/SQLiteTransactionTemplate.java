@@ -1,4 +1,4 @@
-package olab.ringring.main.home.chat.moudle.localdb;
+package olab.ringring.util.db;
 
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;

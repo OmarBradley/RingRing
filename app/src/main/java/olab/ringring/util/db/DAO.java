@@ -1,6 +1,4 @@
-package olab.ringring.main.home.chat.moudle.localdb;
-
-import android.database.Cursor;
+package olab.ringring.util.db;
 
 import java.util.List;
 

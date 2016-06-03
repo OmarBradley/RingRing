@@ -67,4 +67,17 @@ public class EditTextWithDuplicateButtonView extends LinearLayout {
     public void setInputType(int inputType){
         contentTextEdit.setInputType(inputType);
     }
+
+    public void hideDuplicateCheckButton(){
+        duplicateCheckBtn.setVisibility(INVISIBLE);
+    }
+
+    public void showDuplicateCheckButton(){
+        duplicateCheckBtn.setVisibility(VISIBLE);
+    }
+
+    public void setImeOption(int imeOption){
+        contentTextEdit.setImeOptions(imeOption);
+    }
+
 }

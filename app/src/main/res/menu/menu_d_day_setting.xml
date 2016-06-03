@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
         android:id="@+id/action_d_day_setting"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@drawable/actionbar_check_image"
         app:showAsAction="always"
         android:title="check" />
 </menu>

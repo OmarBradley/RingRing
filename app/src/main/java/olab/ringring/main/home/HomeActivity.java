@@ -6,12 +6,14 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import lombok.Getter;
 import olab.ringring.R;
 import olab.ringring.main.home.chat.ChatFragment;
+import olab.ringring.util.preperance.PropertyManager;
 import olab.ringring.main.home.customview.ChatProfileView;
 import olab.ringring.main.nav.visitor.MainNavigationVisitor;
 import olab.ringring.main.nav.visitor.concretevisitior.SetNavigationFragmentVisitor;
@@ -39,6 +41,7 @@ public class HomeActivity extends AppCompatActivity
         setContentView(R.layout.activity_home);
         ButterKnife.bind(this);
         setSupportActionBar(toolbar);
+        Log.d("reg", PropertyManager.getInstance().getRegistrationToken());
         this.accept(new SetNavigationFragmentVisitor());
         this.accept(new SetToggleVisitor());
         this.accept(new DeleteActionBarTitleVisitor());

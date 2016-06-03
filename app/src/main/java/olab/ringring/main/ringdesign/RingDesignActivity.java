@@ -33,6 +33,7 @@ import olab.ringring.network.response.ring.intro.RingIntroResult;
 import olab.ringring.util.actionbar.element.ActionBarElement;
 import olab.ringring.util.actionbar.visitor.ActionbarVisitor;
 import olab.ringring.util.colorchanger.ImageColorChanger;
+import olab.ringring.util.preperance.PropertyManager;
 
 public class RingDesignActivity extends AppCompatActivity
         implements MainNavigationElement, ActionBarElement {
@@ -72,13 +73,23 @@ public class RingDesignActivity extends AppCompatActivity
         ringLevelView.setPresentRingLevel(RingLevel.FIFTEEN);
     }
 
-    private void initBigRingView(){
-        NetworkManager.getInstance().getResult(RingProtocol.makeIntroRequest(this), RingIntroResult.class, (request, result) -> {
+
+    private void initBigRingView() {
+        if (PropertyManager.getInstance().isDefaultRingProperty()) {
+            syncBigRingView();
+        } else {
+            ringFactory = new BigRingFactory(bigRingView, PropertyManager.getInstance().getUserJewelry(), PropertyManager.getInstance().getUserMaterial(), PropertyManager.getInstance().getUserShape());
+        }
+    }
+
+    private void syncBigRingView(){
+        NetworkManager.getInstance().sendRequest(RingProtocol.makeIntroRequest(this), RingIntroResult.class, (request, result) -> {
             RingIntroResult data = result;
             setSelectedMaterial(RingMaterial.valueOf(data.getRingMaterial()));
             ringFactory = new BigRingFactory(bigRingView, RingJewelry.valueOf(data.getRingJewelry()),RingMaterial.valueOf(data.getRingMaterial()),RingShape.valueOf(data.getRingShape()));
             ringLevelView.setPresentRingLevel(RingLevel.valueOf(data.getCoupleExp()));
             attachSetRingAttributeFragment(data);
+            PropertyManager.getInstance().setAllRingAttribute(RingJewelry.valueOf(data.getRingJewelry()),RingShape.valueOf(data.getRingShape()),RingMaterial.valueOf(data.getRingMaterial()));
         }, ((request, integer, throwable) -> {
             Toast.makeText(this, "알수 없는 에러" + integer, Toast.LENGTH_SHORT).show();
         }));
@@ -108,7 +119,7 @@ public class RingDesignActivity extends AppCompatActivity
     @Override
     protected void onResume() {
         super.onResume();
-        initBigRingView();
+        syncBigRingView();
     }
 
     @Override
