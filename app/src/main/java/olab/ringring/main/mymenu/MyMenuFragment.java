@@ -22,6 +22,7 @@ import olab.ringring.R;
 import olab.ringring.main.mymenu.dday.DDaySettingActivity;
 import olab.ringring.main.mymenu.missionhistory.MissionHistoryActivity;
 import olab.ringring.main.mymenu.myaccount.MyAccountActivity;
+import olab.ringring.main.mymenu.profile.ProfileImageActivity;
 import olab.ringring.main.mymenu.ringattribute.MyMenuRingJewelry;
 import olab.ringring.main.mymenu.ringattribute.MyMenuRingShape;
 import olab.ringring.main.ringdesign.customview.MyMenuRingView;
@@ -31,8 +32,8 @@ import olab.ringring.main.ringdesign.ringattribute.material.RingMaterial;
 import olab.ringring.main.ringdesign.ringattribute.shape.RingShape;
 import olab.ringring.network.NetworkManager;
 import olab.ringring.network.request.mymenu.MyMenuProtocol;
-import olab.ringring.network.response.mymenu.intro.MyMenuIntroCoupleRing;
-import olab.ringring.network.response.mymenu.intro.MyMenuIntroResult;
+import olab.ringring.network.response.mymenu.home.MyMenuIntroCoupleRing;
+import olab.ringring.network.response.mymenu.home.MyMenuIntroResult;
 import olab.ringring.util.preperance.PropertyManager;
 
 /**
@@ -59,6 +60,7 @@ public class MyMenuFragment extends Fragment {
         setNavView(navSettingDdayView, DDaySettingActivity.class,R.drawable.nav_set_d_day_image ,"사귄날 설정" );
         setNavView(navMissionHistoryView, MissionHistoryActivity.class,R.drawable.nav_history_image, "히스토리" );
         initMyMenuRingView();
+        initProfileImageViewOnClickListener();
         return myMenuFragmentView;
     }
 
@@ -87,10 +89,11 @@ public class MyMenuFragment extends Fragment {
     }
 
     private void getResponseData() {
-        NetworkManager.getInstance().sendRequest(MyMenuProtocol.makeIntroRequest(getActivity()), MyMenuIntroResult.class, (request, result) -> {
+        NetworkManager.getInstance().sendRequest(MyMenuProtocol.makeHomeRequest(getActivity()), MyMenuIntroResult.class, (request, result) -> {
             MyMenuIntroResult data = result;
             attachResultDataInView(data);
             setJewelryProperty(data);
+            PropertyManager.getInstance().setUserProperty(result);
         }, ((request, integer, throwable) -> {
             Toast.makeText(getContext(), "알수 없는 에러" + integer, Toast.LENGTH_SHORT).show();
         }));
@@ -122,5 +125,11 @@ public class MyMenuFragment extends Fragment {
         PropertyManager.getInstance().setUserJewelry(RingJewelry.valueOf(coupleRing.getRingJewelry()));
         PropertyManager.getInstance().setUserMaterial(RingMaterial.valueOf(coupleRing.getRingMaterial()));
         PropertyManager.getInstance().setUserShape(RingShape.valueOf(coupleRing.getRingShape()));
+    }
+
+    private void initProfileImageViewOnClickListener(){
+        userProfileImage.setOnClickListener(view -> {
+            moveToAnotherActivity(ProfileImageActivity.class);
+        });
     }
 }

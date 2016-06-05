@@ -48,4 +48,17 @@ public class UsersProtocol {
                 .addBodyParameters(bodyParameters)
                 .build();
     }
+
+    public static final Request makeLoginRequest(Context tag, String userEmail, String userPassword){
+        Map<String, String> bodyParameters = new HashMap<>();
+        bodyParameters.put("userEmail", userEmail);
+        bodyParameters.put("userPassword", userPassword);
+        return new RequestBuilder()
+                .setTag(tag)
+                .setUrl(UsersProtocolUrl.LOGIN.getUrl())
+                .addPageSegment(UsersProtocolUrl.LOGIN.getPageSegment())
+                .addBodyParameters(bodyParameters)
+                .build();
+    }
+
 }

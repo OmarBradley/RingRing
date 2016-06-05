@@ -15,11 +15,11 @@ import olab.ringring.network.request.RequestBuilder;
  */
 public class MyMenuProtocol {
 
-    public static final Request makeIntroRequest(Context tag){
+    public static final Request makeHomeRequest(Context tag){
         return new RequestBuilder()
                 .setTag(tag)
-                .setUrl(MyMenuProtocolUrl.INTRO.getUrl())
-                .addPageSegment(MyMenuProtocolUrl.INTRO.getPageSegment())
+                .setUrl(MyMenuProtocolUrl.HOME.getUrl())
+                .addPageSegment(MyMenuProtocolUrl.HOME.getPageSegment())
                 .build();
     }
 
@@ -62,5 +62,12 @@ public class MyMenuProtocol {
                 .build();
     }
 
+    public static final Request makeShowProfileRequest(Context tag){
+        return new RequestBuilder()
+                .setTag(tag)
+                .setUrl(MyMenuProtocolUrl.SHOW_PROFILE.getUrl())
+                .addPageSegment(MyMenuProtocolUrl.SHOW_PROFILE.getPageSegment())
+                .build();
+    }
 
 }

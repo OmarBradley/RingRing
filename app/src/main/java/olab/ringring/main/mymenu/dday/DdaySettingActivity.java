@@ -38,17 +38,18 @@ public class DDaySettingActivity extends AppCompatActivity implements ActionBarE
         ButterKnife.bind(this);
         initDDaySettingCalendar();
         this.accept(new SetActionBarIconVisitor(ContextCompat.getDrawable(this, R.drawable.actionbar_home_as_up_image)));
-
     }
 
     private void initDDaySettingCalendar() {
         dDaySettingCalendar.setIsOverflowDateVisible(false);
+
         dDaySettingCalendar.refreshCalendar(Calendar.getInstance(Locale.getDefault()));
-        //dDaySettingCalendar.
         dDaySettingCalendar.setOnDateSelectedListener(date -> {
             SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy년 M월 d일", Locale.getDefault());
             selectDate = date.getTime();
-            Toast.makeText(this, dDaySettingCalendar.getCurrentMonth(),Toast.LENGTH_SHORT).show();
+            dDaySettingCalendar.setDateAsSelected(date);
+            dDaySettingCalendar.setSelectedDayBackground(R.color.colorPrimaryDark);
+            dDaySettingCalendar.setCurrentDay(date);
             todayText.setText(dateFormat.format(date));
         });
     }

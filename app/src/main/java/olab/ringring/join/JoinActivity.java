@@ -22,7 +22,7 @@ public class JoinActivity extends AppCompatActivity {
     private final static @DrawableRes int TAB_INDICATOR_NAV_IMAGE = R.drawable.join_tab_indicator_nav_image;
 
     @Bind(R.id.tabLayout) TabLayout tabLayout;
-    @Bind(R.id.pager) ViewPager pager;
+    @Bind(R.id.pager_join_fragment) ViewPager pager;
     JoinPageAdapter pageAdapter;
     JoinTabIndicatorView loginTabView;
     JoinTabIndicatorView signUpTabView;

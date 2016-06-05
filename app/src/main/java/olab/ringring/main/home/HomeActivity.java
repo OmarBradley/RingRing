@@ -1,18 +1,39 @@
 package olab.ringring.main.home;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.util.Log;
+import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import com.bumptech.glide.Glide;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import lombok.Getter;
 import olab.ringring.R;
+import olab.ringring.init.application.RingRingApplication;
 import olab.ringring.main.home.chat.ChatFragment;
+import olab.ringring.main.home.ring.HomeRingFactory;
+import olab.ringring.main.home.ring.HomeRingJewelry;
+import olab.ringring.main.home.ring.HomeRingShape;
+import olab.ringring.main.mymenu.MyMenuActivity;
+import olab.ringring.main.mymenu.myaccount.MyAccountActivity;
+import olab.ringring.main.ringdesign.ringattribute.jewelry.RingJewelry;
+import olab.ringring.main.ringdesign.ringattribute.material.RingMaterial;
+import olab.ringring.main.ringdesign.ringattribute.shape.RingShape;
+import olab.ringring.network.NetworkManager;
+import olab.ringring.network.request.mymenu.MyMenuProtocol;
+import olab.ringring.network.response.mymenu.home.MyMenuIntroCoupleRing;
+import olab.ringring.network.response.mymenu.home.MyMenuIntroResult;
 import olab.ringring.util.preperance.PropertyManager;
 import olab.ringring.main.home.customview.ChatProfileView;
 import olab.ringring.main.nav.visitor.MainNavigationVisitor;
@@ -32,8 +53,12 @@ public class HomeActivity extends AppCompatActivity
 
     @Getter @Bind(R.id.toolbar) Toolbar toolbar;
     @Getter @Bind(R.id.drawer_layout) DrawerLayout drawer;
+    @Bind(R.id.text_couple_d_day) TextView coupleDDayText;
+    @Bind(R.id.image_home_ring_shape) ImageView shapeView;
+    @Bind(R.id.image_home_ring_jewelry) ImageView jewelryView;
     @Bind(R.id.profile_view_user) ChatProfileView userProfileView;
     @Bind(R.id.profile_view_lover) ChatProfileView loverProfileView;
+    private HomeRingFactory ringFactory;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,12 +66,14 @@ public class HomeActivity extends AppCompatActivity
         setContentView(R.layout.activity_home);
         ButterKnife.bind(this);
         setSupportActionBar(toolbar);
-        Log.d("reg", PropertyManager.getInstance().getRegistrationToken());
         this.accept(new SetNavigationFragmentVisitor());
         this.accept(new SetToggleVisitor());
         this.accept(new DeleteActionBarTitleVisitor());
         setElevationInChatProfileView();
+        initHomeRing();
         attachChatFragment();
+        getHomeInfo();
+        setOnClickListenerInUserProfile();
     }
 
     @Override
@@ -73,6 +100,13 @@ public class HomeActivity extends AppCompatActivity
         }
     }
 
+    private void initHomeRing() {
+        if (!PropertyManager.getInstance().isDefaultRingProperty()) {
+            ringFactory = new HomeRingFactory(jewelryView, shapeView, HomeRingJewelry.valueOf(PropertyManager.getInstance().getUserJewelry().name()),
+                    HomeRingShape.valueOf(PropertyManager.getInstance().getUserShape().name()), RingMaterial.valueOf(PropertyManager.getInstance().getUserMaterial().name()));
+        }
+    }
+
     private void attachChatFragment(){
         ChatFragment chatFragment = new ChatFragment();
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
@@ -80,8 +114,49 @@ public class HomeActivity extends AppCompatActivity
         fragmentTransaction.commit();
     }
 
+    private void getHomeInfo() {
+        NetworkManager.getInstance().sendRequest(MyMenuProtocol.makeHomeRequest(this), MyMenuIntroResult.class, (request, result) -> {
+            initView(result);
+            PropertyManager.getInstance().setUserProperty(result);
+        }, (request, integer, throwable) -> {
+            Toast.makeText(this, "network error", Toast.LENGTH_SHORT).show();
+        });
+    }
+
+    private void initView(MyMenuIntroResult homeInfo){
+        coupleDDayText.setText(""+homeInfo.getCoupleDuringDate());
+        attachImageInImageView(userProfileView.getUserProfileImage(),homeInfo.getUserProfile(), R.drawable.default_profile_image );
+
+        // TODO: 2016-06-05 lover image 속성 저장을 하지 않고 있음
+        attachImageInImageView(loverProfileView.getUserProfileImage(), homeInfo.getUserProfile(), R.drawable.default_profile_image);
+        userProfileView.setUserName(homeInfo.getUserNickname());
+        loverProfileView.setUserName(homeInfo.getLoverNickname());
+        initHomeRing(homeInfo);
+    }
+
+    private void attachImageInImageView(ImageView imageView, String imageUrl, int defaultImageRes) {
+        if (imageUrl != null || !TextUtils.isEmpty(imageUrl) || !imageUrl.contains("127.0.0.1:3000")) {
+            Glide.with(this).load(imageUrl).into(imageView);
+        } else {
+            imageView.setImageDrawable(ContextCompat.getDrawable(RingRingApplication.getContext(), defaultImageRes));
+        }
+    }
+
+    private void initHomeRing(MyMenuIntroResult homeInfo){
+        MyMenuIntroCoupleRing coupleRing = homeInfo.getCoupleRings().get(0);
+        ringFactory = new HomeRingFactory(jewelryView, shapeView , HomeRingJewelry.valueOf(coupleRing.getRingJewelry()),
+                HomeRingShape.valueOf(coupleRing.getRingShape()), RingMaterial.valueOf(coupleRing.getRingMaterial()));
+        ringFactory.build();
+        PropertyManager.getInstance().setAllRingAttribute(RingJewelry.valueOf(coupleRing.getRingJewelry()), RingShape.valueOf(coupleRing.getRingShape()), RingMaterial.valueOf(coupleRing.getRingMaterial()));
+    }
 
 
+    private void setOnClickListenerInUserProfile(){
+        userProfileView.setOnClickListener(view -> {
+            Intent intent = new Intent(this, MyAccountActivity.class);
+            startActivity(intent);
+        });
+    }
 }
 
 

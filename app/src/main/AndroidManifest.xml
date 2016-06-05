@@ -25,10 +25,12 @@
             android:name=".splash.SplashActivity"
             android:theme="@style/NoActionBarTheme">
 
-            <!--<intent-filter>
+            <!--
+            intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>-->
+            </intent-filter>
+            -->
         </activity>
         <activity
             android:name=".join.JoinActivity"
@@ -67,33 +69,41 @@
             android:name=".main.mymenu.dday.DDaySettingActivity"
             android:label="@string/title_activity_set_d_day"
             android:theme="@style/AppTheme">
-           <!-- <intent-filter>
+
+            <!--
+            <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>-->
+            </intent-filter>
+            -->
         </activity>
         <activity
             android:name=".main.mymenu.myaccount.MyAccountActivity"
             android:label="@string/title_activity_my_account"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustResize">
-            <!--<intent-filter>
+
+            <!--
+            <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>-->
+            </intent-filter>
+            -->
         </activity>
         <activity
             android:name=".main.mymenu.missionhistory.MissionHistoryActivity"
             android:label="@string/title_activity_mission_history"
-            android:theme="@style/AppTheme" >
+            android:theme="@style/AppTheme">
 
-            <!--<intent-filter>
+            <!--
+            <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>-->
+            </intent-filter>
+            -->
 
         </activity>
         <activity
@@ -142,6 +152,7 @@
             android:permission="com.google.android.c2dm.permission.SEND">
             <intent-filter>
                 <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+
                 <category android:name="olab.ringring" />
             </intent-filter>
         </receiver>
@@ -162,9 +173,11 @@
         </service>
         <service
             android:name=".main.home.chat.moudle.gcm.RegistrationIntentService"
-            android:exported="false"></service>
+            android:exported="false" />
 
-
+        <activity
+            android:name=".main.mymenu.profile.ProfileImageActivity"
+            android:theme="@style/NoActionBarTheme"></activity>
     </application>
 
 </manifest>

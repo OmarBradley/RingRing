@@ -9,7 +9,8 @@ import olab.ringring.network.request.RequestBuilder;
 public enum UsersProtocolUrl {
     CHECK_EMAIL(RequestBuilder.BASE_URL + UsersProtocolUrl.USERS_PROTOCOL_PAGE_SEGMENT, "checkemail"),
     CHECK_PHONE_NUMBER(RequestBuilder.BASE_URL + UsersProtocolUrl.USERS_PROTOCOL_PAGE_SEGMENT, "checkphonenumber"),
-    SIGN_UP(RequestBuilder.BASE_URL + UsersProtocolUrl.USERS_PROTOCOL_PAGE_SEGMENT , "signup");
+    SIGN_UP(RequestBuilder.BASE_URL + UsersProtocolUrl.USERS_PROTOCOL_PAGE_SEGMENT , "signup"),
+    LOGIN(RequestBuilder.BASE_URL, "users");
 
     UsersProtocolUrl(String url, String pageSegment) {
         this.url = url;

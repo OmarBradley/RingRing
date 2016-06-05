@@ -47,7 +47,7 @@ public class CoupleChatDAO extends SQLiteOpenHelper implements DAO<ChatContent> 
     }
 
     @Override
-    public List<ChatContent> searchDataColumns() {
+    public List<ChatContent> getDataRows() {
         List<ChatContent> chatContents = new ArrayList<>();
         String[] columns = {CoupleChatDBConstant.CoupleChatTableColumn._CHAT_DATE, CoupleChatDBConstant.CoupleChatTableColumn._CHAT_MESSAGE,
                 CoupleChatDBConstant.CoupleChatTableColumn._RECEIVER_ID, CoupleChatDBConstant.CoupleChatTableColumn._SENDER_ID,
@@ -63,9 +63,6 @@ public class CoupleChatDAO extends SQLiteOpenHelper implements DAO<ChatContent> 
             data.setReadStatus(cursor.getInt(cursor.getColumnIndex(CoupleChatDBConstant.CoupleChatTableColumn._IS_READ)));
             chatContents.add(data);
         }
-        Log.e("char", chatContents.size() + "");
         return chatContents;
     }
-
-
 }

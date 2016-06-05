@@ -20,6 +20,9 @@ import olab.ringring.R;
 import olab.ringring.join.customview.EditTextWithSubmitButtonView;
 import olab.ringring.join.util.Validator;
 import olab.ringring.main.home.HomeActivity;
+import olab.ringring.network.NetworkManager;
+import olab.ringring.network.request.users.UsersProtocol;
+import olab.ringring.network.response.users.SuccessLogin;
 import olab.ringring.util.dialog.confirm.ConfirmDialogFragment;
 import olab.ringring.util.dialog.confirm.ConfirmDialogInfoPool;
 import olab.ringring.util.dialog.yesorno.YesOrNoDialogFragment;
@@ -60,15 +63,19 @@ public class LoginFragment extends Fragment {
         validatePassword();
     }
 
+    // TODO: 2016-06-04 상욱이가 내려준 프로토콜로 로그인 프로토콜 고치기
     private void validatePassword(){
         passwordEdit.setOnSubmitButtonClickListener(view -> {
-            if(Validator.isCorrectPassword(passwordEdit.getInputString(), "1234")){
-                moveToMainActivity();
-                passwordValidateText.setVisibility(View.INVISIBLE);
-            } else {
-                buildInfoErrorDialog();
-                passwordValidateText.setVisibility(View.VISIBLE);
-            }
+            NetworkManager.getInstance().sendRequest(UsersProtocol.makeLoginRequest(getActivity(),emailEdit.getText().toString(), passwordEdit.getInputString()), SuccessLogin.class, (request, result) -> {
+                if(result == null){
+                    buildInfoErrorDialog();
+                } else {
+                    moveToHomeActivity();
+                    passwordValidateText.setVisibility(View.VISIBLE);
+                }
+            }, (request, integer, throwable) -> {
+                Toast.makeText(getActivity(), "network error", Toast.LENGTH_SHORT).show();
+            });
         });
         passwordEdit.addTextChangedListener(new TextWatcher() {
             @Override
@@ -89,7 +96,7 @@ public class LoginFragment extends Fragment {
         });
     }
 
-    private void moveToMainActivity(){
+    private void moveToHomeActivity(){
         Intent intent = new Intent(getActivity(), HomeActivity.class);
         startActivity(intent);
         getActivity().finish();
@@ -97,15 +104,8 @@ public class LoginFragment extends Fragment {
 
 
     private void buildInfoErrorDialog() {
-        /*ConfirmDialogFragment errorDialog = ConfirmDialogInfoPool.LOGIN_INFO_ERROR.makeConfirmDialog();
-        errorDialog.show(getActivity().getSupportFragmentManager(), "error dialog");*/
-
-        YesOrNoDialogFragment errorDialog = YesOrNoDialogInfoPool.SEND_RING.makeYesOrNoDialog(((dialog, which) -> {
-            Log.e("posi", "posi");
-        }),((dialog, which) -> {
-            Log.e("nage", "nage");
-        }));
-        errorDialog.show(getActivity().getSupportFragmentManager(), "error dialog");
+        ConfirmDialogFragment loginErrorDialog = ConfirmDialogInfoPool.LOGIN_INFO_ERROR.makeConfirmDialog();
+        loginErrorDialog.show(getActivity().getSupportFragmentManager(), "login error dialog");
     }
 
 

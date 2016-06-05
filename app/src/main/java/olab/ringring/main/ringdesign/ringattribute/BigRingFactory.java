@@ -15,14 +15,12 @@ import olab.ringring.util.colorchanger.ImageColorChanger;
 
 public class BigRingFactory  {
 
-    BigRingView ringView;
-    RingJewelry jewelry;
-    RingShape shape;
-    RingMaterial material;
+    private BigRingView ringView;
+    private RingShape shape;
+    private RingMaterial material;
 
     public BigRingFactory(BigRingView ringView, RingJewelry jewelry, RingMaterial material, RingShape shape) {
         this.ringView = ringView;
-        this.jewelry = jewelry;
         this.material = material;
         this.shape = shape;
         createRingJewelry(jewelry);

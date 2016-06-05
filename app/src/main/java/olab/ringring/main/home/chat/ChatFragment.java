@@ -29,6 +29,7 @@ import butterknife.ButterKnife;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import olab.ringring.R;
+import olab.ringring.main.home.HomeActivity;
 import olab.ringring.main.home.chat.moudle.gcm.RingRingGcmListenerService;
 import olab.ringring.main.home.chat.moudle.localdb.CoupleChatDAO;
 import olab.ringring.network.NetworkManager;
@@ -45,20 +46,17 @@ public class ChatFragment extends Fragment {
     public static final int READ = 1;
     public static final int UNREAD = 0;
 
-
     @Bind(R.id.list_view_chat_message) RecyclerView chatMessageListView;
     @Bind(R.id.btn_sender) Button messageSendBtn;
     @Bind(R.id.edit_chat_message) EditText chatMessageEdit;
     private ChatViewAdapter adapter;
     IntentFilter chatActionFilter = new IntentFilter(RingRingGcmListenerService.ACTION_CHAT);
-    String message;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View chatFragmentView =inflater.inflate(R.layout.fragment_chat, container, false);
         ButterKnife.bind(this, chatFragmentView);
-
         setChatMessageListView();
         setOnClickListenerOnButtons();
         executeActionWhenTextTyping();
@@ -68,7 +66,8 @@ public class ChatFragment extends Fragment {
     private void setChatMessageListView(){
         adapter = new ChatViewAdapter();
         chatMessageListView.setAdapter(adapter);
-        chatMessageListView.setLayoutManager(new LinearLayoutManager(getContext()));
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
+        chatMessageListView.setLayoutManager(layoutManager);
     }
 
     private void setOnClickListenerOnButtons() {
@@ -84,26 +83,29 @@ public class ChatFragment extends Fragment {
         iMM.hideSoftInputFromWindow(view.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
     }
 
-    private ChatContent makeChatMessage(){
+    private ChatContent makeChatMessage() {
         ChatContent chatContent = new ChatContent();
         chatContent.setReadStatus(UNREAD);
         chatContent.setSendDate(DateTime.now().getMillis());
         chatContent.setMessage(chatMessageEdit.getText().toString());
-        chatContent.setSenderId("" + USER_ID);
-        chatContent.setReceiverId("" + LOVER_ID);
+        chatContent.setSenderId("" + HomeActivity.USER_ID);
+        chatContent.setReceiverId("" + HomeActivity.LOVER_ID);
+
         return chatContent;
     }
 
     private void sendChatDataToServer() {
+        Log.e("chamt", makeChatMessage().toString());
         NetworkManager.getInstance().sendRequest(HomeProtocol.maeChatContentRequest(getActivity(), makeChatMessage()), ChatContent.class, (request, result) -> {
-            // TODO: 2016-06-03 여기다 채팅 메시지 저장 로직을 삽입시켜줘야 한다
+            Log.e("re chat", result.toString());
+            CoupleChatDAO.getInstance().insertData(result);
         }, (request, integer, throwable) -> {
             Log.e("error", request.toString());
         });
     }
 
     private void scrollToLastItem() {
-        chatMessageListView.smoothScrollToPosition(adapter.getItemCount());
+        chatMessageListView.scrollToPosition(adapter.getItemCount() - 1);
     }
 
     private void deleteStringInChatMessageEditView(){
@@ -143,27 +145,26 @@ public class ChatFragment extends Fragment {
         public void onReceive(Context context, Intent intent) {
             getActivity().runOnUiThread(()->{
                 bindChatDataToView();
-                intent.putExtra(RingRingGcmListenerService.EXTRA_RESULT, true);
             });
+            intent.putExtra(RingRingGcmListenerService.EXTRA_RESULT, true);
         }
     };
 
     @Override
     public void onPause() {
         super.onPause();
-        bindChatDataToView();
         LocalBroadcastManager.getInstance(getActivity()).unregisterReceiver(chatReceiver);
     }
 
     @Override
     public void onResume() {
-        LocalBroadcastManager.getInstance(getActivity()).registerReceiver(chatReceiver, chatActionFilter);
         super.onResume();
+        bindChatDataToView();
+        LocalBroadcastManager.getInstance(getActivity()).registerReceiver(chatReceiver, chatActionFilter);
     }
 
     private void bindChatDataToView(){
-        List<ChatContent> chatResults = CoupleChatDAO.getInstance().searchDataColumns();
-        Log.e("cha", chatResults.size()+"");
+        List<ChatContent> chatResults = CoupleChatDAO.getInstance().getDataRows();
         if(chatResults.size() == 0){
             return;
         } else {

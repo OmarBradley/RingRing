@@ -49,7 +49,6 @@
                 android:background="@color/colorPrimary"
                 android:textSize="15sp"
                 android:textStyle="bold"
-
                 app:calendarBackgroundColor="@color/colorPrimary"
                 app:calendarTitleTextColor="@color/colorWhiteTextColor"
                 app:currentDayOfMonthColor="@color/colorWhiteTextColor"

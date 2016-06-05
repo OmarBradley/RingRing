@@ -35,17 +35,18 @@ public class ChatViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         notifyDataSetChanged();
     }
 
+    // TODO: 2016-06-04 id와 비교로직 구현하기
     @Override
     public int getItemViewType(int position) {
         ChatContent chatContent = chatContents.get(position);
-        if (chatContent.getSenderId().equals(Integer.toString(HomeActivity.USER_ID))) {
+        if (chatContent.getSenderId() == null || chatContent.getSenderId().equals(""+HomeActivity.USER_ID)) {
             return VIEW_USER_CHAT;
-        } else if (chatContent.getSenderId().equals(Integer.toString(HomeActivity.LOVER_ID))) {
+        } else if (chatContent.getSenderId().equals(""+HomeActivity.LOVER_ID)) {
             return VIEW_LOVER_CHAT;
         } else if (chatContent.getSenderId().equals(Integer.toString(HomeActivity.CHAT_DAY_ID))) {
             return VIEW_CHAT_DAY;
         }
-        return VIEW_USER_CHAT;
+        return super.getItemViewType(position);
     }
 
     @Override

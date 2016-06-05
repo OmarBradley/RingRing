@@ -13,6 +13,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
+        android:layout_marginBottom="3dp"
         android:orientation="horizontal">
 
         <TextView
@@ -26,11 +27,26 @@
             android:text="일째" />
     </LinearLayout>
 
-    <ImageView
-        android:id="@+id/image_couple_ring"
+    <RelativeLayout
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:src="@android:mipmap/sym_def_app_icon" />
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/image_home_ring_shape"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_gravity="center"
+            android:src="@drawable/chatting_octagon_image" />
+
+        <ImageView
+            android:id="@+id/image_home_ring_jewelry"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_alignParentTop="true"
+            android:layout_gravity="center"
+            android:layout_marginTop="-20dp"
+            android:src="@drawable/chatting_crystal_image" />
+    </RelativeLayout>
+
 
 </LinearLayout>

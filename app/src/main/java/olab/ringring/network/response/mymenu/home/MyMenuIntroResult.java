@@ -1,4 +1,4 @@
-package olab.ringring.network.response.mymenu.intro;
+package olab.ringring.network.response.mymenu.home;
 
 import com.google.gson.annotations.SerializedName;
 
@@ -38,6 +38,9 @@ public class MyMenuIntroResult {
 
     @SerializedName("LOVER_NICKNAME")
     private String loverNickname;
+
+    @SerializedName("COUPLE_DURING_DATE")
+    private int coupleDuringDate;
 
     @SerializedName("COUPLERING")
     private List<MyMenuIntroCoupleRing> coupleRings;

@@ -15,19 +15,19 @@ import olab.ringring.util.db.RowMapper;
  */
 @Data
 public class ChatContent implements RowMapper, Serializable{
-    @SerializedName("senderId")
+    @SerializedName("SENDER_ID")
     private String senderId;
 
-    @SerializedName("receiverId")
+    @SerializedName("RECEIVER_ID")
     private String receiverId;
 
-    @SerializedName("messageContent")
+    @SerializedName("MESSAGE_CONTENT")
     private String message;
 
-    @SerializedName("sendDate")
+    @SerializedName("SEND_DATE")
     private long sendDate;
 
-    @SerializedName("read_status")
+    @SerializedName("READ_STATUS")
     private int readStatus;
 
     @Override

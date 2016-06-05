@@ -10,12 +10,14 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:text="Sara"
-        android:textColor="@android:color/white" />
+        android:layout_marginBottom="3dp"
+        android:textSize="15sp"
+        android:textColor="@color/colorHomeName" />
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/image_user_profile"
-        android:layout_width="70dp"
-        android:layout_height="70dp"
+        android:layout_width="84dp"
+        android:layout_height="84dp"
         android:layout_gravity="center"
-        android:src="@drawable/test_user_profile_image" />
+        android:src="@drawable/default_profile_image" />
 </LinearLayout>

@@ -41,6 +41,7 @@ import olab.ringring.util.actionbar.visitor.concretevisitor.SetActionBarIconVisi
 import olab.ringring.util.dialog.select.SelectDialogBuilder;
 import olab.ringring.util.dialog.select.SelectDialogFragment;
 import olab.ringring.util.dialog.select.SelectDialogItemData;
+import olab.ringring.util.preperance.PropertyManager;
 
 public class MyAccountActivity extends AppCompatActivity implements ActionBarElement {
 
@@ -102,12 +103,18 @@ public class MyAccountActivity extends AppCompatActivity implements ActionBarEle
 
     @Override
     protected void onResume() {
+        init();
         getResponseData();
         changeUserName();
         changeUserGender();
         setOnProfileImageClickListener();
         buildSexChoiceDialog();
         super.onResume();
+    }
+
+    private void init(){
+        loverName.setEnabled(false);
+        userPhoneNumber.setEnabled(false);
     }
 
     private void getResponseData(){
@@ -127,7 +134,7 @@ public class MyAccountActivity extends AppCompatActivity implements ActionBarEle
         }
         userName.setText(data.getUserName());
         loverName.setText(data.getLoverNickname());
-        
+
         // TODO: 2016-05-27 반지 호수 text 정책 정하기
         ringSize.setText("");
         userSex.setText(UserSexConstant.valueOf(data.getUserSex()).getSexText());
@@ -227,6 +234,7 @@ public class MyAccountActivity extends AppCompatActivity implements ActionBarEle
         imageData.setFileName(uploadFile.getName());
         imageData.setImageFile(uploadFile);
         NetworkManager.getInstance().sendRequest(MyMenuProtocol.makeSetProfileImageRequest(this, imageData), ChangeProfileImageResult.class, (request, result)->{
+            PropertyManager.getInstance().setUserProfileImageUrl(result.getThumnailPicturePath());
             if (result.getOriginalPicturePath() != null || !TextUtils.isEmpty(result.getOriginalPicturePath())) {
                 Glide.with(this).load(result.getOriginalPicturePath()).into(userProfileImage);
             } else {

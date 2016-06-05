@@ -9,10 +9,14 @@ import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
+import com.annimon.stream.function.BiConsumer;
+import com.bumptech.glide.Glide;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -23,10 +27,12 @@ import de.hdodenhof.circleimageview.CircleImageView;
 import lombok.Getter;
 import lombok.Setter;
 import olab.ringring.R;
+import olab.ringring.init.application.RingRingApplication;
 import olab.ringring.main.home.HomeActivity;
 import olab.ringring.main.mymenu.MyMenuActivity;
 import olab.ringring.main.mymenu.NavMyMenuSubElement;
 import olab.ringring.main.ringdesign.RingDesignActivity;
+import olab.ringring.util.preperance.PropertyManager;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -47,6 +53,7 @@ public class MainNavigationFragment extends Fragment {
                              Bundle savedInstanceState) {
         View mainFragmentView = inflater.inflate(R.layout.fragment_main_navigation, container, false);
         ButterKnife.bind(this, mainFragmentView);
+        initUserProfile();
         setNavMainMenu();
         setOnClickListenerInNavMenu();
         initIdAndActivities();
@@ -66,13 +73,13 @@ public class MainNavigationFragment extends Fragment {
         ringDesignNav.setNavMenuAttributes(ContextCompat.getDrawable(getContext(),R.drawable.nav_main_ring_design_image), "반지만들기");
     }
 
-    // TODO: 2016-05-23 네트워크 적용 시 Profile 사진과 이름을 받아올 수 있는 빌더 제작
-    public void setNavUserProfileImage(Bitmap profileImage) {
-        userProfileImage.setImageBitmap(profileImage);
-    }
-
-    public void setNavUserName(String text) {
-        userNameText.setText(text);
+    private void initUserProfile(){
+        if (PropertyManager.getInstance().getUserProfileImageUrl() != null || !TextUtils.isEmpty(PropertyManager.getInstance().getUserProfileImageUrl())) {
+            Glide.with(this).load(PropertyManager.getInstance().getUserProfileImageUrl()).into(userProfileImage);
+        } else {
+            userProfileImage.setImageDrawable(ContextCompat.getDrawable(RingRingApplication.getContext(), R.drawable.default_profile_image));
+        }
+        userNameText.setText(PropertyManager.getInstance().getUserName());
     }
 
     private void setOnClickListenerInNavMenu() {

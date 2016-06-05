@@ -58,7 +58,7 @@ public class NowDateGetter {
 
     private String getHour() {
         int hour = nowDate.getHourOfDay();
-        if (hour >= 1 && hour <= 11) {
+        if (hour >= 1 && hour <= 12) {
             return Integer.toString(hour);
         } else {
             return Integer.toString(hour - 12);

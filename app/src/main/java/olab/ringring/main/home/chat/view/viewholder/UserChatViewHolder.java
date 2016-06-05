@@ -8,6 +8,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import olab.ringring.R;
 import olab.ringring.network.response.chat.ChatContent;
+import olab.ringring.util.date.NowDateGetter;
 
 /**
  * Created by 재화 on 2016-05-19.
@@ -25,6 +26,6 @@ public class UserChatViewHolder extends RecyclerView.ViewHolder implements ChatD
     @Override
     public void setChatDataInChatViewHolder(ChatContent data) {
         userChatMessageText.setText(data.getMessage());
-        userChatTimeText.setText(data.getSendDate() +"");
+        userChatTimeText.setText(new NowDateGetter().getChatTimeString());
     }
 }

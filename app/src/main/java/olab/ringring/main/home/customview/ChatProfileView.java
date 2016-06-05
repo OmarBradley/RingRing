@@ -2,7 +2,10 @@ package olab.ringring.main.home.customview;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
 import android.os.Build;
+import android.support.annotation.DrawableRes;
+import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,7 +15,9 @@ import android.widget.TextView;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import de.hdodenhof.circleimageview.CircleImageView;
+import lombok.Getter;
 import olab.ringring.R;
+import olab.ringring.init.application.RingRingApplication;
 
 /**
  * Created by 재화 on 2016-05-19.
@@ -20,7 +25,7 @@ import olab.ringring.R;
 public class ChatProfileView extends LinearLayout {
 
     @Bind(R.id.text_user_name) TextView userNameText;
-    @Bind(R.id.image_user_profile) CircleImageView userProfileImage;
+    @Getter @Bind(R.id.image_user_profile) CircleImageView userProfileImage;
     float elevation = 0;
 
     public ChatProfileView(Context context) {
@@ -45,6 +50,11 @@ public class ChatProfileView extends LinearLayout {
     public void setUserProfile(Bitmap bitmap) {
         userProfileImage.setImageBitmap(bitmap);
     }
+
+    public void setUserProfile(@DrawableRes int imageRes){
+        userProfileImage.setImageDrawable(ContextCompat.getDrawable(RingRingApplication.getContext(),imageRes ));
+    }
+
 
     public float getElevation() {
         if (Build.VERSION.SDK_INT < 21) {

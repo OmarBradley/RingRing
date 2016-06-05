@@ -2,15 +2,12 @@ package olab.ringring.util.preperance;
 
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
-import android.util.Log;
 
 import olab.ringring.init.application.RingRingApplication;
 import olab.ringring.main.ringdesign.ringattribute.jewelry.RingJewelry;
 import olab.ringring.main.ringdesign.ringattribute.material.RingMaterial;
 import olab.ringring.main.ringdesign.ringattribute.shape.RingShape;
-import olab.ringring.network.NetworkManager;
-import olab.ringring.network.request.mymenu.MyMenuProtocol;
-import olab.ringring.network.response.mymenu.intro.MyMenuIntroResult;
+import olab.ringring.network.response.mymenu.home.MyMenuIntroResult;
 
 /**
  * Created by 재화 on 2016-06-01.
@@ -37,10 +34,15 @@ public class PropertyManager {
     private static final String USER_JEWELRY = "user_jewelry";
     private static final String USER_SHAPE = "user_shape";
     private static final String USER_MATERIAL = "user_material";
+    private static final String USER_NAME = "user_name";
+    private static final String USER_PROFILE_IMAGE_URL = "user_profile_image_url";
+
 
     public static final String DEFAULT_JEWELRY = "RUBY";
     public static final String DEFAULT_SHAPE ="CIRCLE";
     public static final String DEFAULT_MATERIAL = "GOLD";
+    public static final String DEFAULT_USER_NAME ="";
+    public static final String DEFAULT_USER_PROFILE_IMAGE = "";
 
     public void setRegistrationToken(String token) {
         editor.putString(FIELD_REGISTRATION_ID, token);
@@ -91,5 +93,34 @@ public class PropertyManager {
         setUserMaterial(material);
     }
 
+    public void setUserName(String userName){
+        editor.putString(USER_NAME, userName);
+        editor.commit();
+    }
 
+    public void setUserProfileImageUrl(String userProfileImageUrl){
+        editor.putString(USER_PROFILE_IMAGE_URL, userProfileImageUrl);
+        editor.commit();
+    }
+
+    public String getUserName() {
+        return prefs.getString(USER_NAME, DEFAULT_USER_NAME);
+    }
+
+    public String getUserProfileImageUrl() {
+        return prefs.getString(USER_PROFILE_IMAGE_URL, DEFAULT_USER_PROFILE_IMAGE);
+    }
+
+    public boolean isDefaultUserProperty(){
+        if(getUserName().equals(DEFAULT_USER_NAME) || getUserProfileImageUrl().equals(DEFAULT_USER_PROFILE_IMAGE)){
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public void setUserProperty(MyMenuIntroResult data){
+        setUserName(data.getUserNickname());
+        setUserProfileImageUrl(data.getUserProfile());
+    }
 }

@@ -7,5 +7,5 @@ import java.util.List;
  */
 public interface DAO<T extends RowMapper> {
     public long insertData(T data);
-    public List<T> searchDataColumns();
+    public List<T> getDataRows();
 }

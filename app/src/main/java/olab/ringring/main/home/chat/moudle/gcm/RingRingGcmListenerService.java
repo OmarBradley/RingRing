@@ -15,6 +15,7 @@ import com.google.android.gms.gcm.GcmListenerService;
 
 import olab.ringring.R;
 import olab.ringring.main.home.HomeActivity;
+import olab.ringring.main.home.chat.ChatFragment;
 import olab.ringring.main.home.chat.moudle.localdb.CoupleChatDAO;
 import olab.ringring.network.response.chat.ChatContent;
 
@@ -44,7 +45,7 @@ public class RingRingGcmListenerService extends GcmListenerService {
 
     private ChatContent makeChatContent(Bundle data){
         ChatContent chatContent = new ChatContent();
-        chatContent.setSenderId(data.getString("SENDER_ID"));
+        chatContent.setSenderId(""+HomeActivity.LOVER_ID);
         chatContent.setReceiverId(data.getString("RECEIVER_ID"));
         chatContent.setMessage(data.getString("MESSAGE_CONTENT"));
         chatContent.setSendDate(data.getLong("SEND_DATE"));
@@ -52,7 +53,7 @@ public class RingRingGcmListenerService extends GcmListenerService {
         return chatContent;
     }
 
-    private void sendNotification(String message ,  ChatContent chatContent) {
+    private void sendNotification(String message, ChatContent chatContent) {
         Intent intent = new Intent(this, HomeActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0 /* Request code */, intent,
