@@ -36,6 +36,7 @@ import olab.ringring.network.NetworkManager;
 import olab.ringring.network.request.home.HomeProtocol;
 import olab.ringring.network.response.chat.ChatContent;
 import olab.ringring.main.home.chat.view.adapter.ChatViewAdapter;
+import olab.ringring.notification.ChatNotificationActivity;
 
 @NoArgsConstructor(access = AccessLevel.PUBLIC)
 public class ChatFragment extends Fragment {
@@ -95,9 +96,7 @@ public class ChatFragment extends Fragment {
     }
 
     private void sendChatDataToServer() {
-        Log.e("chamt", makeChatMessage().toString());
         NetworkManager.getInstance().sendRequest(HomeProtocol.maeChatContentRequest(getActivity(), makeChatMessage()), ChatContent.class, (request, result) -> {
-            Log.e("re chat", result.toString());
             CoupleChatDAO.getInstance().insertData(result);
         }, (request, integer, throwable) -> {
             Log.e("error", request.toString());
@@ -146,6 +145,7 @@ public class ChatFragment extends Fragment {
             getActivity().runOnUiThread(()->{
                 bindChatDataToView();
             });
+            Log.e("sss", "on");
             intent.putExtra(RingRingGcmListenerService.EXTRA_RESULT, true);
         }
     };

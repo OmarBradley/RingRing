@@ -9,7 +9,11 @@ import android.view.MenuItem;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.github.sundeepk.compactcalendarview.CompactCalendarView;
+import com.github.sundeepk.compactcalendarview.domain.Event;
 import com.samsistemas.calendarview.widget.CalendarView;
+
+import org.joda.time.DateTime;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -19,6 +23,7 @@ import java.util.Locale;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import olab.ringring.R;
+import olab.ringring.init.application.RingRingApplication;
 import olab.ringring.main.mymenu.MyMenuActivity;
 import olab.ringring.util.actionbar.element.ActionBarElement;
 import olab.ringring.util.actionbar.visitor.ActionbarVisitor;
@@ -47,9 +52,7 @@ public class DDaySettingActivity extends AppCompatActivity implements ActionBarE
         dDaySettingCalendar.setOnDateSelectedListener(date -> {
             SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy년 M월 d일", Locale.getDefault());
             selectDate = date.getTime();
-            dDaySettingCalendar.setDateAsSelected(date);
-            dDaySettingCalendar.setSelectedDayBackground(R.color.colorPrimaryDark);
-            dDaySettingCalendar.setCurrentDay(date);
+
             todayText.setText(dateFormat.format(date));
         });
     }

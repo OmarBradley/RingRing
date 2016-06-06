@@ -25,23 +25,23 @@
             android:name=".splash.SplashActivity"
             android:theme="@style/NoActionBarTheme">
 
-            <!--
-            intent-filter>
+            <!--<intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-            -->
+            </intent-filter>-->
         </activity>
         <activity
             android:name=".join.JoinActivity"
             android:theme="@style/JoinActivityTheme"
             android:windowSoftInputMode="adjustPan">
 
+            <!--
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+            -->
         </activity>
         <activity
             android:name=".join.signup.loverauthorization.LoverConnectingActivity"
@@ -109,11 +109,11 @@
         <activity
             android:name=".main.home.HomeActivity"
             android:theme="@style/AppTheme.NoTitleActionBar">
-            <!--<intent-filter>
+            <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>-->
+            </intent-filter>
         </activity>
         <activity
             android:name=".main.mymenu.MyMenuActivity"
@@ -159,7 +159,7 @@
 
         <service
             android:name=".main.home.chat.moudle.gcm.RingRingGcmListenerService"
-            android:exported="false">
+            android:exported="true">
             <intent-filter>
                 <action android:name="com.google.android.c2dm.intent.RECEIVE" />
             </intent-filter>
@@ -177,7 +177,29 @@
 
         <activity
             android:name=".main.mymenu.profile.ProfileImageActivity"
-            android:theme="@style/NoActionBarTheme"></activity>
+            android:theme="@style/NoActionBarTheme" />
+        <activity
+            android:name=".notification.ChatNotificationActivity"
+            android:theme="@style/NoActionBarTheme"
+            android:exported="true"
+            >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <receiver
+            android:name=".notification.BootReceiver"
+            android:enabled="true"
+            android:exported="true"
+            android:process=":remote"
+            >
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>

@@ -33,6 +33,9 @@
     <color name="colorMyAccountTitleText">#3e9bef</color>
     <color name="colorMyAccountEditTextBackground">#f6f6f6</color>
 
+    <color name="colorNotiBackground">#56B5F5</color>
+    <color name="colorCurrentDayText">#59aee9</color>
+
     <color name="colorGold">#f5af3e</color>
     <color name="colorWhiteGold">#ffffff</color>
     <color name="colorSliver">#969796</color>
