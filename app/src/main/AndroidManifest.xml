@@ -35,13 +35,11 @@
             android:theme="@style/JoinActivityTheme"
             android:windowSoftInputMode="adjustPan">
 
-            <!--
-            <intent-filter>
+            <!--<intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-            -->
+            </intent-filter>-->
         </activity>
         <activity
             android:name=".join.signup.loverauthorization.LoverConnectingActivity"
@@ -179,15 +177,15 @@
             android:name=".main.mymenu.profile.ProfileImageActivity"
             android:theme="@style/NoActionBarTheme" />
         <activity
-            android:name=".notification.ChatNotificationActivity"
+            android:name=".notification.RingNotificationActivity"
             android:theme="@style/NoActionBarTheme"
             android:exported="true"
             >
-            <intent-filter>
+           <!-- <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+            </intent-filter>-->
         </activity>
 
         <receiver

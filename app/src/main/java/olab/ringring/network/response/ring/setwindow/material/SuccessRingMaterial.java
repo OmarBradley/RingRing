@@ -8,7 +8,7 @@ import lombok.Data;
  * Created by 재화 on 2016-05-29.
  */
 @Data
-public class RingMaterialResult {
+public class SuccessRingMaterial {
 
     @SerializedName("RING_INDEX")
     private int ringIndex;

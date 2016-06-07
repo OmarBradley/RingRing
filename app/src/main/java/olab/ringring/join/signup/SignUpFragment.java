@@ -25,6 +25,7 @@ import olab.ringring.join.customview.EditTextWithSubmitButtonView;
 import olab.ringring.join.signup.loverauthorization.LoverConnectingActivity;
 import olab.ringring.network.NetworkManager;
 import olab.ringring.network.request.users.UsersProtocol;
+import olab.ringring.network.response.users.SuccessLogin;
 import olab.ringring.network.response.users.SuccessSignUp;
 import olab.ringring.util.dialog.confirm.ConfirmDialogBuilder;
 import olab.ringring.util.dialog.confirm.ConfirmDialogFragment;
@@ -97,7 +98,7 @@ public class SignUpFragment extends Fragment {
                             emailCheckDialog.show(getActivity().getSupportFragmentManager(), "email check success dialog");
                             signUpData.setUserEmail(result.getResult());
                             emailValidateText.setVisibility(View.INVISIBLE);
-                        }, (request, networkResponseCode, throwable) -> {
+                        }, (request, errorCode, throwable) -> {
                             ConfirmDialogFragment emailCheckErrorDialog = ConfirmDialogInfoPool.EMAIL_DUPLICATE_ERROR.makeConfirmDialog();
                             emailCheckErrorDialog.show(getActivity().getSupportFragmentManager(), "email check fail dialog");
                             emailValidateText.setText(EMAIL_DUPLICATE_CHECK_MESSAGE);
@@ -178,10 +179,10 @@ public class SignUpFragment extends Fragment {
                     passwordConfirmEdit.showSubmitButton();
                     signUpData.setUserPassword(text);
                     passwordConfirmEdit.setOnSubmitButtonClickListener(view -> {
-                        NetworkManager.getInstance().sendRequest(UsersProtocol.makeSignUpRequest(getActivity(),signUpData), SuccessSignUp.class, (request, result) -> {
-                            Intent intent = new Intent(getActivity(), LoverConnectingActivity.class);
-                            startActivity(intent);
+                        NetworkManager.getInstance().sendRequest(UsersProtocol.makeSignUpRequest(getActivity(),signUpData), SuccessSignUp.class, (signUpRequest, signUpResult) -> {
+                            login(signUpResult);
                         }, (request, integer, throwable) -> {
+                            Log.e("sign up exception", request.toString());
                             ConfirmDialogFragment signUpErrorDialog = ConfirmDialogInfoPool.SIGN_UP_INFO_ERROR.makeConfirmDialog();
                             signUpErrorDialog.show(getActivity().getSupportFragmentManager(), "sign up error dialog");
                         });
@@ -189,6 +190,18 @@ public class SignUpFragment extends Fragment {
 
                 }
             }
+
+            private void login(SuccessSignUp result){
+                NetworkManager.getInstance().sendRequest(UsersProtocol.makeLoginRequest(getActivity(), result.getUserEmail(), result.getUserPassword()), SuccessLogin.class, (loginRequest, loginResult)->{
+                    Intent intent = new Intent(getActivity(), LoverConnectingActivity.class);
+                    startActivity(intent);
+                },(request, integer, throwable) -> {
+                    Log.e("login exception", request.toString());
+                    ConfirmDialogFragment signUpErrorDialog = ConfirmDialogInfoPool.SIGN_UP_INFO_ERROR.makeConfirmDialog();
+                    signUpErrorDialog.show(getActivity().getSupportFragmentManager(), "sign up error dialog");
+                });
+            }
+
 
             @Override
             public void afterTextChanged(Editable s) {}

@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:background="@color/colorWhiteBackground"
     android:orientation="vertical">
 
     <ImageView
@@ -22,20 +23,20 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:textSize="17sp"
-            android:textColor="@color/colorChattingInputText"
             android:background="@android:color/transparent"
             android:hint="여기에 메시지 입력"
-            android:paddingTop="8dp" />
+            android:paddingTop="8dp"
+            android:textColor="@color/colorTextColor"
+            android:textColorHint="@color/colorChattingInputText"
+            android:textSize="17sp" />
 
         <Button
             android:id="@+id/btn_sender"
+            style="?android:attr/borderlessButtonStyle"
             android:layout_width="45dp"
             android:layout_height="45dp"
             android:layout_gravity="bottom"
-            style="?android:attr/borderlessButtonStyle"
-            android:background="@drawable/ripple_button_send"
-             />
+            android:background="@drawable/ripple_button_send" />
 
     </LinearLayout>
 

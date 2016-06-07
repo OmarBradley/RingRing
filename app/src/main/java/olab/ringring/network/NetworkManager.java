@@ -47,14 +47,14 @@ public class NetworkManager {
         return SingletonHolder.INSTANCE;
     }
 
-    public <T> Request sendRequest(Request request, Class<T> resultDataClass, BiConsumer<Request, T> onSuccess, TriConsumer<Request, Integer, Throwable> onFailure) {
+    public <T> Request sendRequest(Request request, Class<T> resultDataClass, BiConsumer<Request, T> onSuccess, TriConsumer<Request, NetworkResponseCode, Throwable> onFailure) {
         client.newCall(request).enqueue(new Callback() {
 
             @Override
             public void onFailure(Call call, IOException e) {
                 handler.post(() -> {
                     Log.e("fail", request.toString());
-                    onFailure.accept(request, -1, e);
+                    onFailure.accept(request,NetworkResponseCode.CONNECTION_FAIL, e);
                 });
             }
 
@@ -70,12 +70,12 @@ public class NetworkManager {
                         });
                     } else {
                         handler.post(() -> {
-                            onFailure.accept(request,-2 ,new IOException(response.message()));
+                            onFailure.accept(request,NetworkResponseCode.WRONG_DATA ,new IOException(response.message()));
                         });
                     }
                 } else {
                     handler.post(() -> {
-                        onFailure.accept(request,-3 ,new IOException(response.message()));
+                        onFailure.accept(request,NetworkResponseCode.RESPONSE_FAIL ,new IOException(response.message()));
                     });
                 }
             }

@@ -9,25 +9,27 @@ import android.view.MenuItem;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.github.sundeepk.compactcalendarview.CompactCalendarView;
-import com.github.sundeepk.compactcalendarview.domain.Event;
 import com.samsistemas.calendarview.widget.CalendarView;
-
-import org.joda.time.DateTime;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.Locale;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import olab.ringring.R;
-import olab.ringring.init.application.RingRingApplication;
 import olab.ringring.main.mymenu.MyMenuActivity;
+import olab.ringring.network.NetworkManager;
+import olab.ringring.network.request.mymenu.MyMenuProtocol;
+import olab.ringring.network.response.mymenu.changecreatedate.SuccessChangeCreateDate;
+import olab.ringring.network.response.mymenu.showcreatedate.SuccessShowCreateDate;
 import olab.ringring.util.actionbar.element.ActionBarElement;
 import olab.ringring.util.actionbar.visitor.ActionbarVisitor;
 import olab.ringring.util.actionbar.visitor.concretevisitor.SetActionBarIconVisitor;
+import olab.ringring.util.dialog.confirm.ConfirmDialogBuilder;
+import olab.ringring.util.dialog.confirm.ConfirmDialogData;
+import olab.ringring.util.dialog.confirm.ConfirmDialogFragment;
+import olab.ringring.util.dialog.confirm.ConfirmDialogInfoPool;
 
 
 public class DDaySettingActivity extends AppCompatActivity implements ActionBarElement {
@@ -35,24 +37,33 @@ public class DDaySettingActivity extends AppCompatActivity implements ActionBarE
     @Bind(R.id.calendar_set_d_day) CalendarView dDaySettingCalendar;
     @Bind(R.id.text_today) TextView todayText;
     private long selectDate;
+    private int coupleIndex;
+    private SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy년 M월 d일", Locale.getDefault());
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_d_day_setting);
         ButterKnife.bind(this);
+        getTodayText();
         initDDaySettingCalendar();
         this.accept(new SetActionBarIconVisitor(ContextCompat.getDrawable(this, R.drawable.actionbar_home_as_up_image)));
     }
 
+    private void getTodayText(){
+        NetworkManager.getInstance().sendRequest(MyMenuProtocol.makeShowCreateDateRequest(this), SuccessShowCreateDate.class, (request, result) -> {
+            coupleIndex = result.getCoupleIndex();
+            todayText.setText(dateFormat.format(result.getCoupleCreateDate()));
+        }, (request, errorCode, throwable) -> {
+            Toast.makeText(this, errorCode.getMessage(), Toast.LENGTH_SHORT).show();
+        });
+    }
+
     private void initDDaySettingCalendar() {
         dDaySettingCalendar.setIsOverflowDateVisible(false);
-
         dDaySettingCalendar.refreshCalendar(Calendar.getInstance(Locale.getDefault()));
         dDaySettingCalendar.setOnDateSelectedListener(date -> {
-            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy년 M월 d일", Locale.getDefault());
             selectDate = date.getTime();
-
             todayText.setText(dateFormat.format(date));
         });
     }
@@ -76,12 +87,12 @@ public class DDaySettingActivity extends AppCompatActivity implements ActionBarE
         return true;
     }
 
-    // TODO: 2016-06-03 사귄날을 서버로 보내는 네트워킹 로직을 작성한다.
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_d_day_setting:
-                Toast.makeText(this, selectDate+"", Toast.LENGTH_SHORT).show();
+                makeDialog();
                 return true;
             case android.R.id.home:
                 onBackPressed();
@@ -89,4 +100,27 @@ public class DDaySettingActivity extends AppCompatActivity implements ActionBarE
         }
         return super.onOptionsItemSelected(item);
     }
+
+    private void makeDialog(){
+        ConfirmDialogFragment setDDayDialog = new ConfirmDialogBuilder()
+                .setDialogInfo(new ConfirmDialogData()
+                        .setDialogMessage("처음 사귄날이\n" + dateFormat.format(selectDate)+" 맞아?")
+                        .setDialogTitle("사귄날 설정")
+                        .setDialogTextColor(ContextCompat.getColor(this,R.color.colorDialogCheck ))
+                        .setDialogConfirmButtonMessage("좋아")
+                        .setDialogTitleIcon(ContextCompat.getDrawable(this,R.drawable.dialog_check_image ))
+                ).setOnConfirmButtonClickListener((dialog, dialogItemIndex) -> {
+                    dialog.dismiss();
+                    sendNetworkRequest();
+                }).build();
+        setDDayDialog.show(getSupportFragmentManager(), "select create date dialog");
+    }
+    private void sendNetworkRequest(){
+        NetworkManager.getInstance().sendRequest(MyMenuProtocol.makeChangeCreateDate(this, selectDate, coupleIndex), SuccessChangeCreateDate.class , (request, result) -> {
+            todayText.setText(dateFormat.format(result.getCoupleCreatedDate()));
+        }, (request, errorCode, throwable) -> {
+            Toast.makeText(this, errorCode.getMessage(), Toast.LENGTH_SHORT).show();
+        });
+    }
+
 }

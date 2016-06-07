@@ -30,7 +30,6 @@ import olab.ringring.util.dialog.yesorno.YesOrNoDialogInfoPool;
 
 public class LoginFragment extends Fragment {
 
-    // TODO: 2016-05-18 view들의 id 선언해주기..
     @Bind(R.id.edit_login_password) EditTextWithSubmitButtonView passwordEdit;
     @Bind(R.id.edit_content_text) EditText emailEdit;
     @Bind(R.id.text_login_email_validate) TextView emailValidateText;
@@ -73,8 +72,8 @@ public class LoginFragment extends Fragment {
                     moveToHomeActivity();
                     passwordValidateText.setVisibility(View.VISIBLE);
                 }
-            }, (request, integer, throwable) -> {
-                Toast.makeText(getActivity(), "network error", Toast.LENGTH_SHORT).show();
+            }, (request, errorCode, throwable) -> {
+                Toast.makeText(getActivity(), errorCode.getMessage(), Toast.LENGTH_SHORT).show();
             });
         });
         passwordEdit.addTextChangedListener(new TextWatcher() {

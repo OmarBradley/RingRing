@@ -18,12 +18,4 @@ public enum RingCollectCount {
 
     public static final RingCollectCount MAX_COUNTING_NUMBER = TEN;
 
-    public static RingCollectCount valueOf(int resultNumber){
-        RingCollectCount element = Stream.of(RingCollectCount.values())
-                .filter(value -> {return value.getCountNumber() == resultNumber;})
-                .findFirst()
-                .get();
-        return element;
-    }
-
 }

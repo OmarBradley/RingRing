@@ -2,6 +2,7 @@ package olab.ringring.main.home.ring;
 
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
+import android.view.View;
 import android.widget.ImageView;
 
 import olab.ringring.main.ringdesign.ringattribute.material.RingMaterial;
@@ -40,5 +41,14 @@ public class HomeRingFactory {
     public void build(){
         createRingJewelry(jewelry);
         createRingShape(shape);
+    }
+
+    public void setOnClickListener(View.OnClickListener onClickListener) {
+        shapeImage.setOnClickListener(view -> {
+            onClickListener.onClick(view);
+        });
+        jewelryImage.setOnClickListener(view -> {
+            onClickListener.onClick(view);
+        });
     }
 }

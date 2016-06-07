@@ -7,13 +7,14 @@
     <color name="colorWhiteTextColor">#ffffff</color>
     <color name="colorNotFocusedColor">#87b5fc</color>
 
+    <color name="colorNotiToastBackground">#662095f2</color>
     <color name="colorGrayBackground">#f3f2f2</color>
     <color name="colorRipple">#7DC7DB</color>
     <color name="colorTextColor">#5e5e5e</color>
     <color name="colorInputText">#b2b4b6</color>
     <color name="colorWhiteBackground">#ffffff</color>
     <color name="colorHomeName">#55ffffff</color>
-    <color name="colorChattingInputText">#76c1f6</color>
+    <color name="colorChattingInputText">#b1ceda</color>
     <color name="colorBackground">#ffffff</color>
     <color name="colorBlueText">#388cc9</color>
 

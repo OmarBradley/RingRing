@@ -31,10 +31,10 @@ import olab.ringring.main.mymenu.myaccount.picutreupload.PictureUploadStrategy;
 import olab.ringring.network.NetworkManager;
 import olab.ringring.network.request.ImageFileFormData;
 import olab.ringring.network.request.mymenu.MyMenuProtocol;
-import olab.ringring.network.response.mymenu.accountinfo.AccountInfoResult;
-import olab.ringring.network.response.mymenu.changename.ChangeNameResult;
-import olab.ringring.network.response.mymenu.changeprofile.ChangeProfileImageResult;
-import olab.ringring.network.response.mymenu.changeusersex.ChangeUserSexResult;
+import olab.ringring.network.response.mymenu.accountinfo.SuccessAccountInfo;
+import olab.ringring.network.response.mymenu.changename.SuccessChangeName;
+import olab.ringring.network.response.mymenu.changeprofile.SuccessChangeProfileImage;
+import olab.ringring.network.response.mymenu.changeusersex.SuccessChangeUserSex;
 import olab.ringring.util.actionbar.element.ActionBarElement;
 import olab.ringring.util.actionbar.visitor.ActionbarVisitor;
 import olab.ringring.util.actionbar.visitor.concretevisitor.SetActionBarIconVisitor;
@@ -118,15 +118,15 @@ public class MyAccountActivity extends AppCompatActivity implements ActionBarEle
     }
 
     private void getResponseData(){
-        NetworkManager.getInstance().sendRequest(MyMenuProtocol.makeMyAccountRequest(this), AccountInfoResult.class, (request, result) -> {
-            AccountInfoResult data = result;
+        NetworkManager.getInstance().sendRequest(MyMenuProtocol.makeMyAccountRequest(this), SuccessAccountInfo.class, (request, result) -> {
+            SuccessAccountInfo data = result;
             attachResultDataInView(data);
         }, ((request, integer, throwable) -> {
             Toast.makeText(this, "알수 없는 에러" + integer, Toast.LENGTH_SHORT).show();
         }));
     }
 
-    private void attachResultDataInView(AccountInfoResult data){
+    private void attachResultDataInView(SuccessAccountInfo data){
         if (data.getUserProfile() != null || !TextUtils.isEmpty(data.getUserProfile())) {
             Glide.with(this).load(data.getUserProfile()).into(userProfileImage);
         } else {
@@ -137,8 +137,12 @@ public class MyAccountActivity extends AppCompatActivity implements ActionBarEle
 
         // TODO: 2016-05-27 반지 호수 text 정책 정하기
         ringSize.setText("");
-        userSex.setText(UserSexConstant.valueOf(data.getUserSex()).getSexText());
 
+        if(data.getUserSex()  == null){
+            userSex.setText("성별");
+        } else {
+            userSex.setText(UserSexConstant.valueOf(data.getUserSex()).getSexText());
+        }
         userPhoneNumber.setText(data.getUserPhoneNumber());
         
         // TODO: 2016-05-27 유저 정보 text 정책 정하기
@@ -151,7 +155,7 @@ public class MyAccountActivity extends AppCompatActivity implements ActionBarEle
         userName.setOnEditorActionListener((textView, actionId, event) -> {
             if (actionId == EditorInfo.IME_ACTION_SEND) {
                 String changedUserName = userName.getText().toString();
-                NetworkManager.getInstance().sendRequest(MyMenuProtocol.makeChangeNameRequest(this, changedUserName), ChangeNameResult.class, (request, result) -> {
+                NetworkManager.getInstance().sendRequest(MyMenuProtocol.makeChangeNameRequest(this, changedUserName), SuccessChangeName.class, (request, result) -> {
                     userName.setText(result.getUserNickName());
                     Toast.makeText(this, "이름이 변경되었습니다.", Toast.LENGTH_SHORT).show();
                 }, (request, integer, throwable) -> {
@@ -162,12 +166,11 @@ public class MyAccountActivity extends AppCompatActivity implements ActionBarEle
         });
     }
 
-    // TODO: 2016-05-27 성별 제한 두기!!.. WOMAN 과 MAN 밖에 칠 수 없도록...
     private void changeUserGender(){
         userSex.setOnEditorActionListener((textView, actionId, event) -> {
             if (actionId == EditorInfo.IME_ACTION_SEND) {
                 String changedUserSex = userSex.getText().toString();
-                NetworkManager.getInstance().sendRequest(MyMenuProtocol.makeChangeUserSexRequest(this, UserSexConstant.valueOf(changedUserSex)), ChangeUserSexResult.class, (request, result) -> {
+                NetworkManager.getInstance().sendRequest(MyMenuProtocol.makeChangeUserSexRequest(this, UserSexConstant.valueOf(changedUserSex)), SuccessChangeUserSex.class, (request, result) -> {
                     userSex.setText(result.getUserSex());
                     Toast.makeText(this, "성별이 변경되었습니다.", Toast.LENGTH_SHORT).show();
                 }, (request, integer, throwable) -> {
@@ -215,11 +218,11 @@ public class MyAccountActivity extends AppCompatActivity implements ActionBarEle
     }
 
     private void changeUserSex(UserSexConstant userSexConstant){
-        NetworkManager.getInstance().sendRequest(MyMenuProtocol.makeChangeUserSexRequest(this, userSexConstant), ChangeUserSexResult.class, (request, result) -> {
+        NetworkManager.getInstance().sendRequest(MyMenuProtocol.makeChangeUserSexRequest(this, userSexConstant), SuccessChangeUserSex.class, (request, result) -> {
             userSex.setText(UserSexConstant.valueOf(result.getUserSex()).getSexText());
             Toast.makeText(this, "성별이 변경 되었습니다", Toast.LENGTH_SHORT);
-        }, (request, integer, throwable) -> {
-            Toast.makeText(this, "오류", Toast.LENGTH_SHORT);
+        }, (request, errorCode, throwable) -> {
+            Toast.makeText(this, errorCode.getMessage(), Toast.LENGTH_SHORT);
         });
 
     }
@@ -233,15 +236,15 @@ public class MyAccountActivity extends AppCompatActivity implements ActionBarEle
         imageData.setBodyName("profile");
         imageData.setFileName(uploadFile.getName());
         imageData.setImageFile(uploadFile);
-        NetworkManager.getInstance().sendRequest(MyMenuProtocol.makeSetProfileImageRequest(this, imageData), ChangeProfileImageResult.class, (request, result)->{
+        NetworkManager.getInstance().sendRequest(MyMenuProtocol.makeSetProfileImageRequest(this, imageData), SuccessChangeProfileImage.class, (request, result)->{
             PropertyManager.getInstance().setUserProfileImageUrl(result.getThumnailPicturePath());
-            if (result.getOriginalPicturePath() != null || !TextUtils.isEmpty(result.getOriginalPicturePath())) {
+            if (result.getOriginalPicturePath() != null || !TextUtils.isEmpty(result.getOriginalPicturePath()) || !result.getOriginalPicturePath().equals("-")) {
                 Glide.with(this).load(result.getOriginalPicturePath()).into(userProfileImage);
             } else {
                 userProfileImage.setImageResource(R.drawable.my_account_default_image);
             }
-        }, (request, integer, throwable) -> {
-            Log.e("eeee",request.toString() + integer);
+        }, (request, errorCode, throwable) -> {
+            Log.e("eeee", errorCode.getMessage());
         });
 
 

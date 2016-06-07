@@ -9,7 +9,6 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
-import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -25,7 +24,6 @@ import olab.ringring.main.home.chat.ChatFragment;
 import olab.ringring.main.home.ring.HomeRingFactory;
 import olab.ringring.main.home.ring.HomeRingJewelry;
 import olab.ringring.main.home.ring.HomeRingShape;
-import olab.ringring.main.mymenu.MyMenuActivity;
 import olab.ringring.main.mymenu.myaccount.MyAccountActivity;
 import olab.ringring.main.ringdesign.ringattribute.jewelry.RingJewelry;
 import olab.ringring.main.ringdesign.ringattribute.material.RingMaterial;
@@ -33,7 +31,8 @@ import olab.ringring.main.ringdesign.ringattribute.shape.RingShape;
 import olab.ringring.network.NetworkManager;
 import olab.ringring.network.request.mymenu.MyMenuProtocol;
 import olab.ringring.network.response.mymenu.home.MyMenuIntroCoupleRing;
-import olab.ringring.network.response.mymenu.home.MyMenuIntroResult;
+import olab.ringring.network.response.mymenu.home.SuccessMyMenuIntro;
+import olab.ringring.notification.RingNotificationActivity;
 import olab.ringring.util.preperance.PropertyManager;
 import olab.ringring.main.home.customview.ChatProfileView;
 import olab.ringring.main.nav.visitor.MainNavigationVisitor;
@@ -70,9 +69,9 @@ public class HomeActivity extends AppCompatActivity
         this.accept(new SetToggleVisitor());
         this.accept(new DeleteActionBarTitleVisitor());
         setElevationInChatProfileView();
-        initHomeRing();
         attachChatFragment();
         getHomeInfo();
+        initHomeRing();
         setOnClickListenerInUserProfile();
     }
 
@@ -104,7 +103,13 @@ public class HomeActivity extends AppCompatActivity
         if (!PropertyManager.getInstance().isDefaultRingProperty()) {
             ringFactory = new HomeRingFactory(jewelryView, shapeView, HomeRingJewelry.valueOf(PropertyManager.getInstance().getUserJewelry().name()),
                     HomeRingShape.valueOf(PropertyManager.getInstance().getUserShape().name()), RingMaterial.valueOf(PropertyManager.getInstance().getUserMaterial().name()));
+            ringFactory.build();
         }
+        ringFactory.setOnClickListener((view) -> {
+            Intent intent = new Intent(this, RingNotificationActivity.class);
+            startActivity(intent);
+            finish();
+        });
     }
 
     private void attachChatFragment(){
@@ -115,15 +120,15 @@ public class HomeActivity extends AppCompatActivity
     }
 
     private void getHomeInfo() {
-        NetworkManager.getInstance().sendRequest(MyMenuProtocol.makeHomeRequest(this), MyMenuIntroResult.class, (request, result) -> {
+        NetworkManager.getInstance().sendRequest(MyMenuProtocol.makeHomeRequest(this), SuccessMyMenuIntro.class, (request, result) -> {
             initView(result);
             PropertyManager.getInstance().setUserProperty(result);
-        }, (request, integer, throwable) -> {
-            Toast.makeText(this, "network error", Toast.LENGTH_SHORT).show();
+        }, (request, errorCode, throwable) -> {
+            Toast.makeText(this, errorCode.getMessage(), Toast.LENGTH_SHORT).show();
         });
     }
 
-    private void initView(MyMenuIntroResult homeInfo){
+    private void initView(SuccessMyMenuIntro homeInfo){
         coupleDDayText.setText(""+homeInfo.getCoupleDuringDate());
         attachImageInImageView(userProfileView.getUserProfileImage(),homeInfo.getUserProfile(), R.drawable.default_profile_image );
 
@@ -135,14 +140,14 @@ public class HomeActivity extends AppCompatActivity
     }
 
     private void attachImageInImageView(ImageView imageView, String imageUrl, int defaultImageRes) {
-        if (imageUrl != null || !TextUtils.isEmpty(imageUrl) || !imageUrl.contains("127.0.0.1:3000")) {
+        if (imageUrl != null || !TextUtils.isEmpty(imageUrl) || !imageUrl.contains("127.0.0.1:3000") || !imageUrl.equals("-")) {
             Glide.with(this).load(imageUrl).into(imageView);
         } else {
             imageView.setImageDrawable(ContextCompat.getDrawable(RingRingApplication.getContext(), defaultImageRes));
         }
     }
 
-    private void initHomeRing(MyMenuIntroResult homeInfo){
+    private void initHomeRing(SuccessMyMenuIntro homeInfo){
         MyMenuIntroCoupleRing coupleRing = homeInfo.getCoupleRings().get(0);
         ringFactory = new HomeRingFactory(jewelryView, shapeView , HomeRingJewelry.valueOf(coupleRing.getRingJewelry()),
                 HomeRingShape.valueOf(coupleRing.getRingShape()), RingMaterial.valueOf(coupleRing.getRingMaterial()));

@@ -4,6 +4,9 @@ import android.content.Context;
 
 import org.joda.time.DateTime;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+
 import olab.ringring.R;
 import olab.ringring.init.application.RingRingApplication;
 
@@ -74,6 +77,11 @@ public class NowDateGetter {
         }
     }
 
+    public String getChatTimeString(long timeMillis) {
+        DateFormat chatTimeDateFormat = new SimpleDateFormat("h:mm"); // HH=24h, hh=12h
+        String timeString = chatTimeDateFormat.format(timeMillis);
+        return getMeridiem() + BLANK + timeString;
+    }
 
 
 }

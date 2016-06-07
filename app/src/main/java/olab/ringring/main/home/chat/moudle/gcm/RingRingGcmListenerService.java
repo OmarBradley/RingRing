@@ -8,20 +8,23 @@ import android.content.Intent;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.content.LocalBroadcastManager;
-import android.util.Log;
+import android.view.Gravity;
+import android.widget.Toast;
 
 import com.google.android.gms.gcm.GcmListenerService;
 
 import org.joda.time.DateTime;
 
 import olab.ringring.R;
+import olab.ringring.init.application.RingRingApplication;
 import olab.ringring.main.home.HomeActivity;
 import olab.ringring.main.home.chat.moudle.localdb.CoupleChatDAO;
 import olab.ringring.network.response.chat.ChatContent;
-import olab.ringring.notification.BootReceiver;
-import olab.ringring.notification.ChatNotificationActivity;
+import olab.ringring.notification.NotiToastView;
 
 /**
  * Created by 재화 on 2016-06-01.
@@ -34,14 +37,6 @@ public class RingRingGcmListenerService extends GcmListenerService {
     public static final String EXTRA_SENDER_ID = "senderid";
     public static final String EXTRA_RESULT = "result";
 
-    AlarmManager alarmManager;
-
-    @Override
-    public void onCreate() {
-        super.onCreate();
-        alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
-    }
-
     @Override
     public void onMessageReceived(String from, Bundle data) {
         ChatContent chatContent = makeChatContent(data);
@@ -50,12 +45,7 @@ public class RingRingGcmListenerService extends GcmListenerService {
         LocalBroadcastManager.getInstance(this).sendBroadcastSync(actionChatIntent);
         boolean isProcessed = actionChatIntent.getBooleanExtra(EXTRA_RESULT, false);
         if (!isProcessed) {
-            if (new Intent(Intent.ACTION_BOOT_COMPLETED).getAction().equals(Intent.ACTION_BOOT_COMPLETED)) {
-                Log.e("sfffa", "boot");
-                Intent alarmIntent = new Intent(this, ChatNotificationActivity.class);
-                PendingIntent operation = PendingIntent.getActivity(this, 0, alarmIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-                alarmManager.set(AlarmManager.RTC_WAKEUP, DateTime.now().getMillis()+500, operation);
-            }
+            NotiToastView.makeToast(chatContent);
             sendNotification(data.getString("RECEIVER_ID"), chatContent);
         }
     }
@@ -65,10 +55,11 @@ public class RingRingGcmListenerService extends GcmListenerService {
         chatContent.setSenderId(""+HomeActivity.LOVER_ID);
         chatContent.setReceiverId(data.getString("RECEIVER_ID"));
         chatContent.setMessage(data.getString("MESSAGE_CONTENT"));
-        chatContent.setSendDate(data.getLong("SEND_DATE"));
+        chatContent.setSendDate(DateTime.now().getMillis());
         chatContent.setReadStatus(data.getInt("READ_STATUS"));
         return chatContent;
     }
+
 
     private void sendNotification(String message, ChatContent chatContent) {
         Intent intent = new Intent(this, HomeActivity.class);
@@ -78,7 +69,7 @@ public class RingRingGcmListenerService extends GcmListenerService {
 
         Uri defaultSoundUri= RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
         NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this)
-                .setTicker("GCM message")
+                .setTicker("RingRing")
                 .setSmallIcon(R.mipmap.ic_launcher)
                 .setContentTitle(message)
                 .setContentText(chatContent.getMessage())

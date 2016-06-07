@@ -1,6 +1,5 @@
 package olab.ringring.main.ringdesign.ringattribute.material;
 
-import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.ColorRes;
 import android.support.annotation.DrawableRes;
@@ -13,7 +12,7 @@ import olab.ringring.init.application.RingRingApplication;
 import olab.ringring.main.ringdesign.choicedialog.attributeview.RingDetailAttributeViewData;
 import olab.ringring.main.ringdesign.levelpolicy.RingCollectCount;
 import olab.ringring.main.ringdesign.ringattribute.shape.RingShape;
-import olab.ringring.network.response.ring.intro.RingIntroResult;
+import olab.ringring.network.response.ring.intro.SuccessRingIntro;
 import olab.ringring.util.colorchanger.ImageColorChanger;
 
 /**
@@ -40,7 +39,7 @@ public enum RingMaterial {
     @Getter @Setter private String name;
     @Getter @Setter private String tag;
 
-    public RingDetailAttributeViewData getAttributeData(RingCollectCount count, RingIntroResult viewData){
+    public RingDetailAttributeViewData getAttributeData(RingCollectCount count, SuccessRingIntro viewData){
         return new RingDetailAttributeViewData.Builder()
                 .setAttributeImage(getMaterialImageUsingChoiceDialog(this, count))
                 .setSetImage(image)

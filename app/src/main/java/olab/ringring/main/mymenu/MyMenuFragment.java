@@ -33,7 +33,7 @@ import olab.ringring.main.ringdesign.ringattribute.shape.RingShape;
 import olab.ringring.network.NetworkManager;
 import olab.ringring.network.request.mymenu.MyMenuProtocol;
 import olab.ringring.network.response.mymenu.home.MyMenuIntroCoupleRing;
-import olab.ringring.network.response.mymenu.home.MyMenuIntroResult;
+import olab.ringring.network.response.mymenu.home.SuccessMyMenuIntro;
 import olab.ringring.util.preperance.PropertyManager;
 
 /**
@@ -89,17 +89,17 @@ public class MyMenuFragment extends Fragment {
     }
 
     private void getResponseData() {
-        NetworkManager.getInstance().sendRequest(MyMenuProtocol.makeHomeRequest(getActivity()), MyMenuIntroResult.class, (request, result) -> {
-            MyMenuIntroResult data = result;
+        NetworkManager.getInstance().sendRequest(MyMenuProtocol.makeHomeRequest(getActivity()), SuccessMyMenuIntro.class, (request, result) -> {
+            SuccessMyMenuIntro data = result;
             attachResultDataInView(data);
             setJewelryProperty(data);
             PropertyManager.getInstance().setUserProperty(result);
-        }, ((request, integer, throwable) -> {
-            Toast.makeText(getContext(), "알수 없는 에러" + integer, Toast.LENGTH_SHORT).show();
+        }, ((request, errorCode, throwable) -> {
+            Toast.makeText(getContext(), errorCode.getMessage(), Toast.LENGTH_SHORT).show();
         }));
     }
 
-    private void attachResultDataInView(MyMenuIntroResult data){
+    private void attachResultDataInView(SuccessMyMenuIntro data){
         if (data.getUserProfile() != null || !TextUtils.isEmpty(data.getUserProfile())) {
             Glide.with(this).load(data.getUserProfile()).into(userProfileImage);
         } else {
@@ -111,7 +111,7 @@ public class MyMenuFragment extends Fragment {
         ringLevelText.setText(""+RingLevel.valueOf(data.getCoupleExp()).getLevelNumber());
     }
 
-    private void setMyRingView(MyMenuIntroResult data){
+    private void setMyRingView(SuccessMyMenuIntro data){
         myRingView.setCollectingCountProgressBar(RingLevel.valueOf(data.getCoupleExp()));
         myRingView.setCollectingCountText(RingLevel.valueOf(data.getCoupleExp()));
         MyMenuIntroCoupleRing coupleRing = data.getCoupleRings().get(0);
@@ -120,7 +120,7 @@ public class MyMenuFragment extends Fragment {
         myRingView.setMaterialColor(RingMaterial.valueOf(coupleRing.getRingMaterial()));
     }
 
-    private void setJewelryProperty(MyMenuIntroResult data){
+    private void setJewelryProperty(SuccessMyMenuIntro data){
         MyMenuIntroCoupleRing coupleRing = data.getCoupleRings().get(0);
         PropertyManager.getInstance().setUserJewelry(RingJewelry.valueOf(coupleRing.getRingJewelry()));
         PropertyManager.getInstance().setUserMaterial(RingMaterial.valueOf(coupleRing.getRingMaterial()));

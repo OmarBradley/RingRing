@@ -12,7 +12,7 @@ import olab.ringring.util.dialog.DialogBuilder;
 @Accessors(chain=true)
 @Data
 public class ConfirmDialogBuilder implements DialogBuilder {
-    private ConfirmDialogInfoPool dialogInfo;
+    private ConfirmDialogData dialogInfo;
     private DialogInterface.OnClickListener onConfirmButtonClickListener;
 
     @Override

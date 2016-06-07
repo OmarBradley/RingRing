@@ -1,7 +1,6 @@
 package olab.ringring.join.customview;
 
 import android.content.Context;
-import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
@@ -10,14 +9,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 
-import com.annimon.stream.function.Consumer;
-
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import lombok.Getter;
-import lombok.Setter;
 import olab.ringring.R;
-import olab.ringring.util.inputtype.InputTypeConstant;
 
 /**
  * Created by 재화 on 2016-05-20.

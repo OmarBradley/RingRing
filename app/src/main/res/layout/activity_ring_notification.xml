@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorNotiBackground"
-    tools:context=".notification.ChatNotificationActivity">
+    tools:context=".notification.RingNotificationActivity">
 
     <ImageView
         android:id="@+id/image_noti_rignt_send"

@@ -7,7 +7,8 @@ import lombok.Getter;
  */
 public enum NetworkResponseCode {
 
-    CONNECTION_FAIL(-3, "연결이 되지 않습니다") , CHECK_FAIL(-2, "중복되었습니다"), CHECK_SUCCESS(100, "성공하였습니다");
+    CONNECTION_FAIL(-3, "연결이 되지 않습니다") , CHECK_FAIL(-2, "중복되었습니다"), CHECK_SUCCESS(100, "성공하였습니다"), WRONG_DATA(0, "데이터가 잘못 되었습니다"),
+    RESPONSE_FAIL(2, "응답이 실패했습니다");
 
     NetworkResponseCode(int code, String message){
         this.code = code;

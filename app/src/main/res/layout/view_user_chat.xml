@@ -1,27 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:background="@color/colorWhiteBackground"
     android:orientation="horizontal"
-    android:gravity="end"
-    android:padding="16dp">
-
-    <TextView
-        android:id="@+id/text_user_chat_time"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
-        android:textSize="8dp"
-        android:paddingEnd="4dp"
-        android:text="오후 10:22" />
+    android:padding="16dp"
+    android:paddingEnd="6dp">
 
     <TextView
         android:id="@+id/text_user_chat_message"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:padding="6dp"
-        android:paddingEnd="14dp"
-        android:background="@drawable/send_chat_bubble"
-        android:text="New TextNew " />
+        android:layout_alignParentStart="true"
+        android:layout_marginRight="65dp"
+        android:background="@drawable/user_chat_read_bubble_image"
+        android:padding="10dp"
+        android:paddingStart="14dp"
+        android:textColor="@color/colorTextColor"
+        android:text="nadasdhashdahsdhuashidasdasasasdasdasdasd" />
 
-</LinearLayout>
+    <TextView
+        android:id="@+id/text_user_chat_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/text_user_chat_message"
+        android:layout_marginLeft="-65dp"
+        android:textColor="@color/colorTextColor"
+        android:layout_toEndOf="@+id/text_user_chat_message"
+        android:text="오후 10:22"
+        android:textSize="13sp" />
+</RelativeLayout>

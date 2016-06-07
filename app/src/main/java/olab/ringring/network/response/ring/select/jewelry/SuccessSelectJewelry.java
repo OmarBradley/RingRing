@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName;
 import lombok.Data;
 
 @Data
-public class SelectJewelryResult {
+public class SuccessSelectJewelry {
 
     @SerializedName("COUPLE_ID")
     private int coupleId;

@@ -10,7 +10,7 @@ import lombok.Data;
  * Created by 재화 on 2016-05-26.
  */
 @Data
-public class MyMenuIntroResult {
+public class SuccessMyMenuIntro {
 
     @SerializedName("USER_PROFILE")
     private String userProfile;
@@ -21,7 +21,7 @@ public class MyMenuIntroResult {
     @SerializedName("USER_NICKNAME")
     private String userNickname;
 
-    @SerializedName("COUPLE_INDEX")
+    @SerializedName("coupleIndex")
     private int coupleIndex;
 
     @SerializedName("COUPLE_USER_WOMAN")

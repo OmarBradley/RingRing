@@ -8,7 +8,7 @@ import lombok.Data;
  * Created by 재화 on 2016-05-31.
  */
 @Data
-public class ChangeProfileImageResult {
+public class SuccessChangeProfileImage {
 
     @SerializedName("USER_INDEX")
     private int userIndex;

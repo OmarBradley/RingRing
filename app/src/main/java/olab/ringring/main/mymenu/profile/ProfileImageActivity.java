@@ -13,7 +13,7 @@ import olab.ringring.R;
 import olab.ringring.main.mymenu.MyMenuActivity;
 import olab.ringring.network.NetworkManager;
 import olab.ringring.network.request.mymenu.MyMenuProtocol;
-import olab.ringring.network.response.mymenu.showprofile.ShowProfileResult;
+import olab.ringring.network.response.mymenu.showprofile.SuccessShowProfile;
 
 public class ProfileImageActivity extends AppCompatActivity {
 
@@ -46,10 +46,10 @@ public class ProfileImageActivity extends AppCompatActivity {
     }
 
     private void addFragment(){
-        NetworkManager.getInstance().sendRequest(MyMenuProtocol.makeShowProfileRequest(this), ShowProfileResult.class , (request, result) -> {
+        NetworkManager.getInstance().sendRequest(MyMenuProtocol.makeShowProfileRequest(this), SuccessShowProfile.class , (request, result) -> {
             pageAdapter.addFragment(new ProfileImageFragment(), result.getUserProfile());
-        }, (request, integer, throwable) -> {
-            Toast.makeText(this, "newwork error", Toast.LENGTH_SHORT).show();
+        }, (request, errorCode, throwable) -> {
+            Toast.makeText(this, errorCode.getMessage(), Toast.LENGTH_SHORT).show();
         });
 
 

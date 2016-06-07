@@ -29,7 +29,7 @@ import olab.ringring.main.ringdesign.ringattribute.shape.RingShape;
 import olab.ringring.main.ringdesign.ringattribute.BigRingFactory;
 import olab.ringring.network.NetworkManager;
 import olab.ringring.network.request.ring.RingProtocol;
-import olab.ringring.network.response.ring.intro.RingIntroResult;
+import olab.ringring.network.response.ring.intro.SuccessRingIntro;
 import olab.ringring.util.actionbar.element.ActionBarElement;
 import olab.ringring.util.actionbar.visitor.ActionbarVisitor;
 import olab.ringring.util.colorchanger.ImageColorChanger;
@@ -83,19 +83,19 @@ public class RingDesignActivity extends AppCompatActivity
     }
 
     private void syncBigRingView(){
-        NetworkManager.getInstance().sendRequest(RingProtocol.makeIntroRequest(this), RingIntroResult.class, (request, result) -> {
-            RingIntroResult data = result;
+        NetworkManager.getInstance().sendRequest(RingProtocol.makeIntroRequest(this), SuccessRingIntro.class, (request, result) -> {
+            SuccessRingIntro data = result;
             setSelectedMaterial(RingMaterial.valueOf(data.getRingMaterial()));
             ringFactory = new BigRingFactory(bigRingView, RingJewelry.valueOf(data.getRingJewelry()),RingMaterial.valueOf(data.getRingMaterial()),RingShape.valueOf(data.getRingShape()));
             ringLevelView.setPresentRingLevel(RingLevel.valueOf(data.getCoupleExp()));
             attachSetRingAttributeFragment(data);
             PropertyManager.getInstance().setAllRingAttribute(RingJewelry.valueOf(data.getRingJewelry()),RingShape.valueOf(data.getRingShape()),RingMaterial.valueOf(data.getRingMaterial()));
-        }, ((request, integer, throwable) -> {
-            Toast.makeText(this, "알수 없는 에러" + integer, Toast.LENGTH_SHORT).show();
+        }, ((request, errorCode, throwable) -> {
+            Toast.makeText(this, errorCode.getMessage(), Toast.LENGTH_SHORT).show();
         }));
     }
 
-    private void attachSetRingAttributeFragment(RingIntroResult data) {
+    private void attachSetRingAttributeFragment(SuccessRingIntro data) {
         SetRingAttributeFragment setRingAttributeFragment = new SetRingAttributeFragment();
         setRingAttributeFragment.setViewData(data);
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
@@ -115,7 +115,6 @@ public class RingDesignActivity extends AppCompatActivity
         });
     }
 
-    // TODO: 2016-05-28 반지 설정 변경 후 갱신되는 로직 삽입하기..
     @Override
     protected void onResume() {
         super.onResume();

@@ -94,7 +94,7 @@
                     android:layout_alignParentEnd="true"
                     android:layout_centerVertical="true"
                     android:layout_marginEnd="14dp"
-                    android:text="남" />
+                    android:text="성별" />
 
             </RelativeLayout>
 

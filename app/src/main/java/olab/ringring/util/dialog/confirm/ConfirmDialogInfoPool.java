@@ -4,6 +4,13 @@ import android.graphics.drawable.Drawable;
 import android.support.annotation.ColorRes;
 import android.support.v4.content.ContextCompat;
 
+import com.annimon.stream.function.BiFunction;
+import com.annimon.stream.function.Function;
+import com.annimon.stream.function.UnaryOperator;
+
+import java.text.SimpleDateFormat;
+import java.util.Locale;
+
 import lombok.Getter;
 import olab.ringring.R;
 import olab.ringring.init.application.RingRingApplication;
@@ -25,6 +32,7 @@ public enum ConfirmDialogInfoPool {
     LOVER_AUTHORIZATION_SUCCESS("애인과 연결성공!\n가입 축하해 채팅하러 고고!", "가입 완료", R.drawable.dialog_check_image, R.color.colorDialogCheck, "좋아"),
     GET_COUPLEING_MESSAGE("드디어! 모든아이템을 다 모았어!\n커플링 받으러 가자가자!", "우와! 축하축하", R.drawable.dialog_mission_success, R.color.colorDialogCheck, "좋아");
 
+
     ConfirmDialogInfoPool(String dialogMessage, String dialogTitle, int dialogTitleIconRes, int dialogTitleTextColorRes, String dialogConfirmButtonMessage) {
         this.dialogMessage = dialogMessage;
         this.dialogTitle = dialogTitle;
@@ -41,7 +49,12 @@ public enum ConfirmDialogInfoPool {
 
     public ConfirmDialogFragment makeConfirmDialog() {
         return new ConfirmDialogBuilder()
-                .setDialogInfo(this)
+                .setDialogInfo(new ConfirmDialogData()
+                        .setDialogTitle(dialogTitle)
+                        .setDialogTitleIcon(dialogTitleIcon)
+                        .setDialogMessage(dialogMessage)
+                        .setDialogTextColor(dialogTextColor)
+                        .setDialogConfirmButtonMessage(dialogConfirmButtonMessage))
                 .setOnConfirmButtonClickListener((dialog, dialogItemIndex) -> {
                     dialog.dismiss();
                 }).build();

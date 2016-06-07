@@ -8,7 +8,7 @@ import lombok.Data;
  * Created by 재화 on 2016-05-27.
  */
 @Data
-public class AccountInfoResult {
+public class SuccessAccountInfo {
 
     @SerializedName("USER_PROFILE")
     private String userProfile;
@@ -34,7 +34,7 @@ public class AccountInfoResult {
     @SerializedName("PASSWORD")
     private String password;
 
-    @SerializedName("COUPLE_INDEX")
+    @SerializedName("coupleIndex")
     private int coupleIndex;
 
     @SerializedName("COUPLE_USER_WOMAN")

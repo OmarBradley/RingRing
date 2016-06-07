@@ -31,10 +31,10 @@ import olab.ringring.main.ringdesign.ringattribute.material.RingMaterial;
 import olab.ringring.main.ringdesign.ringattribute.shape.RingShape;
 import olab.ringring.network.NetworkManager;
 import olab.ringring.network.request.ring.RingProtocol;
-import olab.ringring.network.response.ring.intro.RingIntroResult;
-import olab.ringring.network.response.ring.setwindow.jewelry.RingJewelryResult;
-import olab.ringring.network.response.ring.setwindow.material.RingMaterialResult;
-import olab.ringring.network.response.ring.setwindow.shape.RingShapeResult;
+import olab.ringring.network.response.ring.intro.SuccessRingIntro;
+import olab.ringring.network.response.ring.setwindow.jewelry.SuccessRingJewelry;
+import olab.ringring.network.response.ring.setwindow.material.SuccessRingMaterial;
+import olab.ringring.network.response.ring.setwindow.shape.SuccessRingShape;
 import olab.ringring.util.preperance.PropertyManager;
 
 /**
@@ -49,10 +49,10 @@ public class SetRingAttributeFragment extends Fragment {
 
     private ChoiceRingAttributeDialogFragment choiceDialog;
     @Setter @Getter private BiConsumer<RingDetailAttributeViewData, RingAttributeListConstant> onDataReceiveListener;
-    @Setter private RingIntroResult viewData;
-    @Setter private RingShapeResult shapeData;
-    @Setter private RingMaterialResult materialData;
-    @Setter private RingJewelryResult jewelryData;
+    @Setter private SuccessRingIntro viewData;
+    @Setter private SuccessRingShape shapeData;
+    @Setter private SuccessRingMaterial materialData;
+    @Setter private SuccessRingJewelry jewelryData;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -75,35 +75,35 @@ public class SetRingAttributeFragment extends Fragment {
     }
 
     private void initShapeData() {
-        NetworkManager.getInstance().sendRequest(RingProtocol.SetWindow.makeSetShapeWindowRequest(getActivity()), RingShapeResult.class, (request, result) -> {
+        NetworkManager.getInstance().sendRequest(RingProtocol.SetWindow.makeSetShapeWindowRequest(getActivity()), SuccessRingShape.class, (request, result) -> {
             shapeData = result;
             initSetRingAttributeView(shapeView, "링 모양", RingShape.valueOf(shapeData.getRingShape()).getSetImage(),  RingCollectCount.MAX_COUNTING_NUMBER);
             PropertyManager.getInstance().setUserShape(RingShape.valueOf(shapeData.getRingShape()));
             ((RingDesignActivity) getActivity()).getRingFactory().createRingShape(RingShape.valueOf(shapeData.getRingShape()));
-        }, ((request, integer, throwable) -> {
-            Toast.makeText(getActivity(), "알수 없는 에러" + integer, Toast.LENGTH_SHORT).show();
+        }, ((request, errorCode, throwable) -> {
+            Toast.makeText(getActivity(), errorCode.getMessage(), Toast.LENGTH_SHORT).show();
         }));
     }
 
     private void initMaterialData() {
-        NetworkManager.getInstance().sendRequest(RingProtocol.SetWindow.makeSetMaterialWindowRequest(getActivity()), RingMaterialResult.class, (request, result) -> {
+        NetworkManager.getInstance().sendRequest(RingProtocol.SetWindow.makeSetMaterialWindowRequest(getActivity()), SuccessRingMaterial.class, (request, result) -> {
             materialData = result;
             initSetRingAttributeView(materialView, "링 재질", RingMaterial.valueOf(materialData.getRingMaterial()).getImage(),  RingCollectCount.MAX_COUNTING_NUMBER);
             PropertyManager.getInstance().setUserMaterial(RingMaterial.valueOf(materialData.getRingMaterial()));
             ((RingDesignActivity) getActivity()).getRingFactory().createRingMaterial(RingMaterial.valueOf(materialData.getRingMaterial()));
-        }, ((request, integer, throwable) -> {
-            Toast.makeText(getActivity(), "알수 없는 에러" + integer, Toast.LENGTH_SHORT).show();
+        }, ((request, errorCode, throwable) -> {
+            Toast.makeText(getActivity(), errorCode.getMessage(), Toast.LENGTH_SHORT).show();
         }));
     }
 
     private void initJewelryData() {
-        NetworkManager.getInstance().sendRequest(RingProtocol.SetWindow.makeSetJewelryWindowRequest(getActivity()), RingJewelryResult.class, (request, result) -> {
+        NetworkManager.getInstance().sendRequest(RingProtocol.SetWindow.makeSetJewelryWindowRequest(getActivity()), SuccessRingJewelry.class, (request, result) -> {
             jewelryData = result;
             initSetRingAttributeView(jewelryView, "보석", RingJewelry.valueOf(jewelryData.getRingJewelry()).getSetImage(),  RingCollectCount.MAX_COUNTING_NUMBER);
             PropertyManager.getInstance().setUserJewelry(RingJewelry.valueOf(jewelryData.getRingJewelry()));
             ((RingDesignActivity) getActivity()).getRingFactory().createRingJewelry(RingJewelry.valueOf(jewelryData.getRingJewelry()));
-        }, ((request, integer, throwable) -> {
-            Toast.makeText(getActivity(), "알수 없는 에러" + integer, Toast.LENGTH_SHORT).show();
+        }, ((request, errorCode, throwable) -> {
+            Toast.makeText(getActivity(), errorCode.getMessage(), Toast.LENGTH_SHORT).show();
         }));
     }
 

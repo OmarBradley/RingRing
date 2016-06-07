@@ -30,9 +30,9 @@ import olab.ringring.main.ringdesign.choicedialog.attributeview.RingDetailAttrib
 import olab.ringring.main.ringdesign.ringattribute.RingAttributeListConstant;
 import olab.ringring.network.NetworkManager;
 import olab.ringring.network.request.ring.RingProtocol;
-import olab.ringring.network.response.ring.select.jewelry.SelectJewelryResult;
-import olab.ringring.network.response.ring.select.material.SelectMaterialResult;
-import olab.ringring.network.response.ring.select.shape.SelectShapeResult;
+import olab.ringring.network.response.ring.select.jewelry.SuccessSelectJewelry;
+import olab.ringring.network.response.ring.select.material.SuccessSelectMaterial;
+import olab.ringring.network.response.ring.select.shape.SuccessSelectShape;
 
 /**
  * Created by 재화 on 2016-05-24.
@@ -141,11 +141,11 @@ public class ChoiceRingAttributeDialogFragment extends DialogFragment {
 
     private void sendSelectionData(){
         if (dialogBuilder.getTitle().equals(RingAttributeListConstant.JEWELRY.getChoiceDialogTitle())) {
-            sendNetworkRequest(RingProtocol.Select.makeSelectJewelryRequest(getActivity(), adapter.getItem(checkedPosition).getTag()), SelectJewelryResult.class);
+            sendNetworkRequest(RingProtocol.Select.makeSelectJewelryRequest(getActivity(), adapter.getItem(checkedPosition).getTag()), SuccessSelectJewelry.class);
         } else if(dialogBuilder.getTitle().equals(RingAttributeListConstant.MATERIAL.getChoiceDialogTitle())){
-            sendNetworkRequest(RingProtocol.Select.makeSelectMaterialRequest(getActivity(), adapter.getItem(checkedPosition).getTag()), SelectMaterialResult.class);
+            sendNetworkRequest(RingProtocol.Select.makeSelectMaterialRequest(getActivity(), adapter.getItem(checkedPosition).getTag()), SuccessSelectMaterial.class);
         } else {
-            sendNetworkRequest(RingProtocol.Select.makeSelectShapeRequest(getActivity(), adapter.getItem(checkedPosition).getTag()), SelectShapeResult.class);
+            sendNetworkRequest(RingProtocol.Select.makeSelectShapeRequest(getActivity(), adapter.getItem(checkedPosition).getTag()), SuccessSelectShape.class);
         }
     }
 
@@ -153,8 +153,8 @@ public class ChoiceRingAttributeDialogFragment extends DialogFragment {
         NetworkManager.getInstance().sendRequest(selectRequest, selectResultClass,
                 (request, result) -> {
                     Log.e("result", result.toString());
-                }, (request, integer, throwable) -> {
-                    Log.e("result error", integer + "");
+                }, (request, errorCode, throwable) -> {
+                    Log.e("result error", errorCode.getMessage());
                 });
     }
 }

@@ -7,7 +7,7 @@ import olab.ringring.init.application.RingRingApplication;
 import olab.ringring.main.ringdesign.ringattribute.jewelry.RingJewelry;
 import olab.ringring.main.ringdesign.ringattribute.material.RingMaterial;
 import olab.ringring.main.ringdesign.ringattribute.shape.RingShape;
-import olab.ringring.network.response.mymenu.home.MyMenuIntroResult;
+import olab.ringring.network.response.mymenu.home.SuccessMyMenuIntro;
 
 /**
  * Created by 재화 on 2016-06-01.
@@ -119,7 +119,7 @@ public class PropertyManager {
         }
     }
 
-    public void setUserProperty(MyMenuIntroResult data){
+    public void setUserProperty(SuccessMyMenuIntro data){
         setUserName(data.getUserNickname());
         setUserProfileImageUrl(data.getUserProfile());
     }

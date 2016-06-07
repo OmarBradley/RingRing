@@ -70,4 +70,24 @@ public class MyMenuProtocol {
                 .build();
     }
 
+    public static final Request makeShowCreateDateRequest(Context tag){
+        return new RequestBuilder()
+                .setTag(tag)
+                .setUrl(MyMenuProtocolUrl.SHOW_CREATE_DATE.getUrl())
+                .addPageSegment(MyMenuProtocolUrl.SHOW_CREATE_DATE.getPageSegment())
+                .build();
+    }
+
+    public static final Request makeChangeCreateDate(Context tag, long coupleCreatedDate, int coupleIndex) {
+        Map<String, String> bodyParameters = new HashMap<>();
+        bodyParameters.put("coupleIndex", "" + coupleIndex);
+        bodyParameters.put("coupleCreatedDate", "" + coupleCreatedDate);
+        return new RequestBuilder()
+                .setTag(tag)
+                .setUrl(MyMenuProtocolUrl.CHANGE_CREATE_DATE.getUrl())
+                .addPageSegment(MyMenuProtocolUrl.CHANGE_CREATE_DATE.getPageSegment())
+                .addBodyParameters(bodyParameters)
+                .build();
+    }
+
 }

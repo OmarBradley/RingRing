@@ -8,7 +8,7 @@ import lombok.Data;
  * Created by 재화 on 2016-05-29.
  */
 @Data
-public class SelectShapeResult {
+public class SuccessSelectShape {
 
     @SerializedName("RING_INDEX")
     private int ringIndex;

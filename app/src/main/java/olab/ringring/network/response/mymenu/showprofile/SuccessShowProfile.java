@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName;
 import lombok.Data;
 
 @Data
-public class ShowProfileResult implements java.io.Serializable {
+public class SuccessShowProfile implements java.io.Serializable {
     private static final long serialVersionUID = 2571775707988167391L;
 
     @SerializedName("USER_INDEX")

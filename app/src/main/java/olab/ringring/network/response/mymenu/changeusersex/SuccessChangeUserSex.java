@@ -1,4 +1,4 @@
-package olab.ringring.network.response.mymenu.changename;
+package olab.ringring.network.response.mymenu.changeusersex;
 
 import com.google.gson.annotations.SerializedName;
 
@@ -8,11 +8,12 @@ import lombok.Data;
  * Created by 재화 on 2016-05-27.
  */
 @Data
-public class ChangeNameResult {
+public class SuccessChangeUserSex {
+
     @SerializedName("USER_INDEX")
     private int userIndex;
 
-    @SerializedName("USER_NICKNAME")
-    private String userNickName;
+    @SerializedName("USER_SEX")
+    private String userSex;
 
 }
