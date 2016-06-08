@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
-import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -25,6 +24,7 @@ import olab.ringring.main.home.ring.HomeRingFactory;
 import olab.ringring.main.home.ring.HomeRingJewelry;
 import olab.ringring.main.home.ring.HomeRingShape;
 import olab.ringring.main.mymenu.myaccount.MyAccountActivity;
+import olab.ringring.main.nav.visitor.concretevisitior.OnBackPressedVisitor;
 import olab.ringring.main.ringdesign.ringattribute.jewelry.RingJewelry;
 import olab.ringring.main.ringdesign.ringattribute.material.RingMaterial;
 import olab.ringring.main.ringdesign.ringattribute.shape.RingShape;
@@ -39,12 +39,12 @@ import olab.ringring.main.nav.visitor.MainNavigationVisitor;
 import olab.ringring.main.nav.visitor.concretevisitior.SetNavigationFragmentVisitor;
 import olab.ringring.main.nav.visitor.concretevisitior.SetToggleVisitor;
 import olab.ringring.main.nav.visitor.element.MainNavigationElement;
-import olab.ringring.util.actionbar.element.ActionBarElement;
-import olab.ringring.util.actionbar.visitor.ActionbarVisitor;
-import olab.ringring.util.actionbar.visitor.concretevisitor.DeleteActionBarTitleVisitor;
+import olab.ringring.util.normalvisitor.element.NomalActivityElement;
+import olab.ringring.util.normalvisitor.visitor.NormalActivityVisitor;
+import olab.ringring.util.normalvisitor.visitor.concretevisitor.DeleteActionBarTitleVisitor;
 
 public class HomeActivity extends AppCompatActivity
-        implements MainNavigationElement, ActionBarElement {
+        implements MainNavigationElement, NomalActivityElement {
 
     public static final int USER_ID = 1;
     public static final int LOVER_ID = 2;
@@ -59,6 +59,8 @@ public class HomeActivity extends AppCompatActivity
     @Bind(R.id.profile_view_lover) ChatProfileView loverProfileView;
     private HomeRingFactory ringFactory;
 
+    private MainNavigationVisitor onBackPressedVisitor;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -68,6 +70,7 @@ public class HomeActivity extends AppCompatActivity
         this.accept(new SetNavigationFragmentVisitor());
         this.accept(new SetToggleVisitor());
         this.accept(new DeleteActionBarTitleVisitor());
+        initOnBackPressedVisitor();
         setElevationInChatProfileView();
         attachChatFragment();
         getHomeInfo();
@@ -76,13 +79,17 @@ public class HomeActivity extends AppCompatActivity
     }
 
     @Override
-    public void accept(ActionbarVisitor visitor) {
+    public void accept(NormalActivityVisitor visitor) {
         visitor.visit(this);
     }
 
     @Override
     public void accept(MainNavigationVisitor visitor) {
         visitor.visit(this, this);
+    }
+
+    private void initOnBackPressedVisitor(){
+        onBackPressedVisitor = new OnBackPressedVisitor();
     }
 
     private void setElevationInChatProfileView(){
@@ -92,11 +99,7 @@ public class HomeActivity extends AppCompatActivity
 
     @Override
     public void onBackPressed() {
-        if (drawer.isDrawerOpen(GravityCompat.START)) {
-            drawer.closeDrawer(GravityCompat.START);
-        } else {
-            super.onBackPressed();
-        }
+        this.accept(onBackPressedVisitor);
     }
 
     private void initHomeRing() {

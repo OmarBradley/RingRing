@@ -1,5 +1,6 @@
 package olab.ringring.util.dialog.confirm;
 
+import android.content.DialogInterface;
 import android.support.v4.app.DialogFragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -60,5 +61,7 @@ public class ConfirmDialogFragment extends DialogFragment {
         });
         btnDialogConfirm.setTextColor(dialogBuilder.getDialogInfo().getDialogTextColor());
     }
+
+
 
 }

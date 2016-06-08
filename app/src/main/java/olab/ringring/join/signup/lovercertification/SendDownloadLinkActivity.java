@@ -1,4 +1,4 @@
-package olab.ringring.join.signup.loverauthorization;
+package olab.ringring.join.signup.lovercertification;
 
 import android.content.Intent;
 import android.support.v4.content.ContextCompat;
@@ -10,12 +10,12 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import olab.ringring.R;
 import olab.ringring.main.home.HomeActivity;
-import olab.ringring.util.actionbar.element.ActionBarElement;
-import olab.ringring.util.actionbar.visitor.ActionbarVisitor;
-import olab.ringring.util.actionbar.visitor.concretevisitor.SetActionBarIconVisitor;
-import olab.ringring.util.actionbar.visitor.concretevisitor.SetActionBarTitleVisitor;
+import olab.ringring.util.normalvisitor.element.NomalActivityElement;
+import olab.ringring.util.normalvisitor.visitor.NormalActivityVisitor;
+import olab.ringring.util.normalvisitor.visitor.concretevisitor.SetActionBarIconVisitor;
+import olab.ringring.util.normalvisitor.visitor.concretevisitor.SetActionBarTitleVisitor;
 
-public class SendDownloadLinkActivity extends AppCompatActivity implements ActionBarElement {
+public class SendDownloadLinkActivity extends AppCompatActivity implements NomalActivityElement {
 
     @Bind(R.id.btn_send_download_link) Button sendDownloadLinkBtn;
 
@@ -40,7 +40,7 @@ public class SendDownloadLinkActivity extends AppCompatActivity implements Actio
     }
 
     @Override
-    public void accept(ActionbarVisitor visitor) {
+    public void accept(NormalActivityVisitor visitor) {
         visitor.visit(this);
     }
 }

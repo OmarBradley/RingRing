@@ -23,16 +23,15 @@ import olab.ringring.network.NetworkManager;
 import olab.ringring.network.request.mymenu.MyMenuProtocol;
 import olab.ringring.network.response.mymenu.changecreatedate.SuccessChangeCreateDate;
 import olab.ringring.network.response.mymenu.showcreatedate.SuccessShowCreateDate;
-import olab.ringring.util.actionbar.element.ActionBarElement;
-import olab.ringring.util.actionbar.visitor.ActionbarVisitor;
-import olab.ringring.util.actionbar.visitor.concretevisitor.SetActionBarIconVisitor;
+import olab.ringring.util.normalvisitor.element.NomalActivityElement;
+import olab.ringring.util.normalvisitor.visitor.NormalActivityVisitor;
+import olab.ringring.util.normalvisitor.visitor.concretevisitor.SetActionBarIconVisitor;
 import olab.ringring.util.dialog.confirm.ConfirmDialogBuilder;
 import olab.ringring.util.dialog.confirm.ConfirmDialogData;
 import olab.ringring.util.dialog.confirm.ConfirmDialogFragment;
-import olab.ringring.util.dialog.confirm.ConfirmDialogInfoPool;
 
 
-public class DDaySettingActivity extends AppCompatActivity implements ActionBarElement {
+public class DDaySettingActivity extends AppCompatActivity implements NomalActivityElement {
 
     @Bind(R.id.calendar_set_d_day) CalendarView dDaySettingCalendar;
     @Bind(R.id.text_today) TextView todayText;
@@ -77,7 +76,7 @@ public class DDaySettingActivity extends AppCompatActivity implements ActionBarE
     }
 
     @Override
-    public void accept(ActionbarVisitor visitor) {
+    public void accept(NormalActivityVisitor visitor) {
         visitor.visit(this);
     }
 

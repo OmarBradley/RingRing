@@ -8,7 +8,7 @@
     android:paddingLeft="25dp"
     android:paddingRight="25dp"
     android:paddingTop="26dp"
-    tools:context=".join.signup.loverauthorization.SendDownloadLinkActivity">
+    tools:context=".join.signup.lovercertification.SendDownloadLinkActivity">
 
     <TextView style="@style/LoverAuthorizationTitleText" />
 

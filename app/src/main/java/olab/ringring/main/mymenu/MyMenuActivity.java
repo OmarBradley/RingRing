@@ -13,6 +13,7 @@ import lombok.Getter;
 import olab.ringring.R;
 import olab.ringring.main.nav.MainNavigationFragment;
 import olab.ringring.main.nav.visitor.MainNavigationVisitor;
+import olab.ringring.main.nav.visitor.concretevisitior.OnBackPressedVisitor;
 import olab.ringring.main.nav.visitor.concretevisitior.SetNavigationFragmentVisitor;
 import olab.ringring.main.nav.visitor.concretevisitior.SetToggleVisitor;
 import olab.ringring.main.nav.visitor.element.MainNavigationElement;
@@ -24,6 +25,8 @@ public class MyMenuActivity extends AppCompatActivity
     @Getter @Bind(R.id.drawer_layout) DrawerLayout drawer;
     @Getter MainNavigationFragment navigationView;
 
+    private MainNavigationVisitor onBackPressedVisitor;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,6 +35,7 @@ public class MyMenuActivity extends AppCompatActivity
         setSupportActionBar(toolbar);
         this.accept(new SetNavigationFragmentVisitor());
         this.accept(new SetToggleVisitor());
+        initOnBackPressedVisitor();
         attachMyMenuFragment();
     }
 
@@ -40,13 +44,13 @@ public class MyMenuActivity extends AppCompatActivity
         visitor.visit(this, this);
     }
 
+    private void initOnBackPressedVisitor(){
+        onBackPressedVisitor = new OnBackPressedVisitor();
+    }
+
     @Override
     public void onBackPressed() {
-        if (drawer.isDrawerOpen(GravityCompat.START)) {
-            drawer.closeDrawer(GravityCompat.START);
-        } else {
-            super.onBackPressed();
-        }
+        this.accept(onBackPressedVisitor);
     }
 
     private void attachMyMenuFragment(){

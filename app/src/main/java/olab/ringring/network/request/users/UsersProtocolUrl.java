@@ -7,10 +7,13 @@ import olab.ringring.network.request.RequestBuilder;
  * Created by 재화 on 2016-06-03.
  */
 public enum UsersProtocolUrl {
+
     CHECK_EMAIL(RequestBuilder.BASE_URL + UsersProtocolUrl.USERS_PROTOCOL_PAGE_SEGMENT, "checkemail"),
     CHECK_PHONE_NUMBER(RequestBuilder.BASE_URL + UsersProtocolUrl.USERS_PROTOCOL_PAGE_SEGMENT, "checkphonenumber"),
     SIGN_UP(RequestBuilder.BASE_URL + UsersProtocolUrl.USERS_PROTOCOL_PAGE_SEGMENT , "signup"),
-    LOGIN(RequestBuilder.BASE_URL + UsersProtocolUrl.USERS_PROTOCOL_PAGE_SEGMENT, "login");
+    LOGIN(RequestBuilder.BASE_URL + UsersProtocolUrl.USERS_PROTOCOL_PAGE_SEGMENT, "login"),
+    LOVER_CERTIFICATION(RequestBuilder.BASE_URL + UsersProtocolUrl.USERS_PROTOCOL_PAGE_SEGMENT, "loverscertification"),
+    LOGOUT(RequestBuilder.BASE_URL + UsersProtocolUrl.USERS_PROTOCOL_PAGE_SEGMENT, "logout");
 
     UsersProtocolUrl(String url, String pageSegment) {
         this.url = url;
@@ -21,6 +24,4 @@ public enum UsersProtocolUrl {
     @Getter private String pageSegment;
 
     private static final String USERS_PROTOCOL_PAGE_SEGMENT ="/users";
-
-
 }

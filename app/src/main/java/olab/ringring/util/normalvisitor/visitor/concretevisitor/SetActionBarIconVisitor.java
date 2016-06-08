@@ -1,18 +1,16 @@
-package olab.ringring.util.actionbar.visitor.concretevisitor;
+package olab.ringring.util.normalvisitor.visitor.concretevisitor;
 
-import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.DrawableRes;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 
-import olab.ringring.util.actionbar.visitor.ActionbarVisitor;
-import olab.ringring.util.colorchanger.ImageColorChanger;
+import olab.ringring.util.normalvisitor.visitor.NormalActivityVisitor;
 
 /**
  * Created by 재화 on 2016-05-23.
  */
-public class SetActionBarIconVisitor implements ActionbarVisitor {
+public class SetActionBarIconVisitor implements NormalActivityVisitor {
 
     @DrawableRes Drawable actionBarIcon;
 

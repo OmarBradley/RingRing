@@ -7,7 +7,8 @@ import olab.ringring.network.request.RequestBuilder;
  * Created by 재화 on 2016-06-02.
  */
 public enum HomeProtocolUrl {
-    CHAT_CONTENT_URL(RequestBuilder.BASE_URL + HomeProtocolUrl.HOME_PROTOCOL_PAGE_SEGMENT, "chat");
+    SEND_CHAT_MESSAGE(RequestBuilder.BASE_URL + HomeProtocolUrl.HOME_PROTOCOL_PAGE_SEGMENT, "sendmessage"),
+    RECEIVE_CHAT_MESSAGE(RequestBuilder.BASE_URL + HomeProtocolUrl.HOME_PROTOCOL_PAGE_SEGMENT, "receivemessage");
 
     HomeProtocolUrl(String url, String pageSegment){
         this.url = url;

@@ -1,14 +1,14 @@
-package olab.ringring.util.actionbar.visitor.concretevisitor;
+package olab.ringring.util.normalvisitor.visitor.concretevisitor;
 
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 
-import olab.ringring.util.actionbar.visitor.ActionbarVisitor;
+import olab.ringring.util.normalvisitor.visitor.NormalActivityVisitor;
 
 /**
  * Created by 재화 on 2016-05-23.
  */
-public class SetActionBarTitleVisitor implements ActionbarVisitor {
+public class SetActionBarTitleVisitor implements NormalActivityVisitor {
 
     String actionBarTitle;
 

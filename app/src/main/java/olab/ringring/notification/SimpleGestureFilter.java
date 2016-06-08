@@ -60,7 +60,6 @@ public class SimpleGestureFilter extends SimpleOnGestureListener{
             }
 
         }
-        //else just do nothing, it's Transparent
     }
 
     public void setMode(int m){

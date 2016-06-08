@@ -15,6 +15,8 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 import olab.ringring.network.response.Success;
+import olab.ringring.network.response.users.FailLoverCertification;
+import olab.ringring.network.response.users.SuccessLoverCertification;
 import olab.ringring.network.response.users.ValidateMessage;
 import olab.ringring.network.response.users.ValidateSuccess;
 import olab.ringring.util.functioninterface.TriConsumer;
@@ -108,6 +110,44 @@ public class NetworkManager {
                             onFailure.accept(request, NetworkResponseCode.CHECK_FAIL, new IOException(response.message()));
                         });
                     }
+                }
+            }
+        });
+        return request;
+    }
+
+    public <T> Request sendLoverCertificationRequest(Request request, BiConsumer<Request, SuccessLoverCertification> onSuccess, BiConsumer<Request, FailLoverCertification> onFaiCertification,
+                                                     TriConsumer<Request, NetworkResponseCode, Throwable> onFailure) {
+        client.newCall(request).enqueue(new Callback() {
+
+            @Override
+            public void onFailure(Call call, IOException e) {
+                handler.post(() -> {
+                    Log.e("fail", request.toString());
+                    onFailure.accept(request, NetworkResponseCode.CONNECTION_FAIL, e);
+                });
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                if (response.isSuccessful()) {
+                    Gson gson = new Gson();
+                    Success searchResult = gson.fromJson(response.body().charStream(), Success.class);
+                    if (searchResult.getSuccess() == 1) {
+                        SuccessLoverCertification successData = gson.fromJson(gson.toJson(searchResult.getUserResults().get(0)), SuccessLoverCertification.class);
+                        handler.post(() -> {
+                            onSuccess.accept(request, successData);
+                        });
+                    } else if (searchResult.getSuccess() == 0) {
+                        handler.post(() -> {
+                            FailLoverCertification failData = gson.fromJson(gson.toJson(searchResult.getUserResults().get(0)), FailLoverCertification.class);
+                            onFaiCertification.accept(request, failData);
+                        });
+                    }
+                } else {
+                    handler.post(() -> {
+                        onFailure.accept(request, NetworkResponseCode.RESPONSE_FAIL, new IOException(response.message()));
+                    });
                 }
             }
         });

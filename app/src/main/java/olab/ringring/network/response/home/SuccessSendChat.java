@@ -1,4 +1,4 @@
-package olab.ringring.network.response.chat;
+package olab.ringring.network.response.home;
 
 import android.content.ContentValues;
 
@@ -14,7 +14,7 @@ import olab.ringring.util.db.RowMapper;
  * Created by 재화 on 2016-05-18.
  */
 @Data
-public class ChatContent implements RowMapper, Serializable{
+public class SuccessSendChat implements RowMapper, Serializable{
     @SerializedName("SENDER_ID")
     private String senderId;
 

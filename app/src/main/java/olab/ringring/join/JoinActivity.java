@@ -13,9 +13,12 @@ import butterknife.ButterKnife;
 import olab.ringring.R;
 import olab.ringring.join.login.LoginFragment;
 import olab.ringring.join.signup.SignUpFragment;
+import olab.ringring.util.normalvisitor.element.NomalActivityElement;
+import olab.ringring.util.normalvisitor.visitor.NormalActivityVisitor;
+import olab.ringring.util.normalvisitor.visitor.concretevisitor.ActivityFinishVisitor;
 import olab.ringring.util.preperance.PropertyManager;
 
-public class JoinActivity extends AppCompatActivity {
+public class JoinActivity extends AppCompatActivity implements NomalActivityElement{
 
     private final static int LOGIN_TAB_INDICATOR_VIEW_LOCATION = 0;
     private final static int SIGN_UP_INDICATOR_VIEW_LOCATION = 1;
@@ -23,9 +26,11 @@ public class JoinActivity extends AppCompatActivity {
 
     @Bind(R.id.tabLayout) TabLayout tabLayout;
     @Bind(R.id.pager_join_fragment) ViewPager pager;
-    JoinPageAdapter pageAdapter;
-    JoinTabIndicatorView loginTabView;
-    JoinTabIndicatorView signUpTabView;
+    private JoinPageAdapter pageAdapter;
+    private JoinTabIndicatorView loginTabView;
+    private JoinTabIndicatorView signUpTabView;
+
+    private NormalActivityVisitor activityFinishVisitor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,9 +41,7 @@ public class JoinActivity extends AppCompatActivity {
         setAdapterInPager();
         setTabLayout();
         changeTabView();
-        Log.e("j", PropertyManager.getInstance().getUserJewelry().getTag()+"");
-        Log.e("m", PropertyManager.getInstance().getUserMaterial().getTag()+"");
-        Log.e("s", PropertyManager.getInstance().getUserShape().getTag()+"");
+        initActivityFinishVisitor();
     }
 
     private void addFragmentPageInAdapter() {
@@ -88,5 +91,19 @@ public class JoinActivity extends AppCompatActivity {
             @Override
             public void onPageScrollStateChanged(int state) {}
         });
+    }
+
+    private void initActivityFinishVisitor(){
+        activityFinishVisitor = new ActivityFinishVisitor();
+    }
+
+    @Override
+    public void onBackPressed() {
+        this.accept(activityFinishVisitor);
+    }
+
+    @Override
+    public void accept(NormalActivityVisitor visitor) {
+        visitor.visit(this);
     }
 }

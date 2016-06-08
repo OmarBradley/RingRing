@@ -36,13 +36,16 @@ public class PropertyManager {
     private static final String USER_MATERIAL = "user_material";
     private static final String USER_NAME = "user_name";
     private static final String USER_PROFILE_IMAGE_URL = "user_profile_image_url";
-
+    private static final String USER_EMAIL = "user_email";
+    private static final String USER_PASSWORD = "user_password";
 
     public static final String DEFAULT_JEWELRY = "RUBY";
     public static final String DEFAULT_SHAPE ="CIRCLE";
     public static final String DEFAULT_MATERIAL = "GOLD";
     public static final String DEFAULT_USER_NAME ="";
     public static final String DEFAULT_USER_PROFILE_IMAGE = "";
+    public static final String DEFAULT_USER_EMAIL = "";
+    public static final String DEFAULT_USER_PASSWORD = "";
 
     public void setRegistrationToken(String token) {
         editor.putString(FIELD_REGISTRATION_ID, token);
@@ -122,5 +125,31 @@ public class PropertyManager {
     public void setUserProperty(SuccessMyMenuIntro data){
         setUserName(data.getUserNickname());
         setUserProfileImageUrl(data.getUserProfile());
+    }
+
+    public void setUserEmail(String userEmail){
+        editor.putString(USER_EMAIL, userEmail);
+        editor.commit();
+    }
+
+    public String getUserEmail() {
+        return prefs.getString(USER_EMAIL, DEFAULT_USER_EMAIL);
+    }
+
+    public void setUserPassword(String password){
+        editor.putString(USER_PASSWORD, password);
+        editor.commit();
+    }
+
+    public String getUserPassword() {
+        return prefs.getString(USER_PASSWORD, DEFAULT_USER_PASSWORD);
+    }
+
+    public boolean isDefaultUserLoginProperty(){
+        if(getUserPassword().equals(DEFAULT_USER_PASSWORD) || getUserEmail().equals(DEFAULT_USER_EMAIL)){
+            return true;
+        } else {
+            return false;
+        }
     }
 }

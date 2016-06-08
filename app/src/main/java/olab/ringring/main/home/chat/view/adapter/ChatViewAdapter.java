@@ -9,7 +9,7 @@ import java.util.List;
 
 import olab.ringring.R;
 import olab.ringring.main.home.HomeActivity;
-import olab.ringring.network.response.chat.ChatContent;
+import olab.ringring.network.response.home.SuccessSendChat;
 import olab.ringring.main.home.chat.view.viewholder.ChatDayViewHolder;
 import olab.ringring.main.home.chat.view.viewholder.LoverChatViewHolder;
 import olab.ringring.main.home.chat.view.viewholder.UserChatViewHolder;
@@ -23,27 +23,27 @@ public class ChatViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     private static final int VIEW_LOVER_CHAT = 200;
     private static final int VIEW_CHAT_DAY = 300;
 
-    List<ChatContent> chatContents = new ArrayList<>();
+    List<SuccessSendChat> chatContents = new ArrayList<>();
 
-    public void addMessage(ChatContent chatContent) {
-        chatContents.add(chatContent);
+    public void addMessage(SuccessSendChat successSendChat) {
+        chatContents.add(successSendChat);
         notifyDataSetChanged();
     }
 
-    public void addAllMessage(List<ChatContent> chatContents) {
-        this.chatContents.addAll(chatContents);
+    public void addAllMessage(List<SuccessSendChat> successSendChats) {
+        this.chatContents.addAll(successSendChats);
         notifyDataSetChanged();
     }
 
     // TODO: 2016-06-04 id와 비교로직 구현하기
     @Override
     public int getItemViewType(int position) {
-        ChatContent chatContent = chatContents.get(position);
-        if (chatContent.getSenderId() == null || chatContent.getSenderId().equals(""+HomeActivity.USER_ID)) {
+        SuccessSendChat successSendChat = chatContents.get(position);
+        if (successSendChat.getSenderId() == null || successSendChat.getSenderId().equals(""+HomeActivity.USER_ID)) {
             return VIEW_USER_CHAT;
-        } else if (chatContent.getSenderId().equals(""+HomeActivity.LOVER_ID)) {
+        } else if (successSendChat.getSenderId().equals(""+HomeActivity.LOVER_ID)) {
             return VIEW_LOVER_CHAT;
-        } else if (chatContent.getSenderId().equals(Integer.toString(HomeActivity.CHAT_DAY_ID))) {
+        } else if (successSendChat.getSenderId().equals(Integer.toString(HomeActivity.CHAT_DAY_ID))) {
             return VIEW_CHAT_DAY;
         }
         return super.getItemViewType(position);

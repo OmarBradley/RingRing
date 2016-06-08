@@ -22,12 +22,11 @@ import butterknife.ButterKnife;
 import olab.ringring.R;
 import olab.ringring.join.customview.EditTextWithDuplicateButtonView;
 import olab.ringring.join.customview.EditTextWithSubmitButtonView;
-import olab.ringring.join.signup.loverauthorization.LoverConnectingActivity;
+import olab.ringring.join.signup.lovercertification.LoverConnectingActivity;
 import olab.ringring.network.NetworkManager;
 import olab.ringring.network.request.users.UsersProtocol;
 import olab.ringring.network.response.users.SuccessLogin;
 import olab.ringring.network.response.users.SuccessSignUp;
-import olab.ringring.util.dialog.confirm.ConfirmDialogBuilder;
 import olab.ringring.util.dialog.confirm.ConfirmDialogFragment;
 import olab.ringring.util.dialog.confirm.ConfirmDialogInfoPool;
 

@@ -20,6 +20,10 @@ import com.google.android.gms.common.GoogleApiAvailability;
 import olab.ringring.join.JoinActivity;
 import olab.ringring.R;
 import olab.ringring.main.home.HomeActivity;
+import olab.ringring.network.NetworkManager;
+import olab.ringring.network.request.users.UsersProtocol;
+import olab.ringring.network.response.users.SuccessLogin;
+import olab.ringring.network.response.users.SuccessLogout;
 import olab.ringring.util.preperance.PropertyManager;
 import olab.ringring.main.home.chat.moudle.gcm.RegistrationIntentService;
 
@@ -33,7 +37,6 @@ public class SplashActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
-        executeAutoLogin();
         mRegistrationBroadcastReceiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
@@ -44,16 +47,18 @@ public class SplashActivity extends AppCompatActivity {
     }
 
     private void executeAutoLogin() {
-        if (isAutoLoginSuccess()) {
-            moveToAnotherActivity(HomeActivity.class);
-        } else {
+        if (PropertyManager.getInstance().isDefaultUserLoginProperty()) {
             moveToAnotherActivity(JoinActivity.class);
+        } else {
+            NetworkManager.getInstance().sendRequest(UsersProtocol.makeLoginRequest(this, PropertyManager.getInstance().getUserEmail(), PropertyManager.getInstance().getUserPassword()), SuccessLogin.class, (request, result) -> {
+                Log.e("autoLogin data", result.toString());
+                Log.e("autoLogin data2", PropertyManager.getInstance().getUserEmail());
+                moveToAnotherActivity(HomeActivity.class);
+            }, (request, networkResponseCode, throwable) -> {
+                Log.e("autoLogin fail data", networkResponseCode.getMessage());
+                moveToAnotherActivity(JoinActivity.class);
+            });
         }
-    }
-
-    // TODO: 2016-05-16 자동 로그인 로직 삽입하기
-    private boolean isAutoLoginSuccess() {
-        return false;
     }
 
     private void moveToAnotherActivity(Class<? extends Activity> anotherActivity) {

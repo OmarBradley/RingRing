@@ -21,12 +21,12 @@ import olab.ringring.join.customview.EditTextWithSubmitButtonView;
 import olab.ringring.join.util.Validator;
 import olab.ringring.main.home.HomeActivity;
 import olab.ringring.network.NetworkManager;
+import olab.ringring.network.NetworkResponseCode;
 import olab.ringring.network.request.users.UsersProtocol;
 import olab.ringring.network.response.users.SuccessLogin;
 import olab.ringring.util.dialog.confirm.ConfirmDialogFragment;
 import olab.ringring.util.dialog.confirm.ConfirmDialogInfoPool;
-import olab.ringring.util.dialog.yesorno.YesOrNoDialogFragment;
-import olab.ringring.util.dialog.yesorno.YesOrNoDialogInfoPool;
+import olab.ringring.util.preperance.PropertyManager;
 
 public class LoginFragment extends Fragment {
 
@@ -62,20 +62,21 @@ public class LoginFragment extends Fragment {
         validatePassword();
     }
 
-    // TODO: 2016-06-04 상욱이가 내려준 프로토콜로 로그인 프로토콜 고치기
-    private void validatePassword(){
+    private void validatePassword() {
         passwordEdit.setOnSubmitButtonClickListener(view -> {
-            NetworkManager.getInstance().sendRequest(UsersProtocol.makeLoginRequest(getActivity(),emailEdit.getText().toString(), passwordEdit.getInputString()), SuccessLogin.class, (request, result) -> {
-                if(result == null){
+            NetworkManager.getInstance().sendRequest(UsersProtocol.makeLoginRequest(getActivity(), emailEdit.getText().toString(), passwordEdit.getInputString()), SuccessLogin.class, (request, result) -> {
+                setLoginProperty(result.getLoginCase(), emailEdit.getText().toString(), passwordEdit.getInputString());
+                moveToAnotherActivity(LoginCase.valueOf(result.getLoginCase()).getNextActivityClass());
+                passwordValidateText.setVisibility(View.INVISIBLE);
+            }, (request, errorCode, throwable) -> {
+                if (errorCode.equals(NetworkResponseCode.WRONG_DATA)) {
                     buildInfoErrorDialog();
                 } else {
-                    moveToHomeActivity();
-                    passwordValidateText.setVisibility(View.VISIBLE);
+                    Toast.makeText(getActivity(), errorCode.getMessage(), Toast.LENGTH_SHORT).show();
                 }
-            }, (request, errorCode, throwable) -> {
-                Toast.makeText(getActivity(), errorCode.getMessage(), Toast.LENGTH_SHORT).show();
             });
         });
+
         passwordEdit.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -95,24 +96,21 @@ public class LoginFragment extends Fragment {
         });
     }
 
-    private void moveToHomeActivity(){
-        Intent intent = new Intent(getActivity(), HomeActivity.class);
+    private void moveToAnotherActivity(Class activityClass){
+        Intent intent = new Intent(getActivity(), activityClass);
         startActivity(intent);
         getActivity().finish();
     }
 
+    private void setLoginProperty(int loginCaseCode, String email, String password) {
+        if(loginCaseCode == LoginCase.YES_LOVER_AUTHORIZATION.getLoginCode()){
+            PropertyManager.getInstance().setUserEmail(email);
+            PropertyManager.getInstance().setUserPassword(password);
+        }
+    }
 
     private void buildInfoErrorDialog() {
         ConfirmDialogFragment loginErrorDialog = ConfirmDialogInfoPool.LOGIN_INFO_ERROR.makeConfirmDialog();
         loginErrorDialog.show(getActivity().getSupportFragmentManager(), "login error dialog");
     }
-
-
-
-
-
-
-
-
-
 }

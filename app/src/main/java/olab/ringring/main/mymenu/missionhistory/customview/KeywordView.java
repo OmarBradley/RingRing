@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import de.hdodenhof.circleimageview.CircleImageView;
 import olab.ringring.R;
 
 /**
@@ -21,6 +22,7 @@ public class KeywordView extends LinearLayout {
 
     @Bind(R.id.image_keyword) ImageView keywordImage;
     @Bind(R.id.text_keyword_success_count) TextView keywordSuccessCountText;
+    @Bind(R.id.image_keyword_success_count_background) CircleImageView countTextBgImage;
 
     public KeywordView(Context context) {
         super(context);
@@ -37,19 +39,33 @@ public class KeywordView extends LinearLayout {
         ButterKnife.bind(this, view);
     }
 
-    public void setKeywordImage(@DrawableRes int drawableRes){
+    public void setKeywordImage(@DrawableRes int drawableRes) {
         keywordImage.setImageDrawable(ContextCompat.getDrawable(getContext(), drawableRes));
     }
 
-    public void setKeywordSuccessCountText(String countText){
+    public void setKeywordSuccessCountText(String countText) {
         keywordSuccessCountText.setText(countText);
+        showKeyword("" + countText);
     }
 
-    public void hideKeywordSuccessCountText() {
+    // TODO: 2016-06-08 성공 카운트 숫자 type에 따라 바꿔주기,,,,
+    private void showKeyword(String countText) {
+        if (countText.equals("0")) {
+            hideCountTextBackgroundImage();
+            setKeywordImage(R.drawable.keyword_default_image);
+        } else {
+            showCountTextBackgroundImage();
+        }
+    }
+
+
+    private void hideCountTextBackgroundImage() {
+        countTextBgImage.setVisibility(INVISIBLE);
         keywordSuccessCountText.setVisibility(INVISIBLE);
     }
 
-    public void showKeywordSuccessCountText() {
+    private void showCountTextBackgroundImage() {
+        countTextBgImage.setVisibility(VISIBLE);
         keywordSuccessCountText.setVisibility(VISIBLE);
     }
 

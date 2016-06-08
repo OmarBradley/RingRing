@@ -9,6 +9,10 @@ public class SuccessLogin implements java.io.Serializable {
 
     @SerializedName("USER_INDEX")
     private int userIndex;
+
     @SerializedName("USER_EMAIL")
     private String userEmail;
+
+    @SerializedName("LOGIN_CASE")
+    private int loginCase;
 }

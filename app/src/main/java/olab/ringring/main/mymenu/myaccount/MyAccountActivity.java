@@ -35,15 +35,15 @@ import olab.ringring.network.response.mymenu.accountinfo.SuccessAccountInfo;
 import olab.ringring.network.response.mymenu.changename.SuccessChangeName;
 import olab.ringring.network.response.mymenu.changeprofile.SuccessChangeProfileImage;
 import olab.ringring.network.response.mymenu.changeusersex.SuccessChangeUserSex;
-import olab.ringring.util.actionbar.element.ActionBarElement;
-import olab.ringring.util.actionbar.visitor.ActionbarVisitor;
-import olab.ringring.util.actionbar.visitor.concretevisitor.SetActionBarIconVisitor;
+import olab.ringring.util.normalvisitor.element.NomalActivityElement;
+import olab.ringring.util.normalvisitor.visitor.NormalActivityVisitor;
+import olab.ringring.util.normalvisitor.visitor.concretevisitor.SetActionBarIconVisitor;
 import olab.ringring.util.dialog.select.SelectDialogBuilder;
 import olab.ringring.util.dialog.select.SelectDialogFragment;
 import olab.ringring.util.dialog.select.SelectDialogItemData;
 import olab.ringring.util.preperance.PropertyManager;
 
-public class MyAccountActivity extends AppCompatActivity implements ActionBarElement {
+public class MyAccountActivity extends AppCompatActivity implements NomalActivityElement {
 
     @Bind(R.id.image_my_account_user_profile) ImageView userProfileImage;
     @Bind(R.id.edit_my_account_user_name) EditText userName;
@@ -78,7 +78,7 @@ public class MyAccountActivity extends AppCompatActivity implements ActionBarEle
     }
 
     @Override
-    public void accept(ActionbarVisitor visitor) {
+    public void accept(NormalActivityVisitor visitor) {
         visitor.visit(this);
     }
 

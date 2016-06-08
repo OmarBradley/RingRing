@@ -18,6 +18,7 @@
         android:layout_toEndOf="@+id/image_keyword">
 
         <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/image_keyword_success_count_background"
             android:layout_width="26dp"
             android:layout_height="26dp"
             android:src="@drawable/keyword_success_count_background_image" />

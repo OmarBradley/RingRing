@@ -19,7 +19,7 @@ import butterknife.ButterKnife;
 import de.hdodenhof.circleimageview.CircleImageView;
 import olab.ringring.R;
 import olab.ringring.init.application.RingRingApplication;
-import olab.ringring.network.response.chat.ChatContent;
+import olab.ringring.network.response.home.SuccessSendChat;
 
 /**
  * Created by 재화 on 2016-06-07.
@@ -62,12 +62,12 @@ public class NotiToastView extends LinearLayout {
         }
     }
 
-    public static final void makeToast(ChatContent chatContent) {
+    public static final void makeToast(SuccessSendChat successSendChat) {
         Handler popUpToastHandler = new Handler(Looper.getMainLooper());
         popUpToastHandler.post(() -> {
             NotiToastView notiToastView = new NotiToastView(RingRingApplication.getContext());
             notiToastView.setLoverName("김미영");
-            notiToastView.setMessage(chatContent.getMessage());
+            notiToastView.setMessage(successSendChat.getMessage());
             Toast notiToast = new Toast(RingRingApplication.getContext());
             notiToast.setView(notiToastView);
             notiToast.setDuration(Toast.LENGTH_SHORT);

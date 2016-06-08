@@ -2,12 +2,15 @@ package olab.ringring.network.request.users;
 
 import android.content.Context;
 
+import org.joda.time.DateTime;
+
 import java.util.HashMap;
 import java.util.Map;
 
 import okhttp3.Request;
 import olab.ringring.network.request.RequestBuilder;
 import olab.ringring.network.response.users.SuccessSignUp;
+import olab.ringring.util.preperance.PropertyManager;
 
 /**
  * Created by 재화 on 2016-06-03.
@@ -49,15 +52,36 @@ public class UsersProtocol {
                 .build();
     }
 
-    public static final Request makeLoginRequest(Context tag, String userEmail, String userPassword){
+    public static final Request makeLoginRequest(Context tag, String userEmail, String userPassword) {
         Map<String, String> bodyParameters = new HashMap<>();
         bodyParameters.put("userEmail", userEmail);
         bodyParameters.put("userPassword", userPassword);
+        bodyParameters.put("registrationId", PropertyManager.getInstance().getRegistrationToken());
         return new RequestBuilder()
                 .setTag(tag)
                 .setUrl(UsersProtocolUrl.LOGIN.getUrl())
                 .addPageSegment(UsersProtocolUrl.LOGIN.getPageSegment())
                 .addBodyParameters(bodyParameters)
+                .build();
+    }
+
+    public static final Request makeLoverCertificationRequest(Context tag, String loversPhoneNumber) {
+        Map<String, String> bodyParameters = new HashMap<>();
+        bodyParameters.put("loversPhoneNumber", loversPhoneNumber);
+        bodyParameters.put("createDate", "" + DateTime.now().getMillis());
+        return new RequestBuilder()
+                .setTag(tag)
+                .setUrl(UsersProtocolUrl.LOVER_CERTIFICATION.getUrl())
+                .addPageSegment(UsersProtocolUrl.LOVER_CERTIFICATION.getPageSegment())
+                .addBodyParameters(bodyParameters)
+                .build();
+    }
+
+    public static final Request makeLogoutRequest(Context tag) {
+        return new RequestBuilder()
+                .setTag(tag)
+                .setUrl(UsersProtocolUrl.LOGOUT.getUrl())
+                .addPageSegment(UsersProtocolUrl.LOGOUT.getPageSegment())
                 .build();
     }
 

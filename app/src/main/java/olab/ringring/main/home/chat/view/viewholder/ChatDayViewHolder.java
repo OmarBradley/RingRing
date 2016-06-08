@@ -7,7 +7,7 @@ import android.widget.TextView;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import olab.ringring.R;
-import olab.ringring.network.response.chat.ChatContent;
+import olab.ringring.network.response.home.SuccessSendChat;
 
 /**
  * Created by 재화 on 2016-05-20.
@@ -22,7 +22,7 @@ public class ChatDayViewHolder extends RecyclerView.ViewHolder implements ChatDa
     }
 
     @Override
-    public void setChatDataInChatViewHolder(ChatContent data) {
+    public void setChatDataInChatViewHolder(SuccessSendChat data) {
         chatDayText.setText(data.getSendDate()+"");
     }
 }

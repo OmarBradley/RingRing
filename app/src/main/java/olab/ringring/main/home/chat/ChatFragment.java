@@ -34,7 +34,7 @@ import olab.ringring.main.home.chat.moudle.gcm.RingRingGcmListenerService;
 import olab.ringring.main.home.chat.moudle.localdb.CoupleChatDAO;
 import olab.ringring.network.NetworkManager;
 import olab.ringring.network.request.home.HomeProtocol;
-import olab.ringring.network.response.chat.ChatContent;
+import olab.ringring.network.response.home.SuccessSendChat;
 import olab.ringring.main.home.chat.view.adapter.ChatViewAdapter;
 
 @NoArgsConstructor(access = AccessLevel.PUBLIC)
@@ -83,19 +83,18 @@ public class ChatFragment extends Fragment {
         iMM.hideSoftInputFromWindow(view.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
     }
 
-    private ChatContent makeChatMessage() {
-        ChatContent chatContent = new ChatContent();
-        chatContent.setReadStatus(UNREAD);
-        chatContent.setSendDate(DateTime.now().getMillis());
-        chatContent.setMessage(chatMessageEdit.getText().toString());
-        chatContent.setSenderId("" + HomeActivity.USER_ID);
-        chatContent.setReceiverId("" + HomeActivity.LOVER_ID);
-
-        return chatContent;
+    private SuccessSendChat makeChatMessage() {
+        SuccessSendChat successSendChat = new SuccessSendChat();
+        successSendChat.setReadStatus(UNREAD);
+        successSendChat.setSendDate(DateTime.now().getMillis());
+        successSendChat.setMessage(chatMessageEdit.getText().toString());
+        successSendChat.setSenderId("" + HomeActivity.USER_ID);
+        successSendChat.setReceiverId("" + HomeActivity.LOVER_ID);
+        return successSendChat;
     }
 
     private void sendChatDataToServer() {
-        NetworkManager.getInstance().sendRequest(HomeProtocol.maeChatContentRequest(getActivity(), makeChatMessage()), ChatContent.class, (request, result) -> {
+        NetworkManager.getInstance().sendRequest(HomeProtocol.maeSendChatMessageRequest(getActivity(), makeChatMessage()), SuccessSendChat.class, (request, result) -> {
             CoupleChatDAO.getInstance().insertData(result);
         }, (request, errorCode, throwable) -> {
             Log.e("error", errorCode.getMessage());
@@ -114,9 +113,7 @@ public class ChatFragment extends Fragment {
         setButtonClickable(false);
         chatMessageEdit.addTextChangedListener(new TextWatcher() {
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
@@ -126,7 +123,6 @@ public class ChatFragment extends Fragment {
                 } else {
                     setButtonClickable(true);
                 }
-
             }
 
             @Override
@@ -144,6 +140,8 @@ public class ChatFragment extends Fragment {
             getActivity().runOnUiThread(()->{
                 bindChatDataToView();
             });
+            // TODO: 2016-06-08 채팅 성공후 테스트 할 메소드 레퍼런스 코드
+            /*getActivity().runOnUiThread(ChatFragment.this::bindChatDataToView);*/
             intent.putExtra(RingRingGcmListenerService.EXTRA_RESULT, true);
         }
     };
@@ -162,7 +160,7 @@ public class ChatFragment extends Fragment {
     }
 
     private void bindChatDataToView(){
-        List<ChatContent> chatResults = CoupleChatDAO.getInstance().getDataRows();
+        List<SuccessSendChat> chatResults = CoupleChatDAO.getInstance().getDataRows();
         if(chatResults.size() == 0){
             return;
         } else {

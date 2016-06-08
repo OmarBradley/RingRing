@@ -26,8 +26,6 @@ public class RingNotificationActivity extends AppCompatActivity implements Simpl
     private static final int MIN_SWIPE_DISTANCE = 10;
     private static final int MAX_SWIPE_DISTANCE = 900;
 
-
-
     private NotiRingFactory ringFactory;
     private SimpleGestureFilter detector;
 
@@ -57,7 +55,6 @@ public class RingNotificationActivity extends AppCompatActivity implements Simpl
 
     @Override
     public boolean dispatchTouchEvent(MotionEvent me){
-        // Call onTouchEvent of SimpleGestureFilter class
         this.detector.onTouchEvent(me);
         return super.dispatchTouchEvent(me);
     }
