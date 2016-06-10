@@ -19,6 +19,6 @@ public class SuccessReceiveChat {
     private int loverIndex;
 
     @SerializedName("MESSAGE_CONTENTS")
-    private List<ReceiveContent> messageContents;
+    private List<SuccessSendChat> messageContents;
 
 }

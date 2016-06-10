@@ -24,6 +24,7 @@ import java.util.Arrays;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import olab.ringring.R;
+import olab.ringring.join.JoinActivity;
 import olab.ringring.main.mymenu.MyMenuActivity;
 import olab.ringring.main.mymenu.myaccount.picutreupload.CameraPictureUploadStrategy;
 import olab.ringring.main.mymenu.myaccount.picutreupload.GalleryPictureUploadStrategy;
@@ -31,10 +32,14 @@ import olab.ringring.main.mymenu.myaccount.picutreupload.PictureUploadStrategy;
 import olab.ringring.network.NetworkManager;
 import olab.ringring.network.request.ImageFileFormData;
 import olab.ringring.network.request.mymenu.MyMenuProtocol;
+import olab.ringring.network.request.users.UsersProtocol;
 import olab.ringring.network.response.mymenu.accountinfo.SuccessAccountInfo;
 import olab.ringring.network.response.mymenu.changename.SuccessChangeName;
 import olab.ringring.network.response.mymenu.changeprofile.SuccessChangeProfileImage;
 import olab.ringring.network.response.mymenu.changeusersex.SuccessChangeUserSex;
+import olab.ringring.network.response.users.SuccessLogout;
+import olab.ringring.util.dialog.confirm.ConfirmDialogFragment;
+import olab.ringring.util.dialog.confirm.ConfirmDialogInfoPool;
 import olab.ringring.util.normalvisitor.element.NomalActivityElement;
 import olab.ringring.util.normalvisitor.visitor.NormalActivityVisitor;
 import olab.ringring.util.normalvisitor.visitor.concretevisitor.SetActionBarIconVisitor;
@@ -42,6 +47,7 @@ import olab.ringring.util.dialog.select.SelectDialogBuilder;
 import olab.ringring.util.dialog.select.SelectDialogFragment;
 import olab.ringring.util.dialog.select.SelectDialogItemData;
 import olab.ringring.util.preperance.PropertyManager;
+import olab.ringring.util.string.StringHandler;
 
 public class MyAccountActivity extends AppCompatActivity implements NomalActivityElement {
 
@@ -66,7 +72,7 @@ public class MyAccountActivity extends AppCompatActivity implements NomalActivit
         setContentView(R.layout.activity_my_account);
         ButterKnife.bind(this);
         this.accept(new SetActionBarIconVisitor(ContextCompat.getDrawable(this, R.drawable.actionbar_home_as_up_image)));
-
+        setOnClickListenerInLogoutBtn();
     }
 
     @Override
@@ -82,6 +88,20 @@ public class MyAccountActivity extends AppCompatActivity implements NomalActivit
         visitor.visit(this);
     }
 
+
+    private void setOnClickListenerInLogoutBtn(){
+        logoutBtn.setOnClickListener(view -> {
+            NetworkManager.getInstance().sendRequest(UsersProtocol.makeLogoutRequest(this), SuccessLogout.class, (request, result) -> {
+                Log.e("logout success", result.toString());
+                Intent intent = new Intent(this, JoinActivity.class);
+                startActivity(intent);
+                finish();
+            }, (request, networkResponseCode, throwable) -> {
+                Log.e("logout fail", networkResponseCode.getMessage());
+            });
+        });
+    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_my_account, menu);
@@ -92,7 +112,6 @@ public class MyAccountActivity extends AppCompatActivity implements NomalActivit
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
             case R.id.action_my_menu_check:
-                Toast.makeText(this,"sss",Toast.LENGTH_SHORT).show();
                 return true;
             case android.R.id.home:
                 onBackPressed();
@@ -103,7 +122,7 @@ public class MyAccountActivity extends AppCompatActivity implements NomalActivit
 
     @Override
     protected void onResume() {
-        init();
+        initView();
         getResponseData();
         changeUserName();
         changeUserGender();
@@ -112,9 +131,11 @@ public class MyAccountActivity extends AppCompatActivity implements NomalActivit
         super.onResume();
     }
 
-    private void init(){
+    private void initView(){
         loverName.setEnabled(false);
         userPhoneNumber.setEnabled(false);
+        ringSize.setEnabled(false);
+        userPasswordChange.setEnabled(false);
     }
 
     private void getResponseData(){
@@ -155,12 +176,17 @@ public class MyAccountActivity extends AppCompatActivity implements NomalActivit
         userName.setOnEditorActionListener((textView, actionId, event) -> {
             if (actionId == EditorInfo.IME_ACTION_SEND) {
                 String changedUserName = userName.getText().toString();
-                NetworkManager.getInstance().sendRequest(MyMenuProtocol.makeChangeNameRequest(this, changedUserName), SuccessChangeName.class, (request, result) -> {
-                    userName.setText(result.getUserNickName());
-                    Toast.makeText(this, "이름이 변경되었습니다.", Toast.LENGTH_SHORT).show();
-                }, (request, integer, throwable) -> {
-                    Toast.makeText(this, "이름이 같습니다.", Toast.LENGTH_SHORT).show();
-                });
+                if(changedUserName.length() > 0){
+                    NetworkManager.getInstance().sendRequest(MyMenuProtocol.makeChangeNameRequest(this, changedUserName), SuccessChangeName.class, (request, result) -> {
+                        userName.setText(result.getUserNickName());
+                        Toast.makeText(this, "이름이 변경되었습니다.", Toast.LENGTH_SHORT).show();
+                    }, (request, integer, throwable) -> {
+                        Toast.makeText(this, "이름이 같습니다.", Toast.LENGTH_SHORT).show();
+                    });
+                } else {
+                    ConfirmDialogFragment emptyNameDialog = ConfirmDialogInfoPool.EMPTY_NAME_ERROR.makeConfirmDialog();
+                    emptyNameDialog.show(getSupportFragmentManager(), "empty name dialog");
+                }
             }
             return true;
         });
@@ -230,23 +256,33 @@ public class MyAccountActivity extends AppCompatActivity implements NomalActivit
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        try {
+            uploadImage(requestCode, resultCode, data);
+        } catch (Exception e) {
+            Log.e("upload error", e.toString());
+        }
+    }
+
+    private void uploadImage(int requestCode, int resultCode, Intent data){
         File uploadFile = uploadStrategy.getImageFile(userProfileImage, requestCode, resultCode, data);
-        Log.e("file", uploadFile.getName());
+        Log.e("upload",uploadFile.getAbsolutePath() );
         ImageFileFormData imageData = new ImageFileFormData();
         imageData.setBodyName("profile");
         imageData.setFileName(uploadFile.getName());
         imageData.setImageFile(uploadFile);
         NetworkManager.getInstance().sendRequest(MyMenuProtocol.makeSetProfileImageRequest(this, imageData), SuccessChangeProfileImage.class, (request, result)->{
             PropertyManager.getInstance().setUserProfileImageUrl(result.getThumnailPicturePath());
-            if (result.getOriginalPicturePath() != null || !TextUtils.isEmpty(result.getOriginalPicturePath()) || !result.getOriginalPicturePath().equals("-")) {
+            if (StringHandler.isCorrectImageUrl(result.getOriginalPicturePath())) {
                 Glide.with(this).load(result.getOriginalPicturePath()).into(userProfileImage);
             } else {
                 userProfileImage.setImageResource(R.drawable.my_account_default_image);
             }
         }, (request, errorCode, throwable) -> {
-            Log.e("eeee", errorCode.getMessage());
+            Log.e("picture upload", errorCode.getMessage());
         });
-
-
     }
+
+
+
+
 }

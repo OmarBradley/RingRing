@@ -1,6 +1,7 @@
 package olab.ringring.network.request.home;
 
 import android.content.Context;
+import android.util.Log;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -16,9 +17,9 @@ public class HomeProtocol {
 
     public static final Request maeSendChatMessageRequest(Context tag, SuccessSendChat content) {
         Map<String, String> bodyParameters = new HashMap<>();
-        bodyParameters.put("receiverId", content.getReceiverId());
+        bodyParameters.put("receiverId", ""+content.getReceiverId());
         bodyParameters.put("messageContent", content.getMessage());
-        bodyParameters.put("senderId", content.getSenderId());
+        bodyParameters.put("senderId", ""+content.getSenderId());
         bodyParameters.put("sendDate", ""+content.getSendDate());
         bodyParameters.put("readStatus", ""+content.getReadStatus());
         return new RequestBuilder()

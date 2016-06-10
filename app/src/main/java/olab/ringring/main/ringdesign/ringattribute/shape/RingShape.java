@@ -11,7 +11,7 @@ import olab.ringring.R;
 import olab.ringring.init.application.RingRingApplication;
 import olab.ringring.main.ringdesign.choicedialog.attributeview.RingDetailAttributeViewData;
 import olab.ringring.main.ringdesign.levelpolicy.RingCollectCount;
-import olab.ringring.util.colorchanger.ImageColorChanger;
+import olab.ringring.util.image.ImageHandler;
 
 /**
  * Created by 재화 on 2016-05-23.
@@ -66,12 +66,12 @@ public enum RingShape {
 
     public static final Drawable getSelectedShapeImage(RingShape shape){
         Drawable imageNotColorChanged = shape.getChoiceImage();
-        return ImageColorChanger.changeDrawableImageColor(imageNotColorChanged, SELECTED_SHAPE_COLOR);
+        return ImageHandler.changeDrawableImageColor(imageNotColorChanged, SELECTED_SHAPE_COLOR);
     }
 
     public static final Drawable getNotSelectedShapeImage(RingShape shape){
         Drawable imageNotColorChanged = shape.getChoiceImage();
-        return ImageColorChanger.changeDrawableImageColor(imageNotColorChanged, NOT_SELECTED_SHAPE_COLOR);
+        return ImageHandler.changeDrawableImageColor(imageNotColorChanged, NOT_SELECTED_SHAPE_COLOR);
     }
 
 }

@@ -32,7 +32,7 @@ import olab.ringring.network.request.ring.RingProtocol;
 import olab.ringring.network.response.ring.intro.SuccessRingIntro;
 import olab.ringring.util.normalvisitor.element.NomalActivityElement;
 import olab.ringring.util.normalvisitor.visitor.NormalActivityVisitor;
-import olab.ringring.util.colorchanger.ImageColorChanger;
+import olab.ringring.util.image.ImageHandler;
 import olab.ringring.util.preperance.PropertyManager;
 
 public class RingDesignActivity extends AppCompatActivity
@@ -116,8 +116,8 @@ public class RingDesignActivity extends AppCompatActivity
             if (attributeListConstant.getAttributeName() == RingAttributeListConstant.JEWELRY.getAttributeName()) {
                 bigRingView.setJewelryDrawable(data.getBigImage());
             } else {
-                Drawable whiteDrawable = ImageColorChanger.changeWhiteImage(data.getBigImage());
-                bigRingView.setShapeDrawable(ImageColorChanger.changeDrawableImageColor(whiteDrawable, selectedMaterial.getColor()));
+                Drawable whiteDrawable = ImageHandler.changeWhiteImage(data.getBigImage());
+                bigRingView.setShapeDrawable(ImageHandler.changeDrawableImageColor(whiteDrawable, selectedMaterial.getColor()));
             }
         });
     }

@@ -21,10 +21,11 @@ import olab.ringring.R;
  * Created by 재화 on 2016-05-31.
  */
 public class CameraPictureUploadStrategy implements PictureUploadStrategy {
-    AppCompatActivity activity;
-    private final static int CAMERA_PICTURE_UPLOAD_CODE = 3;
-    File uploadFile;
 
+    private final static int CAMERA_PICTURE_UPLOAD_CODE = 3;
+
+    private File uploadFile;
+    private AppCompatActivity activity;
 
     public CameraPictureUploadStrategy(AppCompatActivity activity){
         this.activity = activity;
@@ -59,6 +60,8 @@ public class CameraPictureUploadStrategy implements PictureUploadStrategy {
                 opts.inSampleSize = 2;
                 Bitmap bm = BitmapFactory.decodeFile(uploadFile.getAbsolutePath(), opts);
                 attachImageView.setImageBitmap(bm);
+            } else {
+
             }
         }
         return uploadFile;

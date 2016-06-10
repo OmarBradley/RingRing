@@ -13,6 +13,7 @@ import olab.ringring.network.response.home.SuccessSendChat;
 import olab.ringring.main.home.chat.view.viewholder.ChatDayViewHolder;
 import olab.ringring.main.home.chat.view.viewholder.LoverChatViewHolder;
 import olab.ringring.main.home.chat.view.viewholder.UserChatViewHolder;
+import olab.ringring.util.preperance.PropertyManager;
 
 /**
  * Created by 재화 on 2016-05-19.
@@ -39,14 +40,11 @@ public class ChatViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     @Override
     public int getItemViewType(int position) {
         SuccessSendChat successSendChat = chatContents.get(position);
-        if (successSendChat.getSenderId() == null || successSendChat.getSenderId().equals(""+HomeActivity.USER_ID)) {
+        if (successSendChat.getSenderId() == PropertyManager.getInstance().getUserIndexId()) {
             return VIEW_USER_CHAT;
-        } else if (successSendChat.getSenderId().equals(""+HomeActivity.LOVER_ID)) {
+        } else {
             return VIEW_LOVER_CHAT;
-        } else if (successSendChat.getSenderId().equals(Integer.toString(HomeActivity.CHAT_DAY_ID))) {
-            return VIEW_CHAT_DAY;
         }
-        return super.getItemViewType(position);
     }
 
     @Override

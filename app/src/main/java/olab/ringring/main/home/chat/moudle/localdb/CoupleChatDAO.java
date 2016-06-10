@@ -3,6 +3,7 @@ package olab.ringring.main.home.chat.moudle.localdb;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 import com.annimon.stream.Stream;
 
@@ -56,20 +57,44 @@ public class CoupleChatDAO extends SQLiteOpenHelper implements DAO<SuccessSendCh
                 CoupleChatDBConstant.CoupleChatTableColumn._IS_READ};
         @Cleanup SQLiteDatabase db = getReadableDatabase();
         @Cleanup Cursor cursor = db.query(CoupleChatDBConstant.COUPLE_CHAT_TABLE_NAME, columns, null, null, null, null, null);
-        while (cursor.moveToNext()) {
-            SuccessSendChat data = new SuccessSendChat();
-            data.setSendDate(cursor.getLong(cursor.getColumnIndex(CoupleChatDBConstant.CoupleChatTableColumn._CHAT_DATE)));
-            data.setMessage(cursor.getString(cursor.getColumnIndex(CoupleChatDBConstant.CoupleChatTableColumn._CHAT_MESSAGE)));
-            data.setReceiverId(cursor.getString(cursor.getColumnIndex(CoupleChatDBConstant.CoupleChatTableColumn._RECEIVER_ID)));
-            data.setSenderId(cursor.getString(cursor.getColumnIndex(CoupleChatDBConstant.CoupleChatTableColumn._SENDER_ID)));
-            data.setReadStatus(cursor.getInt(cursor.getColumnIndex(CoupleChatDBConstant.CoupleChatTableColumn._IS_READ)));
-            successSendChats.add(data);
+        try{
+            while (cursor.moveToNext()) {
+                SuccessSendChat data = new SuccessSendChat();
+                data.setSendDate(cursor.getLong(cursor.getColumnIndex(CoupleChatDBConstant.CoupleChatTableColumn._CHAT_DATE)));
+                data.setMessage(cursor.getString(cursor.getColumnIndex(CoupleChatDBConstant.CoupleChatTableColumn._CHAT_MESSAGE)));
+                data.setReceiverId(cursor.getInt(cursor.getColumnIndex(CoupleChatDBConstant.CoupleChatTableColumn._RECEIVER_ID)));
+                data.setSenderId(cursor.getInt(cursor.getColumnIndex(CoupleChatDBConstant.CoupleChatTableColumn._SENDER_ID)));
+                data.setReadStatus(cursor.getInt(cursor.getColumnIndex(CoupleChatDBConstant.CoupleChatTableColumn._IS_READ)));
+                successSendChats.add(data);
+            }
+        } catch (Exception e){
+
         }
+
         return successSendChats;
     }
 
     public long getRecentTime(){
         List<SuccessSendChat> successSendChats = getDataRows();
+        if(successSendChats.size() == 0){
+            return 0;
+        }
         return Stream.of(successSendChats).map(SuccessSendChat::getSendDate).max(Long::compare).get();
     }
+
+    public void changeUnReadToRead(){
+        @Cleanup SQLiteDatabase db = getWritableDatabase();
+        db.execSQL(CoupleChatTableSql.CHANGE_UNREAD_TO_READ);
+    }
+
+    public int getUnreadRowCount() {
+        int readCount = 0;
+        @Cleanup SQLiteDatabase db = getReadableDatabase();
+        Cursor cursor = db.rawQuery(CoupleChatTableSql.UnreadCountSql.COUNT_UNREAD,null);
+        while (cursor.moveToNext()) {
+            readCount = cursor.getInt(cursor.getColumnIndex(CoupleChatTableSql.UnreadCountSql.ROW_UNREAD_COUNT));
+        }
+        return readCount;
+    }
+
 }

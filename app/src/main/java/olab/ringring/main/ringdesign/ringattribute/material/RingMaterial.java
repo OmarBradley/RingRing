@@ -13,7 +13,7 @@ import olab.ringring.main.ringdesign.choicedialog.attributeview.RingDetailAttrib
 import olab.ringring.main.ringdesign.levelpolicy.RingCollectCount;
 import olab.ringring.main.ringdesign.ringattribute.shape.RingShape;
 import olab.ringring.network.response.ring.intro.SuccessRingIntro;
-import olab.ringring.util.colorchanger.ImageColorChanger;
+import olab.ringring.util.image.ImageHandler;
 
 /**
  * Created by 재화 on 2016-05-23.
@@ -44,7 +44,7 @@ public enum RingMaterial {
                 .setAttributeImage(getMaterialImageUsingChoiceDialog(this, count))
                 .setSetImage(image)
                 .setCollectCount(count)
-                .setBigImage(ImageColorChanger.changeDrawableImageColor(RingShape.valueOf(viewData.getRingShape()).getBigImage(), this.getColor()))
+                .setBigImage(ImageHandler.changeDrawableImageColor(RingShape.valueOf(viewData.getRingShape()).getBigImage(), this.getColor()))
                 .setAttributeName(name)
                 .setTag(tag).build();
     }
@@ -56,7 +56,7 @@ public enum RingMaterial {
         if (count == RingCollectCount.MAX_COUNTING_NUMBER) {
             return material.getImage();
         } else {
-            return ImageColorChanger.changeDrawableImageColor(ContextCompat.getDrawable(RingRingApplication.getContext(), NOT_SELECTED_MATERIAL_IMAGE),
+            return ImageHandler.changeDrawableImageColor(ContextCompat.getDrawable(RingRingApplication.getContext(), NOT_SELECTED_MATERIAL_IMAGE),
                     ContextCompat.getColor(RingRingApplication.getContext(), NOT_SELECTED_MATERIAL_COLOR));
         }
     }

@@ -12,7 +12,7 @@ import olab.ringring.init.application.RingRingApplication;
  */
 public enum ReadStatus {
 
-    READ(0), UNREAD(1);
+    READ(1), UNREAD(0);
 
     ReadStatus(int readStatus){
         this.readStatus = readStatus;

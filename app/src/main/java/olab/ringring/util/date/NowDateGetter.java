@@ -83,5 +83,12 @@ public class NowDateGetter {
         return getMeridiem() + BLANK + timeString;
     }
 
+    public String calculateDDay(long timeMillis){
+        long dDayMillis = DateTime.now().getMillis() - timeMillis;
+        int dDay = nowDate.minus(timeMillis).getDayOfMonth();
+        return ""+dDay;
+    }
+
+
 
 }

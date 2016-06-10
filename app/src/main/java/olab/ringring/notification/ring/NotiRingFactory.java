@@ -4,10 +4,8 @@ import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.widget.ImageView;
 
-import olab.ringring.main.home.ring.HomeRingJewelry;
-import olab.ringring.main.home.ring.HomeRingShape;
 import olab.ringring.main.ringdesign.ringattribute.material.RingMaterial;
-import olab.ringring.util.colorchanger.ImageColorChanger;
+import olab.ringring.util.image.ImageHandler;
 
 /**
  * Created by 재화 on 2016-06-06.
@@ -34,7 +32,7 @@ public class NotiRingFactory {
 
     private void createRingShape(NotiRingShape shape) {
         Drawable presentImage = shape.getImage();
-        Bitmap imageAfterColorChange = ImageColorChanger.changeImageColor(presentImage, material.getColor());
+        Bitmap imageAfterColorChange = ImageHandler.changeImageColor(presentImage, material.getColor());
         shapeImage.setImageBitmap(imageAfterColorChange);
     }
 

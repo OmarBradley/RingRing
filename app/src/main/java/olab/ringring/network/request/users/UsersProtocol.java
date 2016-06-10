@@ -67,7 +67,7 @@ public class UsersProtocol {
 
     public static final Request makeLoverCertificationRequest(Context tag, String loversPhoneNumber) {
         Map<String, String> bodyParameters = new HashMap<>();
-        bodyParameters.put("loversPhoneNumber", loversPhoneNumber);
+        bodyParameters.put("loverPhoneNumber", loversPhoneNumber);
         bodyParameters.put("createDate", "" + DateTime.now().getMillis());
         return new RequestBuilder()
                 .setTag(tag)

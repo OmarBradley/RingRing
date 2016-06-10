@@ -29,13 +29,13 @@ import butterknife.ButterKnife;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import olab.ringring.R;
-import olab.ringring.main.home.HomeActivity;
 import olab.ringring.main.home.chat.moudle.gcm.RingRingGcmListenerService;
 import olab.ringring.main.home.chat.moudle.localdb.CoupleChatDAO;
 import olab.ringring.network.NetworkManager;
 import olab.ringring.network.request.home.HomeProtocol;
 import olab.ringring.network.response.home.SuccessSendChat;
 import olab.ringring.main.home.chat.view.adapter.ChatViewAdapter;
+import olab.ringring.util.preperance.PropertyManager;
 
 @NoArgsConstructor(access = AccessLevel.PUBLIC)
 public class ChatFragment extends Fragment {
@@ -60,6 +60,7 @@ public class ChatFragment extends Fragment {
         setChatMessageListView();
         setOnClickListenerOnButtons();
         executeActionWhenTextTyping();
+        hideSoftInput(chatFragmentView);
         return chatFragmentView;
     }
 
@@ -72,15 +73,16 @@ public class ChatFragment extends Fragment {
 
     private void setOnClickListenerOnButtons() {
         messageSendBtn.setOnClickListener(view -> {
-            hideSoftInput(view);
             sendChatDataToServer();
             deleteStringInChatMessageEditView();
         });
     }
 
     private void hideSoftInput(View view) {
-        InputMethodManager iMM = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
-        iMM.hideSoftInputFromWindow(view.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+        view.setOnClickListener(targetView ->{
+            InputMethodManager iMM = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+            iMM.hideSoftInputFromWindow(view.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+        });
     }
 
     private SuccessSendChat makeChatMessage() {
@@ -88,15 +90,18 @@ public class ChatFragment extends Fragment {
         successSendChat.setReadStatus(UNREAD);
         successSendChat.setSendDate(DateTime.now().getMillis());
         successSendChat.setMessage(chatMessageEdit.getText().toString());
-        successSendChat.setSenderId("" + HomeActivity.USER_ID);
-        successSendChat.setReceiverId("" + HomeActivity.LOVER_ID);
+        successSendChat.setSenderId(PropertyManager.getInstance().getUserIndexId());
+        successSendChat.setReceiverId(PropertyManager.getInstance().getLoverIndexId());
         return successSendChat;
     }
 
     private void sendChatDataToServer() {
         NetworkManager.getInstance().sendRequest(HomeProtocol.maeSendChatMessageRequest(getActivity(), makeChatMessage()), SuccessSendChat.class, (request, result) -> {
             CoupleChatDAO.getInstance().insertData(result);
+            adapter.addMessage(result);
+            scrollToLastItem();
         }, (request, errorCode, throwable) -> {
+            Log.e("request", request.toString());
             Log.e("error", errorCode.getMessage());
         });
     }
@@ -137,11 +142,7 @@ public class ChatFragment extends Fragment {
     BroadcastReceiver chatReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-            getActivity().runOnUiThread(()->{
-                bindChatDataToView();
-            });
-            // TODO: 2016-06-08 채팅 성공후 테스트 할 메소드 레퍼런스 코드
-            /*getActivity().runOnUiThread(ChatFragment.this::bindChatDataToView);*/
+            getActivity().runOnUiThread(ChatFragment.this::bindStoredChatDataToView);
             intent.putExtra(RingRingGcmListenerService.EXTRA_RESULT, true);
         }
     };
@@ -155,11 +156,12 @@ public class ChatFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        bindChatDataToView();
+        bindStoredChatDataToView();
         LocalBroadcastManager.getInstance(getActivity()).registerReceiver(chatReceiver, chatActionFilter);
     }
 
-    private void bindChatDataToView(){
+    private void bindStoredChatDataToView(){
+        CoupleChatDAO.getInstance().changeUnReadToRead();
         List<SuccessSendChat> chatResults = CoupleChatDAO.getInstance().getDataRows();
         if(chatResults.size() == 0){
             return;
@@ -168,4 +170,5 @@ public class ChatFragment extends Fragment {
             scrollToLastItem();
         }
     }
+
 }

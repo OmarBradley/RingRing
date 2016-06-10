@@ -11,7 +11,6 @@ import olab.ringring.R;
 import olab.ringring.init.application.RingRingApplication;
 import olab.ringring.main.ringdesign.choicedialog.attributeview.RingDetailAttributeViewData;
 import olab.ringring.main.ringdesign.levelpolicy.RingCollectCount;
-import olab.ringring.util.colorchanger.ImageColorChanger;
 
 /**
  * Created by 재화 on 2016-05-23.

@@ -49,13 +49,7 @@ public class OnBackPressedVisitor implements MainNavigationVisitor {
             handler.postDelayed(changeIsPressedRunnable, TIMEOUT_BACK_KEY_DELAY);
         } else {
             handler.removeCallbacks(changeIsPressedRunnable);
-            NetworkManager.getInstance().sendRequest(UsersProtocol.makeLogoutRequest(activity), SuccessLogout.class, (request, result) -> {
-                Log.e("logout success", result.toString());
-                activity.finish();
-            }, (request, networkResponseCode, throwable) -> {
-                Log.e("logout fail", networkResponseCode.getMessage());
-                activity.finish();
-            });
+            activity.finish();
         }
     }
 

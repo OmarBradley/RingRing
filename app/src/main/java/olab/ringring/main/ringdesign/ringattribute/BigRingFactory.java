@@ -7,7 +7,7 @@ import olab.ringring.main.ringdesign.customview.BigRingView;
 import olab.ringring.main.ringdesign.ringattribute.jewelry.RingJewelry;
 import olab.ringring.main.ringdesign.ringattribute.material.RingMaterial;
 import olab.ringring.main.ringdesign.ringattribute.shape.RingShape;
-import olab.ringring.util.colorchanger.ImageColorChanger;
+import olab.ringring.util.image.ImageHandler;
 
 /**
  * Created by 재화 on 2016-05-24.
@@ -37,14 +37,14 @@ public class BigRingFactory  {
     public void createRingShape(RingShape shape) {
         this.shape = shape;
         Drawable presentImage = shape.getBigImage();
-        Bitmap imageAfterColorChange = ImageColorChanger.changeImageColor(presentImage, material.getColor());
+        Bitmap imageAfterColorChange = ImageHandler.changeImageColor(presentImage, material.getColor());
         ringView.setShapeImageBitmap(imageAfterColorChange);
     }
 
     public void createRingMaterial(RingMaterial material) {
         this.material = material;
         Drawable presentImage = shape.getBigImage();
-        Bitmap imageAfterColorChange = ImageColorChanger.changeImageColor(presentImage, material.getColor());
+        Bitmap imageAfterColorChange = ImageHandler.changeImageColor(presentImage, material.getColor());
         ringView.setShapeImageBitmap(imageAfterColorChange);
 
     }

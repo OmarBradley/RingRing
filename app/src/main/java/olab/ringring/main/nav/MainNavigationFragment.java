@@ -14,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.annimon.stream.function.BiConsumer;
 import com.bumptech.glide.Glide;
@@ -32,7 +33,12 @@ import olab.ringring.main.home.HomeActivity;
 import olab.ringring.main.mymenu.MyMenuActivity;
 import olab.ringring.main.mymenu.NavMyMenuSubElement;
 import olab.ringring.main.ringdesign.RingDesignActivity;
+import olab.ringring.main.ringdesign.util.StringMaker;
+import olab.ringring.network.NetworkManager;
+import olab.ringring.network.request.mymenu.MyMenuProtocol;
+import olab.ringring.network.response.mymenu.home.SuccessMyMenuIntro;
 import olab.ringring.util.preperance.PropertyManager;
+import olab.ringring.util.string.StringHandler;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -73,13 +79,17 @@ public class MainNavigationFragment extends Fragment {
         ringDesignNav.setNavMenuAttributes(ContextCompat.getDrawable(getContext(),R.drawable.nav_main_ring_design_image), "반지만들기");
     }
 
-    private void initUserProfile(){
-        if (PropertyManager.getInstance().getUserProfileImageUrl() != null || !TextUtils.isEmpty(PropertyManager.getInstance().getUserProfileImageUrl())) {
-            Glide.with(this).load(PropertyManager.getInstance().getUserProfileImageUrl()).into(userProfileImage);
-        } else {
-            userProfileImage.setImageDrawable(ContextCompat.getDrawable(RingRingApplication.getContext(), R.drawable.default_profile_image));
-        }
-        userNameText.setText(PropertyManager.getInstance().getUserName());
+    private void initUserProfile() {
+        NetworkManager.getInstance().sendRequest(MyMenuProtocol.makeHomeRequest(getActivity()), SuccessMyMenuIntro.class, (request, result) -> {
+            if (StringHandler.isCorrectImageUrl(result.getUserProfile())) {
+                Glide.with(this).load(result.getUserProfile()).into(userProfileImage);
+            } else {
+                userProfileImage.setImageDrawable(ContextCompat.getDrawable(RingRingApplication.getContext(), R.drawable.default_profile_image));
+            }
+            userNameText.setText(result.getUserNickname());
+        }, (request, errorCode, throwable) -> {
+            Toast.makeText(getActivity(), errorCode.getMessage(), Toast.LENGTH_SHORT).show();
+        });
     }
 
     private void setOnClickListenerInNavMenu() {

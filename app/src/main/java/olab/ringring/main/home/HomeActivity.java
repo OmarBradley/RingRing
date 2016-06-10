@@ -8,6 +8,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
+import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -20,6 +21,8 @@ import lombok.Getter;
 import olab.ringring.R;
 import olab.ringring.init.application.RingRingApplication;
 import olab.ringring.main.home.chat.ChatFragment;
+import olab.ringring.main.home.chat.moudle.badgenumber.BadgeNumber;
+import olab.ringring.main.home.chat.moudle.localdb.CoupleChatDAO;
 import olab.ringring.main.home.ring.HomeRingFactory;
 import olab.ringring.main.home.ring.HomeRingJewelry;
 import olab.ringring.main.home.ring.HomeRingShape;
@@ -28,11 +31,13 @@ import olab.ringring.main.nav.visitor.concretevisitior.OnBackPressedVisitor;
 import olab.ringring.main.ringdesign.ringattribute.jewelry.RingJewelry;
 import olab.ringring.main.ringdesign.ringattribute.material.RingMaterial;
 import olab.ringring.main.ringdesign.ringattribute.shape.RingShape;
+import olab.ringring.main.ringdesign.util.StringMaker;
 import olab.ringring.network.NetworkManager;
 import olab.ringring.network.request.mymenu.MyMenuProtocol;
 import olab.ringring.network.response.mymenu.home.MyMenuIntroCoupleRing;
 import olab.ringring.network.response.mymenu.home.SuccessMyMenuIntro;
 import olab.ringring.notification.RingNotificationActivity;
+import olab.ringring.util.date.NowDateGetter;
 import olab.ringring.util.preperance.PropertyManager;
 import olab.ringring.main.home.customview.ChatProfileView;
 import olab.ringring.main.nav.visitor.MainNavigationVisitor;
@@ -42,12 +47,11 @@ import olab.ringring.main.nav.visitor.element.MainNavigationElement;
 import olab.ringring.util.normalvisitor.element.NomalActivityElement;
 import olab.ringring.util.normalvisitor.visitor.NormalActivityVisitor;
 import olab.ringring.util.normalvisitor.visitor.concretevisitor.DeleteActionBarTitleVisitor;
+import olab.ringring.util.string.StringHandler;
 
 public class HomeActivity extends AppCompatActivity
         implements MainNavigationElement, NomalActivityElement {
 
-    public static final int USER_ID = 1;
-    public static final int LOVER_ID = 2;
     public static final int CHAT_DAY_ID = 3;
 
     @Getter @Bind(R.id.toolbar) Toolbar toolbar;
@@ -126,24 +130,25 @@ public class HomeActivity extends AppCompatActivity
         NetworkManager.getInstance().sendRequest(MyMenuProtocol.makeHomeRequest(this), SuccessMyMenuIntro.class, (request, result) -> {
             initView(result);
             PropertyManager.getInstance().setUserProperty(result);
+            PropertyManager.getInstance().setLoverIndexId(result.getLoverIndex());
+            PropertyManager.getInstance().setUserIndexId(result.getUserIndex());
         }, (request, errorCode, throwable) -> {
             Toast.makeText(this, errorCode.getMessage(), Toast.LENGTH_SHORT).show();
         });
     }
 
     private void initView(SuccessMyMenuIntro homeInfo){
-        coupleDDayText.setText(""+homeInfo.getCoupleDuringDate());
+        Log.e("coupleDATE", homeInfo.toString());
+        coupleDDayText.setText(""+new NowDateGetter().calculateDDay(homeInfo.getCoupleDuringDate()));
         attachImageInImageView(userProfileView.getUserProfileImage(),homeInfo.getUserProfile(), R.drawable.default_profile_image );
-
-        // TODO: 2016-06-05 lover image 속성 저장을 하지 않고 있음
-        attachImageInImageView(loverProfileView.getUserProfileImage(), homeInfo.getUserProfile(), R.drawable.default_profile_image);
+        attachImageInImageView(loverProfileView.getUserProfileImage(), homeInfo.getLoveProfile(), R.drawable.default_profile_image);
         userProfileView.setUserName(homeInfo.getUserNickname());
         loverProfileView.setUserName(homeInfo.getLoverNickname());
         initHomeRing(homeInfo);
     }
 
     private void attachImageInImageView(ImageView imageView, String imageUrl, int defaultImageRes) {
-        if (imageUrl != null || !TextUtils.isEmpty(imageUrl) || !imageUrl.contains("127.0.0.1:3000") || !imageUrl.equals("-")) {
+        if (StringHandler.isCorrectImageUrl(imageUrl)) {
             Glide.with(this).load(imageUrl).into(imageView);
         } else {
             imageView.setImageDrawable(ContextCompat.getDrawable(RingRingApplication.getContext(), defaultImageRes));
@@ -164,6 +169,24 @@ public class HomeActivity extends AppCompatActivity
             Intent intent = new Intent(this, MyAccountActivity.class);
             startActivity(intent);
         });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        initBadgeNumber();
+        getHomeInfo();
+    }
+
+    private void initBadgeNumber(){
+        BadgeNumber badgeNumber = new BadgeNumber(0);
+        sendBroadcast(badgeNumber.makeBadgeNumberIntent());
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        CoupleChatDAO.getInstance().changeUnReadToRead();
     }
 }
 

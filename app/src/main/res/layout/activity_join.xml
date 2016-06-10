@@ -31,6 +31,7 @@
         android:background="@drawable/ripple_join_tab_layout"
         android:fillViewport="true"
         app:tabGravity="fill"
+        style="@style/JoinActivityTabTheme"
         app:tabMode="fixed" />
 
     <View

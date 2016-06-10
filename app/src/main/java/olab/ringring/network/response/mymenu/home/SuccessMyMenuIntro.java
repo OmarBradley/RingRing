@@ -21,7 +21,7 @@ public class SuccessMyMenuIntro {
     @SerializedName("USER_NICKNAME")
     private String userNickname;
 
-    @SerializedName("coupleIndex")
+    @SerializedName("COUPLE_INDEX")
     private int coupleIndex;
 
     @SerializedName("COUPLE_USER_WOMAN")
@@ -40,7 +40,10 @@ public class SuccessMyMenuIntro {
     private String loverNickname;
 
     @SerializedName("COUPLE_DURING_DATE")
-    private int coupleDuringDate;
+    private long coupleDuringDate;
+
+    @SerializedName("LOVER_PROFILE")
+    private String loveProfile;
 
     @SerializedName("COUPLERING")
     private List<MyMenuIntroCoupleRing> coupleRings;

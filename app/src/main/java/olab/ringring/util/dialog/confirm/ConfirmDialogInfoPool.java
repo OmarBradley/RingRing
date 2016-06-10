@@ -23,6 +23,7 @@ import olab.ringring.util.dialog.confirm.ConfirmDialogFragment;
 public enum ConfirmDialogInfoPool {
 
     LOGIN_INFO_ERROR("아이디와 비밀번호가 \n일치하지 않습니다", "정보 오류", R.drawable.dialog_caption_image, R.color.colorDialogCaption, "알겠어"),
+    EMPTY_NAME_ERROR("이름은\n한글자 이상이야", "이름 오류", R.drawable.dialog_caption_image, R.color.colorDialogCaption, "알겠어"),
     SIGN_UP_INFO_ERROR("해당 회원가입 정보가\n유효하지 않습니다", "정보 오류", R.drawable.dialog_caption_image, R.color.colorDialogCaption, "알겠어"),
     EMAIL_DUPLICATE_ERROR("이미 존재하는 이메일이야\n다시 확인해줘", "이메일 중복", R.drawable.dialog_caption_image, R.color.colorDialogCaption, "알겠어"),
     EMAIL_DUPLICATE_CHECK("해당 이메일은 사용해도 좋아\n다음 단계로 고고", "이메일 중복 확인", R.drawable.dialog_check_image, R.color.colorDialogCheck, "좋아"),

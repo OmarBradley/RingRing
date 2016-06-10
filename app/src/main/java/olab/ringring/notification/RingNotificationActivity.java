@@ -24,7 +24,7 @@ public class RingNotificationActivity extends AppCompatActivity implements Simpl
     @Bind(R.id.image_noti_ring_shape) ImageView ringShape;
     @Bind(R.id.image_noti_chat) ImageView notiChat;
     private static final int MIN_SWIPE_DISTANCE = 10;
-    private static final int MAX_SWIPE_DISTANCE = 900;
+    private static final int MAX_SWIPE_DISTANCE = 1500;
 
     private NotiRingFactory ringFactory;
     private SimpleGestureFilter detector;
@@ -54,6 +54,12 @@ public class RingNotificationActivity extends AppCompatActivity implements Simpl
     }
 
     @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        moveHomeActivity();
+    }
+
+    @Override
     public boolean dispatchTouchEvent(MotionEvent me){
         this.detector.onTouchEvent(me);
         return super.dispatchTouchEvent(me);
@@ -76,7 +82,6 @@ public class RingNotificationActivity extends AppCompatActivity implements Simpl
                 moveHomeActivity();
                 break;
         }
-        Toast.makeText(this, str, Toast.LENGTH_SHORT).show();
     }
 
     private void moveHomeActivity(){

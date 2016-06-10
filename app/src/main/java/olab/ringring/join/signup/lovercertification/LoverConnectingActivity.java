@@ -26,6 +26,7 @@ import olab.ringring.util.dialog.confirm.ConfirmDialogBuilder;
 import olab.ringring.util.dialog.confirm.ConfirmDialogData;
 import olab.ringring.util.dialog.confirm.ConfirmDialogFragment;
 import olab.ringring.util.dialog.confirm.ConfirmDialogInfoPool;
+import olab.ringring.util.preperance.PropertyManager;
 
 public class LoverConnectingActivity extends AppCompatActivity implements NomalActivityElement {
 
@@ -58,6 +59,7 @@ public class LoverConnectingActivity extends AppCompatActivity implements NomalA
         loverConnectBtn.setOnClickListener(view -> {
             NetworkManager.getInstance().sendLoverCertificationRequest(UsersProtocol.makeLoverCertificationRequest(this, loverPhoneNumberEdit.getText().toString()),
                     (request, result) -> {
+                        PropertyManager.getInstance().setLoverIndexId(result.getLoverIndex());
                         Log.e("result", result.toString());
                         buildSuccessDialog(result);
                     }, (request, failResult) -> {

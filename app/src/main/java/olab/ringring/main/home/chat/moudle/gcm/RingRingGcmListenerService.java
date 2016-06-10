@@ -12,12 +12,14 @@ import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.annimon.stream.Stream;
 import com.google.android.gms.gcm.GcmListenerService;
 
 import org.joda.time.DateTime;
 
 import olab.ringring.R;
 import olab.ringring.main.home.HomeActivity;
+import olab.ringring.main.home.chat.moudle.badgenumber.BadgeNumber;
 import olab.ringring.main.home.chat.moudle.localdb.CoupleChatDAO;
 import olab.ringring.network.NetworkManager;
 import olab.ringring.network.request.home.HomeProtocol;
@@ -32,35 +34,16 @@ public class RingRingGcmListenerService extends GcmListenerService {
 
     private static final String TAG = "RingRingGcmListenerService";
 
+
     public static final String ACTION_CHAT = "ringring.action.chat";
-    public static final String EXTRA_SENDER_ID = "senderid";
     public static final String EXTRA_RESULT = "result";
-    private int unreadCount;
 
     @Override
     public void onMessageReceived(String from, Bundle data) {
-        getRecentReceiveData(CoupleChatDAO.getInstance().getRecentTime());
-        SuccessSendChat successSendChat = makeSuccessSendChat(data);
-        CoupleChatDAO.getInstance().insertData(successSendChat);
-        Intent actionChatIntent = new Intent(ACTION_CHAT);
-        LocalBroadcastManager.getInstance(this).sendBroadcastSync(actionChatIntent);
-        boolean isProcessed = actionChatIntent.getBooleanExtra(EXTRA_RESULT, false);
-        if (!isProcessed) {
-            NotiToastView.makeToast(successSendChat);
-            sendNotification(data.getString("RECEIVER_ID"), successSendChat);
-        }
+        Log.e("bundle origin",data.toString());
+        Log.e("bundle",new SuccessSendChat().mapBundle(data).toString());
+        getRecentReceiveData(CoupleChatDAO.getInstance().getRecentTime(), data);
     }
-
-    private SuccessSendChat makeSuccessSendChat(Bundle data){
-        SuccessSendChat successSendChat = new SuccessSendChat();
-        successSendChat.setSenderId(""+HomeActivity.LOVER_ID);
-        successSendChat.setReceiverId(data.getString("RECEIVER_ID"));
-        successSendChat.setMessage(data.getString("MESSAGE_CONTENT"));
-        successSendChat.setSendDate(DateTime.now().getMillis());
-        successSendChat.setReadStatus(data.getInt("READ_STATUS"));
-        return successSendChat;
-    }
-
 
     private void sendNotification(String message, SuccessSendChat successSendChat) {
         Intent intent = new Intent(this, HomeActivity.class);
@@ -84,13 +67,28 @@ public class RingRingGcmListenerService extends GcmListenerService {
         notificationManager.notify(0 /* ID of notification */, notificationBuilder.build());
     }
 
-    private void getRecentReceiveData(long recentTime) {
+    private void getRecentReceiveData(long recentTime, Bundle data) {
         NetworkManager.getInstance().sendRequest(HomeProtocol.makeReceiveChatMessageRequest(this, recentTime), SuccessReceiveChat.class, (request, result) -> {
-            unreadCount = result.getMessageContents().size();
-            Log.e("unreadCount", unreadCount + "");
+            SuccessSendChat successSendChat = new SuccessSendChat().mapBundle(data);
+            Stream.of(result.getMessageContents()).forEach(CoupleChatDAO.getInstance()::insertData);
+            Intent actionChatIntent = new Intent(ACTION_CHAT);
+            LocalBroadcastManager.getInstance(this).sendBroadcastSync(actionChatIntent);
+            boolean isProcessed = actionChatIntent.getBooleanExtra(EXTRA_RESULT, false);
+            if (!isProcessed) {
+                executeBadgeNumber();
+                NotiToastView.makeToast(successSendChat);
+                sendNotification(data.getString("RECEIVER_ID"), successSendChat);
+            } else {
+                CoupleChatDAO.getInstance().changeUnReadToRead();
+            }
         }, (request, networkResponseCode, throwable) -> {
             Toast.makeText(this, networkResponseCode.getMessage(), Toast.LENGTH_SHORT).show();
         });
+    }
+
+    private void executeBadgeNumber(){
+        BadgeNumber badgeNumber = new BadgeNumber(CoupleChatDAO.getInstance().getUnreadRowCount());
+        sendBroadcast(badgeNumber.makeBadgeNumberIntent());
     }
 
 }

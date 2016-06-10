@@ -6,7 +6,7 @@ import android.view.View;
 import android.widget.ImageView;
 
 import olab.ringring.main.ringdesign.ringattribute.material.RingMaterial;
-import olab.ringring.util.colorchanger.ImageColorChanger;
+import olab.ringring.util.image.ImageHandler;
 
 /**
  * Created by 재화 on 2016-06-05.
@@ -34,7 +34,7 @@ public class HomeRingFactory {
 
     private void createRingShape(HomeRingShape shape) {
         Drawable presentImage = shape.getImage();
-        Bitmap imageAfterColorChange = ImageColorChanger.changeImageColor(presentImage, material.getColor());
+        Bitmap imageAfterColorChange = ImageHandler.changeImageColor(presentImage, material.getColor());
         shapeImage.setImageBitmap(imageAfterColorChange);
     }
 

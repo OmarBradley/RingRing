@@ -38,7 +38,7 @@
     <color name="colorCurrentDayText">#59aee9</color>
 
     <color name="colorGold">#f5af3e</color>
-    <color name="colorWhiteGold">#ffffff</color>
+    <color name="colorWhiteGold">#e2e2e2</color>
     <color name="colorSliver">#969796</color>
     <color name="colorCopper">#b04427</color>
     <color name="colorIron">#646464</color>

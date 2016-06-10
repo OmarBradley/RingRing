@@ -35,6 +35,7 @@ import olab.ringring.network.request.mymenu.MyMenuProtocol;
 import olab.ringring.network.response.mymenu.home.MyMenuIntroCoupleRing;
 import olab.ringring.network.response.mymenu.home.SuccessMyMenuIntro;
 import olab.ringring.util.preperance.PropertyManager;
+import olab.ringring.util.string.StringHandler;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -100,7 +101,7 @@ public class MyMenuFragment extends Fragment {
     }
 
     private void attachResultDataInView(SuccessMyMenuIntro data){
-        if (data.getUserProfile() != null || !TextUtils.isEmpty(data.getUserProfile())) {
+        if (StringHandler.isCorrectImageUrl(data.getUserProfile())) {
             Glide.with(this).load(data.getUserProfile()).into(userProfileImage);
         } else {
             userProfileImage.setImageResource(R.drawable.default_profile_image);

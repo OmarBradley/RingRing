@@ -66,7 +66,7 @@ public class NotiToastView extends LinearLayout {
         Handler popUpToastHandler = new Handler(Looper.getMainLooper());
         popUpToastHandler.post(() -> {
             NotiToastView notiToastView = new NotiToastView(RingRingApplication.getContext());
-            notiToastView.setLoverName("김미영");
+            notiToastView.setLoverName(successSendChat.getLoverNickname());
             notiToastView.setMessage(successSendChat.getMessage());
             Toast notiToast = new Toast(RingRingApplication.getContext());
             notiToast.setView(notiToastView);

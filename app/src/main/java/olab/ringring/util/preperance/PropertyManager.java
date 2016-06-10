@@ -38,6 +38,8 @@ public class PropertyManager {
     private static final String USER_PROFILE_IMAGE_URL = "user_profile_image_url";
     private static final String USER_EMAIL = "user_email";
     private static final String USER_PASSWORD = "user_password";
+    private static final String USER_INDEX_ID ="user_index_id";
+    private static final String LOVER_INDEX_ID = "lover_index_id";
 
     public static final String DEFAULT_JEWELRY = "RUBY";
     public static final String DEFAULT_SHAPE ="CIRCLE";
@@ -46,6 +48,9 @@ public class PropertyManager {
     public static final String DEFAULT_USER_PROFILE_IMAGE = "";
     public static final String DEFAULT_USER_EMAIL = "";
     public static final String DEFAULT_USER_PASSWORD = "";
+    public static final int DEFAULT_USER_INDEX_ID = 0;
+    public static final int DEFAULT_LOVER_INDEX_ID = 1;
+
 
     public void setRegistrationToken(String token) {
         editor.putString(FIELD_REGISTRATION_ID, token);
@@ -152,4 +157,24 @@ public class PropertyManager {
             return false;
         }
     }
+
+    public void setUserIndexId(int userIndexId){
+        editor.putInt(USER_INDEX_ID, userIndexId);
+        editor.commit();
+    }
+
+    public int getUserIndexId(){
+        return prefs.getInt(USER_INDEX_ID, DEFAULT_USER_INDEX_ID);
+    }
+
+    public void setLoverIndexId(int loverIndexId){
+        editor.putInt(LOVER_INDEX_ID, loverIndexId);
+        editor.commit();
+    }
+
+    public int getLoverIndexId(){
+        return prefs.getInt(LOVER_INDEX_ID, DEFAULT_LOVER_INDEX_ID);
+    }
+
+
 }

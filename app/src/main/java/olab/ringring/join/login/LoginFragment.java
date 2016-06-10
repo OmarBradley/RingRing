@@ -65,6 +65,7 @@ public class LoginFragment extends Fragment {
     private void validatePassword() {
         passwordEdit.setOnSubmitButtonClickListener(view -> {
             NetworkManager.getInstance().sendRequest(UsersProtocol.makeLoginRequest(getActivity(), emailEdit.getText().toString(), passwordEdit.getInputString()), SuccessLogin.class, (request, result) -> {
+                PropertyManager.getInstance().setUserIndexId(result.getUserIndex());
                 setLoginProperty(result.getLoginCase(), emailEdit.getText().toString(), passwordEdit.getInputString());
                 moveToAnotherActivity(LoginCase.valueOf(result.getLoginCase()).getNextActivityClass());
                 passwordValidateText.setVisibility(View.INVISIBLE);
