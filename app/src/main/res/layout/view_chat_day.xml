@@ -9,19 +9,21 @@
         android:layout_width="0dp"
         android:layout_height="20dp"
         android:layout_weight="0.5"
-        android:src="@drawable/send_message_input_border_line" />
+        android:src="@drawable/image_chat_day_border_line" />
 
     <TextView
         android:id="@+id/text_chat_day"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="New Text" />
+        android:layout_marginEnd="10dp"
+        android:layout_marginStart="10dp"
+        android:text="New Text"
+        android:textSize="13sp" />
 
     <ImageView
         android:layout_width="0dp"
         android:layout_height="20dp"
         android:layout_weight="0.5"
-        android:src="@drawable/send_message_input_border_line" />
-
+        android:src="@drawable/image_chat_day_border_line" />
 
 </LinearLayout>

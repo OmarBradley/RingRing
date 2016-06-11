@@ -1,6 +1,8 @@
 package olab.ringring.notification;
 
 import android.content.Intent;
+import android.os.Handler;
+import android.os.Looper;
 import android.support.annotation.AnimRes;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -17,25 +19,22 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import olab.ringring.R;
 import olab.ringring.main.home.HomeActivity;
-import olab.ringring.notification.ring.NotiRingFactory;
 import olab.ringring.notification.ring.NotiRingJewelry;
 import olab.ringring.notification.ring.NotiRingShape;
+import olab.ringring.notification.ring.NotiRingView;
 import olab.ringring.util.preperance.PropertyManager;
 
 public class RingNotificationActivity extends AppCompatActivity implements SimpleGestureFilter.SimpleGestureListener{
 
     @Bind(R.id.image_noti_rignt_send) ImageView rightSend;
     @Bind(R.id.image_noti_left_send) ImageView leftSend;
-    @Bind(R.id.image_noti_ring_jewelry) ImageView ringJewelry;
-    @Bind(R.id.image_noti_ring_shape) ImageView ringShape;
+    @Bind(R.id.view_noti_ring) NotiRingView ringView;
     @Bind(R.id.image_noti_chat) ImageView notiChat;
-
-
 
     private static final int MIN_SWIPE_DISTANCE = 10;
     private static final int MAX_SWIPE_DISTANCE = 1500;
+    private static final int MOVE_HOME_ACTIVITY_DELAY_TIME = 200;
 
-    private NotiRingFactory ringFactory;
     private SimpleGestureFilter detector;
 
     @Override
@@ -47,13 +46,10 @@ public class RingNotificationActivity extends AppCompatActivity implements Simpl
         initGestureDetector();
     }
 
-
     private void initRing() {
-        ringFactory = new NotiRingFactory(ringJewelry, ringShape,
-                NotiRingJewelry.valueOf(PropertyManager.getInstance().getUserJewelry().name()),
-                NotiRingShape.valueOf(PropertyManager.getInstance().getUserShape().name()),
-                PropertyManager.getInstance().getUserMaterial());
-        ringFactory.build();
+        ringView.setRingJewelryImage(NotiRingJewelry.valueOf(PropertyManager.getInstance().getUserJewelry().name()));
+        ringView.setRingShapeImage(NotiRingShape.valueOf(PropertyManager.getInstance().getUserShape().name())
+                , PropertyManager.getInstance().getUserMaterial());
     }
 
     private void initGestureDetector(){
@@ -81,14 +77,15 @@ public class RingNotificationActivity extends AppCompatActivity implements Simpl
     public void onSwipe(int direction) {
         switch (direction) {
             case SimpleGestureFilter.SWIPE_RIGHT:
-                addAnimationInViews(R.anim.translate_ring_right_swipe, ringShape, ringJewelry);
+                addAnimationInViews(R.anim.translate_ring_right_swipe, ringView);
                 break;
             case SimpleGestureFilter.SWIPE_LEFT:
-                addAnimationInViews(R.anim.translate_ring_left_swipe, ringShape, ringJewelry);
+                addAnimationInViews(R.anim.translate_ring_left_swipe, ringView);
                 break;
             case SimpleGestureFilter.SWIPE_DOWN:
-                addAnimationInViews(R.anim.translate_ring_down_swipe, ringShape, ringJewelry);
-                moveHomeActivity();
+                addAnimationInViews(R.anim.translate_ring_down_swipe, ringView);
+                Handler ringMoveHandler = new Handler(Looper.getMainLooper());
+                ringMoveHandler.postDelayed(this::moveHomeActivity, MOVE_HOME_ACTIVITY_DELAY_TIME);
                 break;
         }
     }
@@ -99,11 +96,9 @@ public class RingNotificationActivity extends AppCompatActivity implements Simpl
         finish();
     }
 
-    private void addAnimationInViews(@AnimRes int animRes, View... views) {
+    private void addAnimationInViews(@AnimRes int animRes, View view) {
         Animation swipeAnimator = AnimationUtils.loadAnimation(this, animRes);
-        Stream.of(views).forEach(view -> {
-            view.startAnimation(swipeAnimator);
-        });
+        view.startAnimation(swipeAnimator);
     }
 
 }

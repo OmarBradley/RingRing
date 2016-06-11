@@ -5,10 +5,14 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
+import com.annimon.stream.Collectors;
 import com.annimon.stream.Stream;
+import com.annimon.stream.function.BinaryOperator;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
+import static com.annimon.stream.Stream.*;
 
 import lombok.Cleanup;
 import olab.ringring.init.application.RingRingApplication;
@@ -57,29 +61,18 @@ public class CoupleChatDAO extends SQLiteOpenHelper implements DAO<SuccessSendCh
                 CoupleChatDBConstant.CoupleChatTableColumn._IS_READ};
         @Cleanup SQLiteDatabase db = getReadableDatabase();
         @Cleanup Cursor cursor = db.query(CoupleChatDBConstant.COUPLE_CHAT_TABLE_NAME, columns, null, null, null, null, null);
-        try{
+        try {
             while (cursor.moveToNext()) {
-                SuccessSendChat data = new SuccessSendChat();
-                data.setSendDate(cursor.getLong(cursor.getColumnIndex(CoupleChatDBConstant.CoupleChatTableColumn._CHAT_DATE)));
-                data.setMessage(cursor.getString(cursor.getColumnIndex(CoupleChatDBConstant.CoupleChatTableColumn._CHAT_MESSAGE)));
-                data.setReceiverId(cursor.getInt(cursor.getColumnIndex(CoupleChatDBConstant.CoupleChatTableColumn._RECEIVER_ID)));
-                data.setSenderId(cursor.getInt(cursor.getColumnIndex(CoupleChatDBConstant.CoupleChatTableColumn._SENDER_ID)));
-                data.setReadStatus(cursor.getInt(cursor.getColumnIndex(CoupleChatDBConstant.CoupleChatTableColumn._IS_READ)));
-                successSendChats.add(data);
+                successSendChats.add(new SuccessSendChat().mapCursor(cursor));
             }
-        } catch (Exception e){
-
+        } catch (Exception e) {
+            Log.e("cursor exception", e.toString());
         }
-
         return successSendChats;
     }
 
-    public long getRecentTime(){
-        List<SuccessSendChat> successSendChats = getDataRows();
-        if(successSendChats.size() == 0){
-            return 0;
-        }
-        return Stream.of(successSendChats).map(SuccessSendChat::getSendDate).max(Long::compare).get();
+    public long getRecentTime() {
+        return Stream.of(getDataRows()).map(SuccessSendChat::getSendDate).max(Long::compare).orElse(0L);
     }
 
     public void changeUnReadToRead(){

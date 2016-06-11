@@ -24,6 +24,8 @@ public class ChatViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     private static final int VIEW_LOVER_CHAT = 200;
     private static final int VIEW_CHAT_DAY = 300;
 
+    public static final int CHAT_DAY_SENDER_ID = -1;
+
     List<SuccessSendChat> chatContents = new ArrayList<>();
 
     public void addMessage(SuccessSendChat successSendChat) {
@@ -36,14 +38,17 @@ public class ChatViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         notifyDataSetChanged();
     }
 
-    // TODO: 2016-06-04 id와 비교로직 구현하기
     @Override
     public int getItemViewType(int position) {
         SuccessSendChat successSendChat = chatContents.get(position);
         if (successSendChat.getSenderId() == PropertyManager.getInstance().getUserIndexId()) {
             return VIEW_USER_CHAT;
         } else {
-            return VIEW_LOVER_CHAT;
+            if (successSendChat.getSenderId() == CHAT_DAY_SENDER_ID) {
+                return VIEW_CHAT_DAY;
+            } else {
+                return VIEW_LOVER_CHAT;
+            }
         }
     }
 

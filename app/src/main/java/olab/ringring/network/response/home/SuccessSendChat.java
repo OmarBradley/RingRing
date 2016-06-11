@@ -1,6 +1,7 @@
 package olab.ringring.network.response.home;
 
 import android.content.ContentValues;
+import android.database.Cursor;
 import android.os.Bundle;
 
 import com.google.gson.annotations.SerializedName;
@@ -12,13 +13,14 @@ import java.io.Serializable;
 import lombok.Data;
 import olab.ringring.main.home.chat.moudle.localdb.CoupleChatDBConstant;
 import olab.ringring.network.response.BundleMapper;
+import olab.ringring.util.db.CursorMapper;
 import olab.ringring.util.db.RowMapper;
 
 /**
  * Created by 재화 on 2016-05-18.
  */
 @Data
-public class SuccessSendChat implements RowMapper, Serializable, BundleMapper<SuccessSendChat>{
+public class SuccessSendChat implements RowMapper, Serializable, BundleMapper<SuccessSendChat>, CursorMapper<SuccessSendChat>{
     @SerializedName("SENDER_ID")
     private int senderId;
 
@@ -58,5 +60,16 @@ public class SuccessSendChat implements RowMapper, Serializable, BundleMapper<Su
         successSendChat.setReadStatus(data.getInt("READ_STATUS"));
         successSendChat.setLoverNickname(data.getString("LOVER_NICKNAME"));
         return successSendChat;
+    }
+
+    @Override
+    public SuccessSendChat mapCursor(Cursor cursor) {
+        SuccessSendChat data = new SuccessSendChat();
+        data.setSendDate(cursor.getLong(cursor.getColumnIndex(CoupleChatDBConstant.CoupleChatTableColumn._CHAT_DATE)));
+        data.setMessage(cursor.getString(cursor.getColumnIndex(CoupleChatDBConstant.CoupleChatTableColumn._CHAT_MESSAGE)));
+        data.setReceiverId(cursor.getInt(cursor.getColumnIndex(CoupleChatDBConstant.CoupleChatTableColumn._RECEIVER_ID)));
+        data.setSenderId(cursor.getInt(cursor.getColumnIndex(CoupleChatDBConstant.CoupleChatTableColumn._SENDER_ID)));
+        data.setReadStatus(cursor.getInt(cursor.getColumnIndex(CoupleChatDBConstant.CoupleChatTableColumn._IS_READ)));
+        return data;
     }
 }

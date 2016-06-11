@@ -23,6 +23,7 @@
         android:supportsRtl="true">
         <activity
             android:name=".splash.SplashActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/NoActionBarTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -32,6 +33,7 @@
         <activity
             android:name=".join.JoinActivity"
             android:theme="@style/JoinActivityTheme"
+            android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan">
             <!--<intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -42,6 +44,7 @@
         <activity
             android:name=".join.signup.lovercertification.LoverConnectingActivity"
             android:label="@string/title_activity_lover_connecting"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme">
 
             <!--
@@ -60,10 +63,12 @@
         <activity
             android:name=".join.signup.lovercertification.SendDownloadLinkActivity"
             android:label="@string/title_activity_send_download"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme" />
         <activity
             android:name=".main.mymenu.dday.DDaySettingActivity"
             android:label="@string/title_activity_set_d_day"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme">
 
             <!--
@@ -78,6 +83,7 @@
             android:name=".main.mymenu.myaccount.MyAccountActivity"
             android:label="@string/title_activity_my_account"
             android:theme="@style/AppTheme"
+            android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize">
 
             <!--
@@ -91,6 +97,7 @@
         <activity
             android:name=".main.mymenu.missionhistory.MissionHistoryActivity"
             android:label="@string/title_activity_mission_history"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme">
 
             <!--
@@ -104,6 +111,7 @@
         </activity>
         <activity
             android:name=".main.home.HomeActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoTitleActionBar">
            <!-- <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -114,6 +122,7 @@
         <activity
             android:name=".main.mymenu.MyMenuActivity"
             android:label="@string/title_activity_my_menu"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoTitleActionBar">
 
             <!--
@@ -127,6 +136,7 @@
         <activity
             android:name=".main.ringdesign.RingDesignActivity"
             android:label="@string/title_activity_ring_design"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoTitleActionBar">
 
             <!--
@@ -173,9 +183,11 @@
 
         <activity
             android:name=".main.mymenu.profile.ProfileImageActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/NoActionBarTheme" />
         <activity
             android:name=".notification.RingNotificationActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/NoActionBarTheme"
             android:exported="true"
             >

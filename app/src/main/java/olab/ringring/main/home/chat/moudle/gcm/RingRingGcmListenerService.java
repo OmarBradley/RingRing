@@ -38,8 +38,6 @@ public class RingRingGcmListenerService extends GcmListenerService {
 
     @Override
     public void onMessageReceived(String from, Bundle data) {
-        Log.e("bundle origin",data.toString());
-        Log.e("bundle",new SuccessSendChat().mapBundle(data).toString());
         getRecentReceiveData(CoupleChatDAO.getInstance().getRecentTime(), data);
     }
 
