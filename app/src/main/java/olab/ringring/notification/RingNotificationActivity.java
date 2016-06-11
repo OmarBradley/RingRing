@@ -1,11 +1,17 @@
 package olab.ringring.notification;
 
 import android.content.Intent;
+import android.support.annotation.AnimRes;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MotionEvent;
+import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.Toast;
+
+import com.annimon.stream.Stream;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -23,6 +29,9 @@ public class RingNotificationActivity extends AppCompatActivity implements Simpl
     @Bind(R.id.image_noti_ring_jewelry) ImageView ringJewelry;
     @Bind(R.id.image_noti_ring_shape) ImageView ringShape;
     @Bind(R.id.image_noti_chat) ImageView notiChat;
+
+
+
     private static final int MIN_SWIPE_DISTANCE = 10;
     private static final int MAX_SWIPE_DISTANCE = 1500;
 
@@ -70,15 +79,15 @@ public class RingNotificationActivity extends AppCompatActivity implements Simpl
 
     @Override
     public void onSwipe(int direction) {
-        String str = "";
         switch (direction) {
             case SimpleGestureFilter.SWIPE_RIGHT:
-                str = "Swipe Right";
+                addAnimationInViews(R.anim.translate_ring_right_swipe, ringShape, ringJewelry);
                 break;
             case SimpleGestureFilter.SWIPE_LEFT:
-                str = "Swipe Left";
+                addAnimationInViews(R.anim.translate_ring_left_swipe, ringShape, ringJewelry);
                 break;
             case SimpleGestureFilter.SWIPE_DOWN:
+                addAnimationInViews(R.anim.translate_ring_down_swipe, ringShape, ringJewelry);
                 moveHomeActivity();
                 break;
         }
@@ -89,4 +98,12 @@ public class RingNotificationActivity extends AppCompatActivity implements Simpl
         startActivity(intent);
         finish();
     }
+
+    private void addAnimationInViews(@AnimRes int animRes, View... views) {
+        Animation swipeAnimator = AnimationUtils.loadAnimation(this, animRes);
+        Stream.of(views).forEach(view -> {
+            view.startAnimation(swipeAnimator);
+        });
+    }
+
 }

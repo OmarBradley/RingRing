@@ -33,8 +33,6 @@ import olab.ringring.notification.NotiToastView;
 public class RingRingGcmListenerService extends GcmListenerService {
 
     private static final String TAG = "RingRingGcmListenerService";
-
-
     public static final String ACTION_CHAT = "ringring.action.chat";
     public static final String EXTRA_RESULT = "result";
 
