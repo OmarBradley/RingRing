@@ -23,9 +23,8 @@ import olab.ringring.main.home.HomeActivity;
 import olab.ringring.network.NetworkManager;
 import olab.ringring.network.request.users.UsersProtocol;
 import olab.ringring.network.response.users.SuccessLogin;
-import olab.ringring.network.response.users.SuccessLogout;
 import olab.ringring.util.preperance.PropertyManager;
-import olab.ringring.main.home.chat.moudle.gcm.RegistrationIntentService;
+import olab.ringring.gcm.RegistrationIntentService;
 
 public class SplashActivity extends AppCompatActivity {
 

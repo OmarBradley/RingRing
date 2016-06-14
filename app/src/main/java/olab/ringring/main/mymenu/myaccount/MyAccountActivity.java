@@ -1,7 +1,9 @@
 package olab.ringring.main.mymenu.myaccount;
 
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -24,6 +26,8 @@ import java.util.Arrays;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import olab.ringring.R;
+import olab.ringring.gcm.KeywordSuccessReceiver;
+import olab.ringring.gcm.RingRingGcmListenerService;
 import olab.ringring.join.JoinActivity;
 import olab.ringring.main.mymenu.MyMenuActivity;
 import olab.ringring.main.mymenu.myaccount.picutreupload.CameraPictureUploadStrategy;
@@ -40,7 +44,7 @@ import olab.ringring.network.response.mymenu.changeusersex.SuccessChangeUserSex;
 import olab.ringring.network.response.users.SuccessLogout;
 import olab.ringring.util.dialog.confirm.ConfirmDialogFragment;
 import olab.ringring.util.dialog.confirm.ConfirmDialogInfoPool;
-import olab.ringring.util.normalvisitor.element.NomalActivityElement;
+import olab.ringring.util.normalvisitor.element.NormalActivityElement;
 import olab.ringring.util.normalvisitor.visitor.NormalActivityVisitor;
 import olab.ringring.util.normalvisitor.visitor.concretevisitor.SetActionBarIconVisitor;
 import olab.ringring.util.dialog.select.SelectDialogBuilder;
@@ -49,7 +53,7 @@ import olab.ringring.util.dialog.select.SelectDialogItemData;
 import olab.ringring.util.preperance.PropertyManager;
 import olab.ringring.util.string.StringHandler;
 
-public class MyAccountActivity extends AppCompatActivity implements NomalActivityElement {
+public class MyAccountActivity extends AppCompatActivity implements NormalActivityElement {
 
     @Bind(R.id.image_my_account_user_profile) ImageView userProfileImage;
     @Bind(R.id.edit_my_account_user_name) EditText userName;
@@ -64,15 +68,22 @@ public class MyAccountActivity extends AppCompatActivity implements NomalActivit
     @Bind(R.id.btn_my_account_secession) Button secessionBtn;
     @Bind(R.id.layout_my_account_user_sex) RelativeLayout userSexLayout;
 
-    PictureUploadStrategy uploadStrategy;
+    private PictureUploadStrategy uploadStrategy;
+    private KeywordSuccessReceiver keywordSuccessReceiver;
+    private IntentFilter keywordSuccessDialogFilter = new IntentFilter(RingRingGcmListenerService.KEYWORD_SUCCESS_DIALOG);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_account);
         ButterKnife.bind(this);
+        initKeywordSuccessReceiver();
         this.accept(new SetActionBarIconVisitor(ContextCompat.getDrawable(this, R.drawable.actionbar_home_as_up_image)));
         setOnClickListenerInLogoutBtn();
+    }
+
+    private void initKeywordSuccessReceiver(){
+        keywordSuccessReceiver = new KeywordSuccessReceiver(this);
     }
 
     @Override
@@ -93,9 +104,13 @@ public class MyAccountActivity extends AppCompatActivity implements NomalActivit
         logoutBtn.setOnClickListener(view -> {
             NetworkManager.getInstance().sendRequest(UsersProtocol.makeLogoutRequest(this), SuccessLogout.class, (request, result) -> {
                 Log.e("logout success", result.toString());
+                PropertyManager.getInstance().setUserEmail(PropertyManager.DEFAULT_USER_EMAIL);
+                PropertyManager.getInstance().setUserPassword(PropertyManager.DEFAULT_USER_PASSWORD);
                 Intent intent = new Intent(this, JoinActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
                 startActivity(intent);
-                finish();
+                finishAffinity();
             }, (request, networkResponseCode, throwable) -> {
                 Log.e("logout fail", networkResponseCode.getMessage());
             });
@@ -129,6 +144,7 @@ public class MyAccountActivity extends AppCompatActivity implements NomalActivit
         setOnProfileImageClickListener();
         buildSexChoiceDialog();
         super.onResume();
+        LocalBroadcastManager.getInstance(this).registerReceiver(keywordSuccessReceiver,keywordSuccessDialogFilter );
     }
 
     private void initView(){
@@ -282,7 +298,9 @@ public class MyAccountActivity extends AppCompatActivity implements NomalActivit
         });
     }
 
-
-
-
+    @Override
+    protected void onPause() {
+        super.onPause();
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(keywordSuccessReceiver);
+    }
 }

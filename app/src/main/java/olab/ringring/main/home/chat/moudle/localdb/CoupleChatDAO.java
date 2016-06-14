@@ -90,4 +90,6 @@ public class CoupleChatDAO extends SQLiteOpenHelper implements DAO<SuccessSendCh
         return readCount;
     }
 
+
+
 }

@@ -1,14 +1,14 @@
 package olab.ringring.main.home;
 
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.text.TextUtils;
-import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -22,37 +22,37 @@ import olab.ringring.R;
 import olab.ringring.init.application.RingRingApplication;
 import olab.ringring.main.home.chat.ChatFragment;
 import olab.ringring.main.home.chat.moudle.badgenumber.BadgeNumber;
+import olab.ringring.gcm.KeywordSuccessReceiver;
+import olab.ringring.gcm.RingRingGcmListenerService;
 import olab.ringring.main.home.chat.moudle.localdb.CoupleChatDAO;
 import olab.ringring.main.home.ring.HomeRingFactory;
 import olab.ringring.main.home.ring.HomeRingJewelry;
 import olab.ringring.main.home.ring.HomeRingShape;
 import olab.ringring.main.mymenu.myaccount.MyAccountActivity;
-import olab.ringring.main.nav.visitor.concretevisitior.OnBackPressedVisitor;
+import olab.ringring.main.nav.visitor.concretevisitior.CloseDrawerVisitor;
 import olab.ringring.main.ringdesign.ringattribute.jewelry.RingJewelry;
 import olab.ringring.main.ringdesign.ringattribute.material.RingMaterial;
 import olab.ringring.main.ringdesign.ringattribute.shape.RingShape;
-import olab.ringring.main.ringdesign.util.StringMaker;
 import olab.ringring.network.NetworkManager;
 import olab.ringring.network.request.mymenu.MyMenuProtocol;
 import olab.ringring.network.response.mymenu.home.MyMenuIntroCoupleRing;
 import olab.ringring.network.response.mymenu.home.SuccessMyMenuIntro;
 import olab.ringring.notification.RingNotificationActivity;
 import olab.ringring.util.date.NowDateGetter;
+import olab.ringring.util.normalvisitor.visitor.concretevisitor.OnBackPressedVisitor;
 import olab.ringring.util.preperance.PropertyManager;
 import olab.ringring.main.home.customview.ChatProfileView;
 import olab.ringring.main.nav.visitor.MainNavigationVisitor;
 import olab.ringring.main.nav.visitor.concretevisitior.SetNavigationFragmentVisitor;
 import olab.ringring.main.nav.visitor.concretevisitior.SetToggleVisitor;
 import olab.ringring.main.nav.visitor.element.MainNavigationElement;
-import olab.ringring.util.normalvisitor.element.NomalActivityElement;
+import olab.ringring.util.normalvisitor.element.NormalActivityElement;
 import olab.ringring.util.normalvisitor.visitor.NormalActivityVisitor;
 import olab.ringring.util.normalvisitor.visitor.concretevisitor.DeleteActionBarTitleVisitor;
 import olab.ringring.util.string.StringHandler;
 
 public class HomeActivity extends AppCompatActivity
-        implements MainNavigationElement, NomalActivityElement {
-
-    public static final int CHAT_DAY_ID = 3;
+        implements MainNavigationElement, NormalActivityElement {
 
     @Getter @Bind(R.id.toolbar) Toolbar toolbar;
     @Getter @Bind(R.id.drawer_layout) DrawerLayout drawer;
@@ -63,13 +63,16 @@ public class HomeActivity extends AppCompatActivity
     @Bind(R.id.profile_view_lover) ChatProfileView loverProfileView;
     private HomeRingFactory ringFactory;
 
-    private MainNavigationVisitor onBackPressedVisitor;
+    private NormalActivityVisitor onBackPressedVisitor;
+    private KeywordSuccessReceiver keywordSuccessReceiver;
+    private IntentFilter keywordSuccessDialogFilter = new IntentFilter(RingRingGcmListenerService.KEYWORD_SUCCESS_DIALOG);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         ButterKnife.bind(this);
+        initKeywordSuccessReceiver();
         setSupportActionBar(toolbar);
         this.accept(new SetNavigationFragmentVisitor());
         this.accept(new SetToggleVisitor());
@@ -80,6 +83,10 @@ public class HomeActivity extends AppCompatActivity
         getHomeInfo();
         initHomeRing();
         setOnClickListenerInUserProfile();
+    }
+
+    private void initKeywordSuccessReceiver(){
+        keywordSuccessReceiver = new KeywordSuccessReceiver(this);
     }
 
     @Override
@@ -104,6 +111,7 @@ public class HomeActivity extends AppCompatActivity
     @Override
     public void onBackPressed() {
         this.accept(onBackPressedVisitor);
+        this.accept(new CloseDrawerVisitor());
     }
 
     private void initHomeRing() {
@@ -138,12 +146,12 @@ public class HomeActivity extends AppCompatActivity
     }
 
     private void initView(SuccessMyMenuIntro homeInfo){
-        Log.e("coupleDATE", homeInfo.toString());
         coupleDDayText.setText(""+new NowDateGetter().calculateDDay(homeInfo.getCoupleDuringDate()));
         attachImageInImageView(userProfileView.getUserProfileImage(),homeInfo.getUserProfile(), R.drawable.default_profile_image );
         attachImageInImageView(loverProfileView.getUserProfileImage(), homeInfo.getLoveProfile(), R.drawable.default_profile_image);
         userProfileView.setUserName(homeInfo.getUserNickname());
         loverProfileView.setUserName(homeInfo.getLoverNickname());
+        PropertyManager.getInstance().setLoverNickName(homeInfo.getLoverNickname());
         initHomeRing(homeInfo);
     }
 
@@ -176,6 +184,8 @@ public class HomeActivity extends AppCompatActivity
         super.onResume();
         initBadgeNumber();
         getHomeInfo();
+        LocalBroadcastManager.getInstance(this).registerReceiver(keywordSuccessReceiver, keywordSuccessDialogFilter);
+
     }
 
     private void initBadgeNumber(){
@@ -187,6 +197,7 @@ public class HomeActivity extends AppCompatActivity
     protected void onPause() {
         super.onPause();
         CoupleChatDAO.getInstance().changeUnReadToRead();
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(keywordSuccessReceiver);
     }
 }
 

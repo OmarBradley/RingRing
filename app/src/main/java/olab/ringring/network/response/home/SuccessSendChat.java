@@ -39,6 +39,9 @@ public class SuccessSendChat implements RowMapper, Serializable, BundleMapper<Su
     @SerializedName("LOVER_NICKNAME")
     private String loverNickname;
 
+    @SerializedName("SEND_CASE")
+    private int sendCase;
+
     @Override
     public ContentValues mapRow() {
         ContentValues values = new ContentValues();

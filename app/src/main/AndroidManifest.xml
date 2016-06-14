@@ -27,19 +27,23 @@
             android:theme="@style/NoActionBarTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
             android:name=".join.JoinActivity"
-            android:theme="@style/JoinActivityTheme"
             android:screenOrientation="portrait"
+            android:theme="@style/JoinActivityTheme"
             android:windowSoftInputMode="adjustPan">
-            <!--<intent-filter>
+
+            <!--
+            <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>-->
+            </intent-filter>
+            -->
         </activity>
         <activity
             android:name=".join.signup.lovercertification.LoverConnectingActivity"
@@ -82,8 +86,8 @@
         <activity
             android:name=".main.mymenu.myaccount.MyAccountActivity"
             android:label="@string/title_activity_my_account"
-            android:theme="@style/AppTheme"
             android:screenOrientation="portrait"
+            android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustResize">
 
             <!--
@@ -113,11 +117,14 @@
             android:name=".main.home.HomeActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoTitleActionBar">
-           <!-- <intent-filter>
+
+            <!--
+            <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>-->
+            </intent-filter>
+            -->
         </activity>
         <activity
             android:name=".main.mymenu.MyMenuActivity"
@@ -164,21 +171,21 @@
         </receiver>
 
         <service
-            android:name=".main.home.chat.moudle.gcm.RingRingGcmListenerService"
+            android:name=".gcm.RingRingGcmListenerService"
             android:exported="true">
             <intent-filter>
                 <action android:name="com.google.android.c2dm.intent.RECEIVE" />
             </intent-filter>
         </service>
         <service
-            android:name=".main.home.chat.moudle.gcm.RingRingInstanceIDListenerService"
+            android:name=".gcm.RingRingInstanceIDListenerService"
             android:exported="false">
             <intent-filter>
                 <action android:name="com.google.android.gms.iid.InstanceID" />
             </intent-filter>
         </service>
         <service
-            android:name=".main.home.chat.moudle.gcm.RegistrationIntentService"
+            android:name=".gcm.RegistrationIntentService"
             android:exported="false" />
 
         <activity
@@ -187,27 +194,32 @@
             android:theme="@style/NoActionBarTheme" />
         <activity
             android:name=".notification.RingNotificationActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/NoActionBarTheme"
             android:exported="true"
-            >
-           <!-- <intent-filter>
+            android:screenOrientation="portrait"
+            android:theme="@style/NoActionBarTheme">
+
+            <!--
+            <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>-->
+            </intent-filter>
+            -->
         </activity>
 
         <receiver
             android:name=".notification.BootReceiver"
             android:enabled="true"
             android:exported="true"
-            android:process=":remote"
-            >
+            android:process=":remote">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
         </receiver>
+        <receiver
+            android:name=".gcm.KeywordSuccessReceiver"
+            android:enabled="true"
+            android:exported="true"></receiver>
     </application>
 
 </manifest>

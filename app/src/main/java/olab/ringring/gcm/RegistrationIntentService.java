@@ -1,4 +1,4 @@
-package olab.ringring.main.home.chat.moudle.gcm;
+package olab.ringring.gcm;
 
 import android.app.IntentService;
 import android.content.Intent;

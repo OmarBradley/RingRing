@@ -10,8 +10,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,6 +17,9 @@ import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
+
+import com.annimon.stream.Stream;
 
 import org.joda.time.DateTime;
 
@@ -29,26 +30,27 @@ import butterknife.ButterKnife;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import olab.ringring.R;
-import olab.ringring.main.home.chat.moudle.gcm.RingRingGcmListenerService;
+import olab.ringring.gcm.RingRingGcmListenerService;
 import olab.ringring.main.home.chat.moudle.localdb.CoupleChatDAO;
 import olab.ringring.network.NetworkManager;
 import olab.ringring.network.request.home.HomeProtocol;
+import olab.ringring.network.response.home.SuccessReceiveChat;
 import olab.ringring.network.response.home.SuccessSendChat;
 import olab.ringring.main.home.chat.view.adapter.ChatViewAdapter;
 import olab.ringring.util.preperance.PropertyManager;
+import olab.ringring.util.string.TextWatcherTemplate;
 
 @NoArgsConstructor(access = AccessLevel.PUBLIC)
 public class ChatFragment extends Fragment {
 
-    public static final int USER_ID = 1;
-    public static final int LOVER_ID = 2;
-    public static final int CHAT_DAY_ID = 3;
-    public static final int READ = 1;
+    private static final long INIT_TIME = 0;
     public static final int UNREAD = 0;
+
 
     @Bind(R.id.list_view_chat_message) RecyclerView chatMessageListView;
     @Bind(R.id.btn_sender) Button messageSendBtn;
     @Bind(R.id.edit_chat_message) EditText chatMessageEdit;
+
     private ChatViewAdapter adapter;
     IntentFilter chatActionFilter = new IntentFilter(RingRingGcmListenerService.ACTION_CHAT);
 
@@ -63,6 +65,8 @@ public class ChatFragment extends Fragment {
         hideSoftInput(chatFragmentView);
         return chatFragmentView;
     }
+
+
 
     private void setChatMessageListView(){
         adapter = new ChatViewAdapter();
@@ -116,23 +120,15 @@ public class ChatFragment extends Fragment {
 
     private void executeActionWhenTextTyping() {
         setButtonClickable(false);
-        chatMessageEdit.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                String text = s.toString();
-                if (text.length() == 0) {
-                    setButtonClickable(false);
-                } else {
-                    setButtonClickable(true);
-                }
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {}
-        });
+        chatMessageEdit.addTextChangedListener(new TextWatcherTemplate()
+                .setOnTextChanged((s) -> {
+                    String text = s.toString();
+                    if (text.length() == 0) {
+                        setButtonClickable(false);
+                    } else {
+                        setButtonClickable(true);
+                    }
+                }).build());
     }
 
     private void setButtonClickable(boolean isClickable){
@@ -160,10 +156,17 @@ public class ChatFragment extends Fragment {
         LocalBroadcastManager.getInstance(getActivity()).registerReceiver(chatReceiver, chatActionFilter);
     }
 
-    private void bindStoredChatDataToView(){
+    private void bindStoredChatDataToView() {
         CoupleChatDAO.getInstance().changeUnReadToRead();
         List<SuccessSendChat> chatResults = CoupleChatDAO.getInstance().getDataRows();
-        if(chatResults.size() == 0){
+        if (chatResults.size() == 0) {
+            NetworkManager.getInstance().sendRequest(HomeProtocol.makeReceiveChatMessageRequest(getActivity(), INIT_TIME), SuccessReceiveChat.class, (request, result) -> {
+                Stream.of(result.getMessageContents()).forEach(CoupleChatDAO.getInstance()::insertData);
+                adapter.addAllMessage(result.getMessageContents());
+                scrollToLastItem();
+            }, (request, networkResponseCode, throwable) -> {
+                Toast.makeText(getActivity(), networkResponseCode.getMessage(), Toast.LENGTH_SHORT).show();
+            });
             return;
         } else {
             adapter.addAllMessage(chatResults);

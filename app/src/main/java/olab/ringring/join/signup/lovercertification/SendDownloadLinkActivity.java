@@ -10,12 +10,12 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import olab.ringring.R;
 import olab.ringring.main.home.HomeActivity;
-import olab.ringring.util.normalvisitor.element.NomalActivityElement;
+import olab.ringring.util.normalvisitor.element.NormalActivityElement;
 import olab.ringring.util.normalvisitor.visitor.NormalActivityVisitor;
 import olab.ringring.util.normalvisitor.visitor.concretevisitor.SetActionBarIconVisitor;
 import olab.ringring.util.normalvisitor.visitor.concretevisitor.SetActionBarTitleVisitor;
 
-public class SendDownloadLinkActivity extends AppCompatActivity implements NomalActivityElement {
+public class SendDownloadLinkActivity extends AppCompatActivity implements NormalActivityElement {
 
     @Bind(R.id.btn_send_download_link) Button sendDownloadLinkBtn;
 

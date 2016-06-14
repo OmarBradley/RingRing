@@ -21,4 +21,8 @@ public class SuccessReceiveChat {
     @SerializedName("MESSAGE_CONTENTS")
     private List<SuccessSendChat> messageContents;
 
+    public SuccessSendChat getLastMessage(){
+        return messageContents.get(messageContents.size()-1);
+    }
+
 }

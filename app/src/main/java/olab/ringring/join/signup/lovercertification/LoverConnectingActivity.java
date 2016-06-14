@@ -18,7 +18,7 @@ import olab.ringring.join.signup.lovercertification.certificationcase.Certificat
 import olab.ringring.network.NetworkManager;
 import olab.ringring.network.request.users.UsersProtocol;
 import olab.ringring.network.response.users.SuccessLoverCertification;
-import olab.ringring.util.normalvisitor.element.NomalActivityElement;
+import olab.ringring.util.normalvisitor.element.NormalActivityElement;
 import olab.ringring.util.normalvisitor.visitor.NormalActivityVisitor;
 import olab.ringring.util.normalvisitor.visitor.concretevisitor.SetActionBarIconVisitor;
 import olab.ringring.util.normalvisitor.visitor.concretevisitor.SetActionBarTitleVisitor;
@@ -28,7 +28,7 @@ import olab.ringring.util.dialog.confirm.ConfirmDialogFragment;
 import olab.ringring.util.dialog.confirm.ConfirmDialogInfoPool;
 import olab.ringring.util.preperance.PropertyManager;
 
-public class LoverConnectingActivity extends AppCompatActivity implements NomalActivityElement {
+public class LoverConnectingActivity extends AppCompatActivity implements NormalActivityElement {
 
     @Bind(R.id.edit_lover_phone_number) EditText loverPhoneNumberEdit;
     @Bind(R.id.btn_lover_connect) Button loverConnectBtn;

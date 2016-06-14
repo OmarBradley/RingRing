@@ -20,6 +20,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 import olab.ringring.R;
 import olab.ringring.init.application.RingRingApplication;
 import olab.ringring.network.response.home.SuccessSendChat;
+import olab.ringring.util.preperance.PropertyManager;
 
 /**
  * Created by 재화 on 2016-06-07.
@@ -66,7 +67,7 @@ public class NotiToastView extends LinearLayout {
         Handler popUpToastHandler = new Handler(Looper.getMainLooper());
         popUpToastHandler.post(() -> {
             NotiToastView notiToastView = new NotiToastView(RingRingApplication.getContext());
-            notiToastView.setLoverName(successSendChat.getLoverNickname());
+            notiToastView.setLoverName(PropertyManager.getInstance().getLoverNickName());
             notiToastView.setMessage(successSendChat.getMessage());
             Toast notiToast = new Toast(RingRingApplication.getContext());
             notiToast.setView(notiToastView);

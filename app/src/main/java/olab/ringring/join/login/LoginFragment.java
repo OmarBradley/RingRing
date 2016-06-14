@@ -4,9 +4,7 @@ package olab.ringring.join.login;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.text.Editable;
-import android.text.TextWatcher;
-import android.util.Log;
+import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,8 +16,6 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import olab.ringring.R;
 import olab.ringring.join.customview.EditTextWithSubmitButtonView;
-import olab.ringring.join.util.Validator;
-import olab.ringring.main.home.HomeActivity;
 import olab.ringring.network.NetworkManager;
 import olab.ringring.network.NetworkResponseCode;
 import olab.ringring.network.request.users.UsersProtocol;
@@ -27,6 +23,7 @@ import olab.ringring.network.response.users.SuccessLogin;
 import olab.ringring.util.dialog.confirm.ConfirmDialogFragment;
 import olab.ringring.util.dialog.confirm.ConfirmDialogInfoPool;
 import olab.ringring.util.preperance.PropertyManager;
+import olab.ringring.util.string.TextWatcherTemplate;
 
 public class LoginFragment extends Fragment {
 
@@ -34,6 +31,8 @@ public class LoginFragment extends Fragment {
     @Bind(R.id.edit_content_text) EditText emailEdit;
     @Bind(R.id.text_login_email_validate) TextView emailValidateText;
     @Bind(R.id.text_login_password_validate) TextView passwordValidateText;
+
+    public static final int MIN_PASSWORD_TEXT_LENGTH = 4;
 
     public LoginFragment() {}
 
@@ -58,7 +57,15 @@ public class LoginFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        Validator.validateEmail(emailEdit,emailValidateText);
+        emailEdit.addTextChangedListener(new TextWatcherTemplate()
+                .setBeforeTextChanged(() -> emailValidateText.setVisibility(View.VISIBLE))
+                .setOnTextChanged((s) -> {
+                    String emailText = s.toString();
+                    if ((emailText.length() != 0) && Patterns.EMAIL_ADDRESS.matcher(emailText).matches()) {
+                        emailValidateText.setVisibility(View.INVISIBLE);
+                    }
+                })
+                .build());
         validatePassword();
     }
 
@@ -78,24 +85,21 @@ public class LoginFragment extends Fragment {
             });
         });
 
-        passwordEdit.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-                passwordEdit.hideSubmitButton();
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                String text = s.toString();
-                if(text.length() >= Validator.MIN_PASSWORD_TEXT_LENGTH){
-                    passwordEdit.showSubmitButton();
-                }
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {}
-        });
+        passwordEdit.addTextChangedListener(new TextWatcherTemplate()
+                .setBeforeTextChanged(passwordEdit::hideSubmitButton)
+                .setOnTextChanged(this::validateEmail)
+                .build());
     }
+
+    private void validateEmail(CharSequence s){
+        String text = s.toString();
+        if (text.length() >= MIN_PASSWORD_TEXT_LENGTH) {
+            passwordEdit.showSubmitButton();
+        }
+    }
+
+
+
 
     private void moveToAnotherActivity(Class activityClass){
         Intent intent = new Intent(getActivity(), activityClass);

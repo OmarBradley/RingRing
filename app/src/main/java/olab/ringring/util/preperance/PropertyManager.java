@@ -3,6 +3,8 @@ package olab.ringring.util.preperance;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
+import org.joda.time.DateTime;
+
 import olab.ringring.init.application.RingRingApplication;
 import olab.ringring.main.ringdesign.ringattribute.jewelry.RingJewelry;
 import olab.ringring.main.ringdesign.ringattribute.material.RingMaterial;
@@ -40,6 +42,8 @@ public class PropertyManager {
     private static final String USER_PASSWORD = "user_password";
     private static final String USER_INDEX_ID ="user_index_id";
     private static final String LOVER_INDEX_ID = "lover_index_id";
+    private static final String COUPLE_D_DAY = "couple_d_day";
+    private static final String LOVER_NICK_NAME = "lover_nick_name";
 
     public static final String DEFAULT_JEWELRY = "RUBY";
     public static final String DEFAULT_SHAPE ="CIRCLE";
@@ -50,7 +54,8 @@ public class PropertyManager {
     public static final String DEFAULT_USER_PASSWORD = "";
     public static final int DEFAULT_USER_INDEX_ID = 0;
     public static final int DEFAULT_LOVER_INDEX_ID = 1;
-
+    private static final long DEFAULT_COUPLE_D_DAY = DateTime.now().getMillis();
+    private static final String DEFAULT_LOVER_NICK_NAME = "";
 
     public void setRegistrationToken(String token) {
         editor.putString(FIELD_REGISTRATION_ID, token);
@@ -176,5 +181,13 @@ public class PropertyManager {
         return prefs.getInt(LOVER_INDEX_ID, DEFAULT_LOVER_INDEX_ID);
     }
 
+    public void setLoverNickName(String loverNickName){
+        editor.putString(LOVER_NICK_NAME, loverNickName);
+        editor.commit();
+    }
+
+    public String getLoverNickName(){
+        return prefs.getString(LOVER_NICK_NAME, DEFAULT_LOVER_NICK_NAME);
+    }
 
 }

@@ -1,4 +1,4 @@
-package olab.ringring.main.home.chat.moudle.gcm;
+package olab.ringring.gcm;
 
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -9,13 +9,10 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.content.LocalBroadcastManager;
-import android.util.Log;
 import android.widget.Toast;
 
 import com.annimon.stream.Stream;
 import com.google.android.gms.gcm.GcmListenerService;
-
-import org.joda.time.DateTime;
 
 import olab.ringring.R;
 import olab.ringring.main.home.HomeActivity;
@@ -26,6 +23,7 @@ import olab.ringring.network.request.home.HomeProtocol;
 import olab.ringring.network.response.home.SuccessReceiveChat;
 import olab.ringring.network.response.home.SuccessSendChat;
 import olab.ringring.notification.NotiToastView;
+import olab.ringring.util.preperance.PropertyManager;
 
 /**
  * Created by 재화 on 2016-06-01.
@@ -34,11 +32,21 @@ public class RingRingGcmListenerService extends GcmListenerService {
 
     private static final String TAG = "RingRingGcmListenerService";
     public static final String ACTION_CHAT = "ringring.action.chat";
+    public static final String KEYWORD_SUCCESS_DIALOG = "keyword.success.dialog";
+    public static final String KEYWORD_DIALOG_KEY ="keywordDialogMessage";
     public static final String EXTRA_RESULT = "result";
 
     @Override
     public void onMessageReceived(String from, Bundle data) {
-        getRecentReceiveData(CoupleChatDAO.getInstance().getRecentTime(), data);
+        GCMPushCase pushCase = GCMPushCase.valueOf(data);
+        if (pushCase.equals(GCMPushCase.MESSAGE_PUSH)) {
+            buildKeywordSuccessDialog(data);
+            getRecentReceiveData(CoupleChatDAO.getInstance().getRecentTime());
+        } else if(pushCase.equals(GCMPushCase.LOVER_AUTH_PUSH)){
+
+        } else if(pushCase.equals(GCMPushCase.KEYWORD_MISSION_SUCCESS)){
+            /*buildKeywordSuccessDialog(data);*/
+        }
     }
 
     private void sendNotification(String message, SuccessSendChat successSendChat) {
@@ -63,17 +71,17 @@ public class RingRingGcmListenerService extends GcmListenerService {
         notificationManager.notify(0 /* ID of notification */, notificationBuilder.build());
     }
 
-    private void getRecentReceiveData(long recentTime, Bundle data) {
+    private void getRecentReceiveData(long recentTime) {
         NetworkManager.getInstance().sendRequest(HomeProtocol.makeReceiveChatMessageRequest(this, recentTime), SuccessReceiveChat.class, (request, result) -> {
-            SuccessSendChat successSendChat = new SuccessSendChat().mapBundle(data);
+            SuccessSendChat lastChatData = result.getLastMessage();
             Stream.of(result.getMessageContents()).forEach(CoupleChatDAO.getInstance()::insertData);
             Intent actionChatIntent = new Intent(ACTION_CHAT);
             LocalBroadcastManager.getInstance(this).sendBroadcastSync(actionChatIntent);
             boolean isProcessed = actionChatIntent.getBooleanExtra(EXTRA_RESULT, false);
             if (!isProcessed) {
                 executeBadgeNumber();
-                NotiToastView.makeToast(successSendChat);
-                sendNotification(data.getString("RECEIVER_ID"), successSendChat);
+                NotiToastView.makeToast(lastChatData);
+                sendNotification(PropertyManager.getInstance().getLoverNickName(), lastChatData);
             } else {
                 CoupleChatDAO.getInstance().changeUnReadToRead();
             }
@@ -87,4 +95,9 @@ public class RingRingGcmListenerService extends GcmListenerService {
         sendBroadcast(badgeNumber.makeBadgeNumberIntent());
     }
 
+    private void buildKeywordSuccessDialog(Bundle data) {
+        Intent keywordSuccessIntent = new Intent(KEYWORD_SUCCESS_DIALOG);
+        keywordSuccessIntent.putExtra(KEYWORD_DIALOG_KEY,data.getString("MESSAGE_CONTENT"));
+        LocalBroadcastManager.getInstance(this).sendBroadcastSync(keywordSuccessIntent);
+    }
 }

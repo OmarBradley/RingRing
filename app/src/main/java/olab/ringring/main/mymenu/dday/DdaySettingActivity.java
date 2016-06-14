@@ -1,7 +1,9 @@
 package olab.ringring.main.mymenu.dday;
 
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -18,12 +20,14 @@ import java.util.Locale;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import olab.ringring.R;
+import olab.ringring.gcm.KeywordSuccessReceiver;
+import olab.ringring.gcm.RingRingGcmListenerService;
 import olab.ringring.main.mymenu.MyMenuActivity;
 import olab.ringring.network.NetworkManager;
 import olab.ringring.network.request.mymenu.MyMenuProtocol;
 import olab.ringring.network.response.mymenu.changecreatedate.SuccessChangeCreateDate;
 import olab.ringring.network.response.mymenu.showcreatedate.SuccessShowCreateDate;
-import olab.ringring.util.normalvisitor.element.NomalActivityElement;
+import olab.ringring.util.normalvisitor.element.NormalActivityElement;
 import olab.ringring.util.normalvisitor.visitor.NormalActivityVisitor;
 import olab.ringring.util.normalvisitor.visitor.concretevisitor.SetActionBarIconVisitor;
 import olab.ringring.util.dialog.confirm.ConfirmDialogBuilder;
@@ -31,22 +35,29 @@ import olab.ringring.util.dialog.confirm.ConfirmDialogData;
 import olab.ringring.util.dialog.confirm.ConfirmDialogFragment;
 
 
-public class DDaySettingActivity extends AppCompatActivity implements NomalActivityElement {
+public class DDaySettingActivity extends AppCompatActivity implements NormalActivityElement {
 
     @Bind(R.id.calendar_set_d_day) CalendarView dDaySettingCalendar;
     @Bind(R.id.text_today) TextView todayText;
     private long selectDate;
     private int coupleIndex;
     private SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy년 M월 d일", Locale.getDefault());
+    private KeywordSuccessReceiver keywordSuccessReceiver;
+    private IntentFilter keywordSuccessDialogFilter = new IntentFilter(RingRingGcmListenerService.KEYWORD_SUCCESS_DIALOG);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_d_day_setting);
         ButterKnife.bind(this);
+        initKeywordSuccessReceiver();
         getTodayText();
         initDDaySettingCalendar();
         this.accept(new SetActionBarIconVisitor(ContextCompat.getDrawable(this, R.drawable.actionbar_home_as_up_image)));
+    }
+
+    private void initKeywordSuccessReceiver(){
+        keywordSuccessReceiver = new KeywordSuccessReceiver(this);
     }
 
     private void getTodayText(){
@@ -115,11 +126,22 @@ public class DDaySettingActivity extends AppCompatActivity implements NomalActiv
         setDDayDialog.show(getSupportFragmentManager(), "select create date dialog");
     }
     private void sendNetworkRequest(){
-        NetworkManager.getInstance().sendRequest(MyMenuProtocol.makeChangeCreateDate(this, selectDate, coupleIndex), SuccessChangeCreateDate.class , (request, result) -> {
+        NetworkManager.getInstance().sendRequest(MyMenuProtocol.makeChangeCreateDateRequest(this, selectDate, coupleIndex), SuccessChangeCreateDate.class , (request, result) -> {
             todayText.setText(dateFormat.format(result.getCoupleCreatedDate()));
         }, (request, errorCode, throwable) -> {
             Toast.makeText(this, errorCode.getMessage(), Toast.LENGTH_SHORT).show();
         });
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        LocalBroadcastManager.getInstance(this).registerReceiver(keywordSuccessReceiver, keywordSuccessDialogFilter);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(keywordSuccessReceiver);
+    }
 }

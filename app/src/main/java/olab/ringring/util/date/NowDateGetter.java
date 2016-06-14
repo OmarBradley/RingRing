@@ -19,37 +19,54 @@ public class NowDateGetter {
     private static final String BLANK = " ";
     private static final String ZERO = "0";
     private static final String HOUR_AND_MINUTE_DIVIDER = ":";
+    private static final String TODAY_STRING = "Today";
 
     public NowDateGetter() {
         nowDate = DateTime.now();
     }
 
-    public int getNowYear() {
+    public int getNowYear(DateTime nowDate) {
         return nowDate.getYear();
     }
 
-    public int getNowMonth() {
+    public int getNowMonth(DateTime nowDate) {
         return nowDate.getMonthOfYear();
     }
 
-    public int getNowDay() {
+    public int getNowDay(DateTime nowDate) {
         return nowDate.getDayOfMonth();
     }
 
-    public String getNowDayOfTheWeek() {
+    public String getNowDayOfTheWeek(DateTime nowDate) {
         return Days.getInstance().getDaysString(nowDate.getDayOfWeek());
     }
 
-    public String getNowDayString() {
+    public String getNowDayString(DateTime nowDate) {
         Context context = RingRingApplication.getContext();
-        return getNowYear() + context.getString(R.string.year_string) + BLANK + getNowMonth() + context.getString(R.string.month_string) + BLANK + getNowDay() + context.getString(R.string.day_string) + BLANK + getNowDayOfTheWeek();
+        if (isSameDay(DateTime.now(), nowDate)) {
+            return TODAY_STRING;
+        } else {
+            return getNowYear(nowDate) + context.getString(R.string.year_string) + BLANK + getNowMonth(nowDate) + context.getString(R.string.month_string) +
+                    BLANK + getNowDay(nowDate) + context.getString(R.string.day_string) + BLANK + getNowDayOfTheWeek(nowDate);
+        }
     }
 
-    public String getChatTimeString() {
-        return getMeridiem() + BLANK + getHour() + HOUR_AND_MINUTE_DIVIDER + getMinute();
+    private boolean isSameDay(DateTime Date1, DateTime date2) {
+        final boolean sameYear = Date1.getYear() == date2.getYear();
+        final boolean sameMonth = Date1.getMonthOfYear() == date2.getMonthOfYear();
+        final boolean sameDay = Date1.getDayOfMonth() == date2.getDayOfMonth();
+        if (sameYear && sameMonth && sameDay) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
-    private String getMeridiem() {
+    public String getChatTimeString(DateTime nowDate) {
+        return getMeridiem(nowDate) + BLANK + getHour(nowDate) + HOUR_AND_MINUTE_DIVIDER + getMinute(nowDate);
+    }
+
+    private String getMeridiem(DateTime nowDate) {
         Context context = RingRingApplication.getContext();
         int hour = nowDate.getHourOfDay();
         if (hour >= 1 && hour <= 11) {
@@ -59,7 +76,7 @@ public class NowDateGetter {
         }
     }
 
-    private String getHour() {
+    private String getHour(DateTime nowDate) {
         int hour = nowDate.getHourOfDay();
         if (hour >= 1 && hour <= 12) {
             return Integer.toString(hour);
@@ -68,7 +85,7 @@ public class NowDateGetter {
         }
     }
 
-    private String getMinute() {
+    private String getMinute(DateTime nowDate) {
         int minute = nowDate.getMinuteOfHour();
         if (minute < 10) {
             return ZERO + Integer.toString(minute);
@@ -80,7 +97,7 @@ public class NowDateGetter {
     public String getChatTimeString(long timeMillis) {
         DateFormat chatTimeDateFormat = new SimpleDateFormat("h:mm"); // HH=24h, hh=12h
         String timeString = chatTimeDateFormat.format(timeMillis);
-        return getMeridiem() + BLANK + timeString;
+        return getMeridiem(new DateTime(timeMillis)) + BLANK + timeString;
     }
 
     public String calculateDDay(long timeMillis){
@@ -89,6 +106,9 @@ public class NowDateGetter {
         return ""+dDay;
     }
 
-
+    public int extractDayOfTimeMills(long timeMillis){
+        DateTime dateTime = new DateTime(timeMillis);
+        return dateTime.getDayOfYear();
+    }
 
 }

@@ -78,7 +78,7 @@ public class MyMenuProtocol {
                 .build();
     }
 
-    public static final Request makeChangeCreateDate(Context tag, long coupleCreatedDate, int coupleIndex) {
+    public static final Request makeChangeCreateDateRequest(Context tag, long coupleCreatedDate, int coupleIndex) {
         Map<String, String> bodyParameters = new HashMap<>();
         bodyParameters.put("coupleIndex", "" + coupleIndex);
         bodyParameters.put("coupleCreatedDate", "" + coupleCreatedDate);
@@ -87,6 +87,14 @@ public class MyMenuProtocol {
                 .setUrl(MyMenuProtocolUrl.CHANGE_CREATE_DATE.getUrl())
                 .addPageSegment(MyMenuProtocolUrl.CHANGE_CREATE_DATE.getPageSegment())
                 .addBodyParameters(bodyParameters)
+                .build();
+    }
+
+    public static final Request makeKeywordHistoryRequest(Context tag) {
+        return new RequestBuilder()
+                .setTag(tag)
+                .setUrl(MyMenuProtocolUrl.KEYWORD_HISTORY.getUrl())
+                .addPageSegment(MyMenuProtocolUrl.KEYWORD_HISTORY.getPageSegment())
                 .build();
     }
 

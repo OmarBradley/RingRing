@@ -4,6 +4,10 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
+import com.annimon.stream.Stream;
+
+import org.joda.time.DateTime;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,6 +17,7 @@ import olab.ringring.network.response.home.SuccessSendChat;
 import olab.ringring.main.home.chat.view.viewholder.ChatDayViewHolder;
 import olab.ringring.main.home.chat.view.viewholder.LoverChatViewHolder;
 import olab.ringring.main.home.chat.view.viewholder.UserChatViewHolder;
+import olab.ringring.util.date.NowDateGetter;
 import olab.ringring.util.preperance.PropertyManager;
 
 /**
@@ -28,13 +33,34 @@ public class ChatViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
     List<SuccessSendChat> chatContents = new ArrayList<>();
 
+
     public void addMessage(SuccessSendChat successSendChat) {
-        chatContents.add(successSendChat);
+        if (chatContents.size() > 0) {
+            SuccessSendChat beforeChat = chatContents.get(chatContents.size() - 1);
+            int beforeChatDay = new NowDateGetter().extractDayOfTimeMills(beforeChat.getSendDate());
+            int presentChatDay = new NowDateGetter().extractDayOfTimeMills(successSendChat.getSendDate());
+            if (beforeChatDay != presentChatDay) {
+                chatContents.add(makeChatContentUsingChatDay(successSendChat.getSendDate()));
+                chatContents.add(successSendChat);
+            } else {
+                chatContents.add(successSendChat);
+            }
+        } else {
+            chatContents.add(makeChatContentUsingChatDay(successSendChat.getSendDate()));
+            chatContents.add(successSendChat);
+        }
         notifyDataSetChanged();
+    }
+    
+    private SuccessSendChat makeChatContentUsingChatDay(long presentChatDayMills) {
+        SuccessSendChat chatDayObject = new SuccessSendChat();
+        chatDayObject.setSenderId(CHAT_DAY_SENDER_ID);
+        chatDayObject.setSendDate(presentChatDayMills);
+        return chatDayObject;
     }
 
     public void addAllMessage(List<SuccessSendChat> successSendChats) {
-        this.chatContents.addAll(successSendChats);
+        Stream.of(successSendChats).forEach(this::addMessage);
         notifyDataSetChanged();
     }
 

@@ -15,7 +15,8 @@ public enum MyMenuProtocolUrl {
     CHANGE_USER_PROFILE(RequestBuilder.BASE_URL + MyMenuProtocolUrl.MY_MENU_PROTOCOL_PAGE_SEGMENT, "changeprofile"),
     SHOW_PROFILE(RequestBuilder.BASE_URL + MyMenuProtocolUrl.MY_MENU_PROTOCOL_PAGE_SEGMENT, "showprofile"),
     SHOW_CREATE_DATE(RequestBuilder.BASE_URL + MyMenuProtocolUrl.MY_MENU_PROTOCOL_PAGE_SEGMENT, "showcreatedate"),
-    CHANGE_CREATE_DATE(RequestBuilder.BASE_URL + MyMenuProtocolUrl.MY_MENU_PROTOCOL_PAGE_SEGMENT, "changecreatedate");
+    CHANGE_CREATE_DATE(RequestBuilder.BASE_URL + MyMenuProtocolUrl.MY_MENU_PROTOCOL_PAGE_SEGMENT, "changecreatedate"),
+    KEYWORD_HISTORY(RequestBuilder.BASE_URL + MyMenuProtocolUrl.MY_MENU_PROTOCOL_PAGE_SEGMENT, "history");
 
     MyMenuProtocolUrl(String url, String pageSegment){
         this.url = url;

@@ -9,12 +9,9 @@ import android.util.Log;
 public class StringHandler {
 
     public static final boolean isCorrectImageUrl(String imageUrl){
-        Log.e("imageUrl", imageUrl);
         if(!TextUtils.isEmpty(imageUrl) && imageUrl.contains("http")){
-            Log.e("imageUrlf", imageUrl);
             return true;
         } else {
-            Log.e("imageUrlT", imageUrl);
             return false;
         }
     }

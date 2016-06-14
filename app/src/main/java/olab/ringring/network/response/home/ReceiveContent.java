@@ -22,4 +22,5 @@ public class ReceiveContent implements java.io.Serializable {
 
     @SerializedName("MESSAGE_CONTENT")
     private String messageContent;
+
 }

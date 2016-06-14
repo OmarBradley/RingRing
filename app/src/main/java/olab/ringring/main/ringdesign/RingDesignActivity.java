@@ -1,8 +1,10 @@
 package olab.ringring.main.ringdesign;
 
+import android.content.IntentFilter;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -13,8 +15,10 @@ import butterknife.ButterKnife;
 import lombok.Getter;
 import lombok.Setter;
 import olab.ringring.R;
+import olab.ringring.gcm.KeywordSuccessReceiver;
+import olab.ringring.gcm.RingRingGcmListenerService;
 import olab.ringring.main.nav.MainNavigationFragment;
-import olab.ringring.main.nav.visitor.concretevisitior.OnBackPressedVisitor;
+import olab.ringring.main.nav.visitor.concretevisitior.CloseDrawerVisitor;
 import olab.ringring.main.nav.visitor.concretevisitior.SetNavigationFragmentVisitor;
 import olab.ringring.main.nav.visitor.concretevisitior.SetToggleVisitor;
 import olab.ringring.main.nav.visitor.element.MainNavigationElement;
@@ -30,13 +34,14 @@ import olab.ringring.main.ringdesign.ringattribute.BigRingFactory;
 import olab.ringring.network.NetworkManager;
 import olab.ringring.network.request.ring.RingProtocol;
 import olab.ringring.network.response.ring.intro.SuccessRingIntro;
-import olab.ringring.util.normalvisitor.element.NomalActivityElement;
+import olab.ringring.util.normalvisitor.element.NormalActivityElement;
 import olab.ringring.util.normalvisitor.visitor.NormalActivityVisitor;
 import olab.ringring.util.image.ImageHandler;
+import olab.ringring.util.normalvisitor.visitor.concretevisitor.OnBackPressedVisitor;
 import olab.ringring.util.preperance.PropertyManager;
 
 public class RingDesignActivity extends AppCompatActivity
-        implements MainNavigationElement, NomalActivityElement {
+        implements MainNavigationElement, NormalActivityElement {
 
     @Getter @Bind(R.id.toolbar) Toolbar toolbar;
     @Getter @Bind(R.id.drawer_layout) DrawerLayout drawer;
@@ -47,19 +52,26 @@ public class RingDesignActivity extends AppCompatActivity
     @Getter private BigRingFactory ringFactory;
     @Setter private RingMaterial selectedMaterial;
 
-    private MainNavigationVisitor onBackPressedVisitor;
+    private NormalActivityVisitor onBackPressedVisitor;
+    private KeywordSuccessReceiver keywordSuccessReceiver;
+    private IntentFilter keywordSuccessDialogFilter = new IntentFilter(RingRingGcmListenerService.KEYWORD_SUCCESS_DIALOG);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ring_design);
         ButterKnife.bind(this);
+        initKeywordSuccessReceiver();
         setSupportActionBar(toolbar);
         this.accept(new SetNavigationFragmentVisitor());
         this.accept(new SetToggleVisitor());
         initOnBackPressedVisitor();
         displayPresentRingLevel();
         initBigRingView();
+    }
+
+    private void initKeywordSuccessReceiver(){
+        keywordSuccessReceiver = new KeywordSuccessReceiver(this);
     }
 
     private void initOnBackPressedVisitor(){
@@ -126,13 +138,19 @@ public class RingDesignActivity extends AppCompatActivity
     protected void onResume() {
         super.onResume();
         syncBigRingView();
+        LocalBroadcastManager.getInstance(this).registerReceiver(keywordSuccessReceiver, keywordSuccessDialogFilter);
     }
 
     @Override
     public void onBackPressed() {
         this.accept(onBackPressedVisitor);
+        this.accept(new CloseDrawerVisitor());
     }
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(keywordSuccessReceiver);
 
-
+    }
 }

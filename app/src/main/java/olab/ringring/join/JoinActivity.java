@@ -6,19 +6,17 @@ import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import olab.ringring.R;
 import olab.ringring.join.login.LoginFragment;
 import olab.ringring.join.signup.SignUpFragment;
-import olab.ringring.util.normalvisitor.element.NomalActivityElement;
+import olab.ringring.util.normalvisitor.element.NormalActivityElement;
 import olab.ringring.util.normalvisitor.visitor.NormalActivityVisitor;
 import olab.ringring.util.normalvisitor.visitor.concretevisitor.ActivityFinishVisitor;
-import olab.ringring.util.preperance.PropertyManager;
 
-public class JoinActivity extends AppCompatActivity implements NomalActivityElement{
+public class JoinActivity extends AppCompatActivity implements NormalActivityElement {
 
     private final static int LOGIN_TAB_INDICATOR_VIEW_LOCATION = 0;
     private final static int SIGN_UP_INDICATOR_VIEW_LOCATION = 1;
