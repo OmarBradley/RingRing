@@ -9,6 +9,7 @@ import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -136,6 +137,7 @@ public class HomeActivity extends AppCompatActivity
 
     private void getHomeInfo() {
         NetworkManager.getInstance().sendRequest(MyMenuProtocol.makeHomeRequest(this), SuccessMyMenuIntro.class, (request, result) -> {
+            Log.e("home result", result.toString());
             initView(result);
             PropertyManager.getInstance().setUserProperty(result);
             PropertyManager.getInstance().setLoverIndexId(result.getLoverIndex());

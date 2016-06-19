@@ -23,8 +23,9 @@ public enum GCMPushCase {
             return MESSAGE_PUSH;
         } else if (pushCase == 1) {
             return LOVER_AUTH_PUSH;
-        } else {
+        } else if(pushCase == 2) {
             return KEYWORD_MISSION_SUCCESS;
         }
+        return null;
     }
 }

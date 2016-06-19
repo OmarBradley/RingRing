@@ -24,10 +24,10 @@ public class KeywordSuccessReceiver extends BroadcastReceiver {
     public void onReceive(Context context, Intent intent) {
         ConfirmDialogFragment keywordSuccessDialog = new ConfirmDialogBuilder()
                 .setDialogInfo(new ConfirmDialogData()
-                        .setDialogMessage("사랑해 성공")
+                        .setDialogMessage(intent.getExtras().getString(RingRingGcmListenerService.KEYWORD_DIALOG_KEY))
                         .setDialogTitle("블라인드 미션 성공!")
                         .setDialogTitleIcon(ContextCompat.getDrawable(RingRingApplication.getContext(), R.drawable.dialog_check_image))
-                        .setDialogConfirmButtonMessage("혹인")
+                        .setDialogConfirmButtonMessage("확인")
                         .setDialogTextColor(ContextCompat.getColor(RingRingApplication.getContext(), R.color.colorPrimary)))
                 .setOnConfirmButtonClickListener((dialog, which) -> {
                     dialog.dismiss();
